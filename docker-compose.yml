@@ -16,6 +16,7 @@ services:
     volumes:
       - ./mariadb:/var/lib/mysql
   php:
+    build: ./
     image: php:7-fpm
     ports:
       - "9696:9000"
