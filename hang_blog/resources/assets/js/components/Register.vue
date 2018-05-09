@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'Register',
 
@@ -49,20 +50,10 @@
     methods: {
       register() {
         var app = this
-        this.$auth.register({
-          params: {
-            name: app.name,
-            email: app.email,
-            password: app.password
-          },
-          success: function() {
-            app.success = true
-          },
-          error: function(resp) {
-            app.error = true;
-            app.errors = resp.response.data.errors;
-          },
-          redirect: null
+        axios.post('/api/register', {
+          name: app.name,
+          email: app.email,
+          password: app.password
         })
       }
     }
