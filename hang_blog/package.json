@@ -22,5 +22,8 @@
     "vue-axios": "^2.1.1",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.16"
+  },
+  "dependencies": {
+    "@websanova/vue-auth": "^2.21.10-beta"
   }
 }
