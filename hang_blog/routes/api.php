@@ -22,6 +22,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::post('register', 'AuthController@register');
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -29,3 +30,4 @@ Route::middleware('auth:api')->group(function () {
         return response()->json(['data' => 'Test Data']);
     });
 });
+

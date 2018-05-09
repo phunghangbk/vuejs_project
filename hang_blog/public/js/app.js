@@ -17792,11 +17792,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     register: function register() {
-      var app = this;
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/register', {
-        name: app.name,
-        email: app.email,
-        password: app.password
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/auth/register', {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }).then(function (resp) {
+        if (resp.status == 'success') {
+          _this.success = true;
+        }
+      }).catch(function (error) {
+        _this.error = true;
       });
     }
   }
