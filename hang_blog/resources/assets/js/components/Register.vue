@@ -49,15 +49,17 @@
 
     methods: {
       register() {
-        axios.post('/api/auth/register', {
+        axios.post('/auth/register', {
           name: this.name,
           email: this.email,
           password: this.password
         }).then(resp => {
-          if (resp.status=='success') {
+          console.log(resp.status)
+          if (resp.status=='200') {
             this.success = true;
           }
         }).catch(error => {
+          console.log(error)
           this.error = true
         })
       }
