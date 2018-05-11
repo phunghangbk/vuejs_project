@@ -19,13 +19,12 @@ class CreateTableMstUser extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('nickname')->nullable();
+            $table->string('avatar_image')->nullable();
+            $table->string('cover_image')->nullable();
             $table->integer('roles')->default(1); // 1: user, 2: admin
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
-
-        DB::statement("ALTER TABLE mst_user ADD avatar_image MEDIUMBLOB");
-        DB::statement("ALTER TABLE mst_user ADD cover_image MEDIUMBLOB");
     }
 
     /**

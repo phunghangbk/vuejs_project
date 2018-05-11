@@ -8,26 +8,22 @@ use App\User;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Facades\Log;
 use Auth;
-use Validator;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        Validator::make($request->all(), [
-                'email' => 'required|email|unique',
-                'password' => 'required|string|min:6|max:10',
-
-            ], 
-            $messages
-        );
         $user = new User;
         $user->email = $request->email;
         $user->name = $request->first_name . ' ' . $request->last_name;
         $user->password = bcrypt($request->password);
         $user->nickname = $request->nickname;
-        $user->avatar_image = $request->avatar_image;
-        $user->cover_image = $request->cover_image;
+        $avatar_image_name = time().'.' . explode('/', explode(':', substr($request->avatar_image, 0, strpos($request->avatar_image, ';')))[1])[1];
+        \Image::make($request->avatar_image)->save(public_path('avatar_images/').$avatar_image_name);
+        $cover_image_name = time().'.' . explode('/', explode(':', substr($request->cover_image, 0, strpos($request->cover_image, ';')))[1])[1];
+        \Image::make($request->cover_image)->save(public_path('cover_images/').$cover_image_name);
+        $user->avatar_image = $avatar_image_name;
+        $user->cover_image = $cover_image_name;
         $user->save();
         return response([
             'status' => 'success',

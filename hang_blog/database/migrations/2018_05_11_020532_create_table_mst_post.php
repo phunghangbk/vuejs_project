@@ -16,12 +16,12 @@ class CreateTableMstPost extends Migration
         Schema::create('mst_post', function (Blueprint $table) {
             $table->increments('post_id');
             $table->string('title')->default('');
+            $table->string('image')->nullable();
             $table->text('content')->default('');
             $table->integer('status')->default(1); //1: published 2: hidden
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
-        DB::statement("ALTER TABLE mst_post ADD image MEDIUMBLOB");
     }
 
     /**
