@@ -8,31 +8,87 @@ use App\User;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Facades\Log;
 use Auth;
+use Validator;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        // Validate input data
+        $rules = [
+            'email' => 'required|string|email|max:255|unique:mst_user',
+            'password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+        ];
+        $messages = [
+            'password.regex' => 'Password needs to contain at least one uppercase, lowercase letters and one number'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response([
+                'status' => 'error',
+                'data' => null,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        // store user information to database
         $user = new User;
         $user->email = $request->email;
         $user->name = $request->first_name . ' ' . $request->last_name;
         $user->password = bcrypt($request->password);
         $user->nickname = $request->nickname;
-        $avatar_image_name = time().'.' . explode('/', explode(':', substr($request->avatar_image, 0, strpos($request->avatar_image, ';')))[1])[1];
-        \Image::make($request->avatar_image)->save(public_path('avatar_images/').$avatar_image_name);
-        $cover_image_name = time().'.' . explode('/', explode(':', substr($request->cover_image, 0, strpos($request->cover_image, ';')))[1])[1];
-        \Image::make($request->cover_image)->save(public_path('cover_images/').$cover_image_name);
+        $avatar_image_name = '';
+        $cover_image_name = '';
+
+        //avatar image
+        if ($request->avatar_image !== '' && $request->avatar_image !== null) {
+            $avatar_image_name = time().'.' . explode('/', explode(':', substr($request->avatar_image, 0, strpos($request->avatar_image, ';')))[1])[1];
+            $avatar_image = \Image::make($request->avatar_image);
+            $avatar_image->resize(720,720);
+            $avatar_image->save(public_path('avatar_images/').$avatar_image_name);
+        }
+        
+
+        //cover image
+        if ($request->cover_image !== '' && $request->cover_image !== null) {
+            $cover_image_name = time().'.' . explode('/', explode(':', substr($request->cover_image, 0, strpos($request->cover_image, ';')))[1])[1];
+            $cover_image = \Image::make($request->cover_image);
+            $cover_image->resize(1000, 1000);
+            $cover_image->save(public_path('cover_images/').$cover_image_name);
+        }
+
         $user->avatar_image = $avatar_image_name;
         $user->cover_image = $cover_image_name;
         $user->save();
+
+        // create JWT token
+        Log::info($user);
+        $token = JWTAuth::fromUser($user);
+
         return response([
             'status' => 'success',
-            'data' => $user
+            'data' => $user,
+            'errors' => [],
+            'token' => $token
            ], 200);
     }
 
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password'=> 'required'
+        ]);
+        if ($validator->fails()) {
+            return response([
+                'status' => 'error',
+                'token' => null,
+                'errors' => $validator->errors()
+            ]);
+        }
+
         $credentials = $request->only('email', 'password');
         if ( ! $token = JWTAuth::attempt($credentials)) {
             return response([
@@ -42,7 +98,8 @@ class AuthController extends Controller
             ], 400);
         }
         return response([
-            'status' => 'success'
+            'status' => 'success',
+            'token' => $token
         ])->header('Authorization', $token);
     }
 
