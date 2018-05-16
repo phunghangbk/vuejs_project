@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user->cover_image = $cover_image_name;
         $user->save();
         return response([
-            'status' => 'success',
+            'status' => config('application.response_status')['success'],
             'data' => $user
            ], 200);
     }
@@ -36,13 +36,13 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if ( ! $token = JWTAuth::attempt($credentials)) {
             return response([
-                'status' => 'error',
-                'error' => 'invalid.credentials',
-                'msg' => 'Invalid Credentials.'
+                'status' => config('application.response_status')['error'],
+                'error' => config('application.invalid_iredentials'),
+                'msg' => config('application.invalid_iredentials')
             ], 400);
         }
         return response([
-            'status' => 'success'
+            'status' => config('application.response_status')['success']
         ])->header('Authorization', $token);
     }
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
     {
         $user = User::find(Auth::user()->id);
         return response([
-            'status' => 'success',
+            'status' => config('application.response_status')['success'],
             'data' => $user
         ]);
     }
@@ -58,7 +58,7 @@ class AuthController extends Controller
     public function refresh()
     {
         return response([
-            'status' => 'success'
+            'status' => config('application.response_status')['success']
         ]);
     }
 
@@ -66,7 +66,7 @@ class AuthController extends Controller
     {
         JWTAuth::invalidate();
         return response([
-            'status' => 'success',
+            'status' => config('application.response_status')['success'],
             'msg' => 'Logged out Successfully.'
         ], 200);
     }
