@@ -19,6 +19,7 @@
 
 <script>
   import axios from 'axios'
+  import * as api from '../store/api.js'
 
   export default {
     name: 'login',
@@ -39,7 +40,7 @@
       login () {
         this.loader = true
         this.infoError = false
-        axios.post('/auth/login', {
+        axios.post(api.login, {
           email: this.email,
           password: this.password
         }).then((response) => {

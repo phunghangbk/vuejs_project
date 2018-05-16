@@ -9,6 +9,7 @@ import Register from './components/Register.vue';
 import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 import store from './store';
+import Profile from './components/Profile.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -51,6 +52,11 @@ const router = new VueRouter({
       path: '/logout',
       name: 'logout',
       component: Logout
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 });
@@ -64,8 +70,16 @@ router.beforeEach((to, from, next) => {
   }
   return next();
 })
-Vue.router = router
 
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.interceptors.request.use(config => {
+  config.headers['Authorization'] = 'Bearer '+ localStorage.getItem('token');
+  return config
+}, error => {
+  return Promise.reject(error)
+});
+
+Vue.router = router
 App.router = Vue.router
 App.store = store
 new Vue(App).$mount('#app');

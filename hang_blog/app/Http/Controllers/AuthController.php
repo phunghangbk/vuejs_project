@@ -105,10 +105,11 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        $user = User::find(Auth::user()->id);
-        return response([
+        Log::info(json_encode($request));
+        // $user = User::find(Auth::user()->id);
+        return response()->json([
             'status' => config('application.response_status')['success'],
-            'data' => $user
+            // 'data' => $user
         ]);
     }
 

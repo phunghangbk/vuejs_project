@@ -65,6 +65,8 @@
 
 <script> 
   import axios from 'axios'
+  import * as api from '../store/api.js'
+
   export default {
     data(){
       return {
@@ -88,7 +90,7 @@
     methods: {
       register() {
         var app = this
-        axios.post('/auth/register', {
+        axios.post(api.register, {
           first_name: app.first_name,
           last_name: app.last_name,
           email: app.email,
