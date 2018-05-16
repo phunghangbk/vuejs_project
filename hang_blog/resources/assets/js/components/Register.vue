@@ -14,43 +14,49 @@
       <div class="form-group" v-bind:class="{'has-error': error && errors.name}">
         <label for="firstName">Your First Name</label>
         <input type="text" id="firstName" class="form-control" v-model="first_name" required>
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.name">{{errors.name[0]}}</span>
       </div>
 
       <div class="form-group" :class="{'has-error': error && errors.name}">
         <label for="lastName">Your Last Name</label>
         <input type="text" id="lastName" class="form-control" v-model="last_name" required>
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.name">{{errors.name[0]}}</span>
       </div>
 
       <div class="form-group" :class="{'has-error': error && errors.email}">
         <label for="email">Email</label>
         <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.email">{{errors.email[0]}}</span>
       </div>
 
-      <div class="form-group" :class="{'has-error': error && errors.name}">
+      <div class="form-group" :class="{'has-error': error && errors.nickname}">
         <label for="nickname">Nickname</label>
         <input type="text" id="nickname" class="form-control" v-model="nickname">
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.nickname">{{errors.nickname[0]}}</span>
       </div>
 
-      <div class="form-group" :class="{'has-error': error && errors.name}" @change="onAvartaImageChange">
+      <div class="form-group" :class="{'has-error': error && errors.avarta_image}" @change="onAvartaImageChange">
         <label for="avartaImage">Avarta Image</label>
+        <div class="col-md-3" v-if="avatar_image">
+          <img :src="avatar_image" class="img-responsive" height="70" width="90">
+        </div>
         <input type="file" id="avartaImage" class="form-control">
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.avatar_image">{{errors.avatar_image[0]}}</span>
       </div>
 
-      <div class="form-group" :class="{'has-error': error && errors.name}" @change="onCoverImageChange">
+      <div class="form-group" :class="{'has-error': error && errors.cover_image}" @change="onCoverImageChange">
         <label for="coverImage">Cover Image</label>
+        <div class="col-md-3" v-if="cover_image">
+          <img :src="cover_image" class="img-responsive" height="70" width="90">
+        </div>
         <input type="file" id="coverImage" class="form-control">
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.cover_image">{{errors.cover_image[0]}}</span>
       </div>
         
-      <div class="form-group" :class="{'has-error': error && errors.name}">
+      <div class="form-group" :class="{'has-error': error && errors.password}">
         <label for="password">Password</label>
         <input type="password" id="password" class="form-control" v-model="password" required>
-        <span class="help-block" v-if="error && errors.name">{{errors.name}}</span>
+        <span class="help-block" v-if="error && errors.password">{{errors.password[0]}}</span>
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
@@ -74,6 +80,11 @@
         success: false
       };
     },
+    beforeCreate () {
+      if (this.$store.state.isLogged) {
+        this.router.push('/dashboard')
+      }
+    },
     methods: {
       register() {
         var app = this
@@ -86,13 +97,18 @@
           avatar_image: app.avatar_image,
           cover_image: app.cover_image
         }).then(resp => {
-          if (resp.status=='200') {
-            app.success = true;
-          } else {
+          if (resp.data.status == 'error') {
             app.error = true;
-            app.errors = resp.response.data.errors;
+            app.errors = resp.data.errors;
+            console.log(app.errors);
+          } else if (resp.data.status == 'success') {
+            localStorage.setItem('token', resp.data.token);
+            this.$store.commit('LOGIN_USER');
+            this.$router.push('/dashboard');
+            app.success = true;
           }
         }).catch(error => {
+          console.log(error);
           app.error = true;
           app.errors = error;
         });               

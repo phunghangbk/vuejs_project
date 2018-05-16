@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="alert alert-danger" v-if="error">
-        <p>There was an error, unable to sign in with those credentials.</p>
+    <div class="alert alert-danger" v-if="infoError">
+      <p>There was an error, unable to sign in with those credentials.</p>
     </div>
     <form autocomplete="off" @submit.prevent="login" method="post">
       <div class="form-group">
@@ -18,29 +18,44 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
-    data(){
+    name: 'login',
+    data () {
       return {
-        email: null,
-        password: null,
-        error: false
+        loader: false,
+        infoError: false,
+        email: '',
+        password: ''
+      }
+    },
+    beforeCreate () {
+      if (this.$store.state.isLogged) {
+        this.$router.push('/dashboard')
       }
     },
     methods: {
-      login(){
-        var app = this
-        this.$auth.login({
-            params: {
-              email: app.email,
-              password: app.password
-            }, 
-            success: function () {},
-            error: function () {},
-            rememberMe: true,
-            redirect: '/dashboard',
-            fetchUser: true,
-        });       
-      },
+      login () {
+        this.loader = true
+        this.infoError = false
+        axios.post('/auth/login', {
+          email: this.email,
+          password: this.password
+        }).then((response) => {
+          if (response.data.status == 'error') {
+            this.infoError = true;
+          } else {
+            localStorage.setItem('token', response.data.token);
+            this.$store.commit('LOGIN_USER');
+            this.$router.push('/dashboard');
+          }
+        }, () => {
+          this.infoError = true
+          this.loader = false
+          this.password = ''
+        })
+      }
     }
-  } 
+  }
 </script>

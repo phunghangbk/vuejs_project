@@ -7,9 +7,12 @@ import Home from './components/Home.vue';
 import Dashboard from './components/Dashboard.vue';
 import Register from './components/Register.vue';
 import Login from './components/Login.vue';
+import Logout from './components/Logout.vue';
+import store from './store';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+
 axios.defaults.baseURL = "http://localhost:8696/api";
 const router = new VueRouter({
   base: '/',
@@ -43,17 +46,26 @@ const router = new VueRouter({
       meta: {
         auth: true
       }
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
     }
   ]
 });
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth) {
+    if (store.state.isLogged) {
+      return next();
+    } else {
+      return next('/login');
+    }
+  }
+  return next();
+})
 Vue.router = router
 
-Vue.use(require('@websanova/vue-auth'), {
-  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
-  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
-  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js')
-});
-
 App.router = Vue.router
+App.store = store
 new Vue(App).$mount('#app');
