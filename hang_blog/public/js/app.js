@@ -18468,7 +18468,7 @@ exports = module.exports = __webpack_require__(58)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -18479,11 +18479,19 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_lazyload__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_lazyload__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_api_js__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_lazyload__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_lazyload__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_api_js__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -18498,16 +18506,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_lazyload___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       nickname: '',
       avatar_image: '',
       cover_image: '',
-      user: [],
+      loaded: false,
       lazyload: {
-        error: '../../../../../hang_blog/public/images/profile_default.png',
-        loading: '../../../../../hang_blog/public/images/loading.gif'
+        error: '/images/profile_default.png',
+        loading: '/images/loading.gif'
       }
     };
   },
@@ -18517,9 +18527,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     fetchUserData: function fetchUserData() {
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["c" /* user */]).then(function (resp) {
-        console.log(resp);
-      }).catch(function (error) {});
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["c" /* user */]).then(function (resp) {
+        _this.nickname = resp.data.user.nickname ? resp.data.user.nickname : '';
+        _this.avatar_image = resp.data.user.avatar_image ? resp.data.user.avatar_image : '';
+        _this.cover_image = resp.data.user.cover_image ? resp.data.user.cover_image : '';
+        _this.loaded = true;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    getImg: function getImg(name, type) {
+      return type + '/' + name;
     }
   }
 });
@@ -18532,24 +18552,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "Profile" } }, [
-      _c("div", { staticClass: "userInfomation" }, [
-        _c("div", { staticClass: "coverImage" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "avatarImage" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "nickname" })
+  return _c("div", { attrs: { id: "Profile" } }, [
+    _c("div", { staticClass: "userInfomation" }, [
+      _c("div", { staticClass: "coverImage" }, [
+        _c("img", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.loaded,
+              expression: "loaded"
+            },
+            {
+              name: "lazy",
+              rawName: "v-lazy",
+              value: {
+                src: _vm.getImg(_vm.cover_image, "cover_images"),
+                loading: _vm.lazyload.loading,
+                error: _vm.lazyload.error
+              },
+              expression:
+                "{src: getImg(cover_image, 'cover_images'), loading: lazyload.loading, error: lazyload.error}"
+            }
+          ]
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "avatarImage" }, [
+        _c("img", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.loaded,
+              expression: "loaded"
+            },
+            {
+              name: "lazy",
+              rawName: "v-lazy",
+              value: {
+                src: _vm.getImg(_vm.avatar_image, "avatar_images"),
+                loading: _vm.lazyload.loading,
+                error: _vm.lazyload.error
+              },
+              expression:
+                "{src: getImg(avatar_image, 'avatar_images'), loading: lazyload.loading, error: lazyload.error}"
+            }
+          ]
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "nickname" }, [
+        _vm._v("\n      " + _vm._s(_vm.nickname) + "\n    ")
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

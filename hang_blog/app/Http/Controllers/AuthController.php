@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JWTAuth;
 use App\User;
-use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Facades\Log;
 use Auth;
 use Validator;
@@ -105,11 +104,9 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        Log::info(json_encode($request));
-        // $user = User::find(Auth::user()->id);
         return response()->json([
             'status' => config('application.response_status')['success'],
-            // 'data' => $user
+            'user' => Auth::user()
         ]);
     }
 
