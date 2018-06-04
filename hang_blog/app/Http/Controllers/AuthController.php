@@ -35,7 +35,7 @@ class AuthController extends Controller
         // store user information to database
         $user = new User;
         $user->email = $request->email;
-        $user->name = $request->first_name . ' ' . $request->last_name;
+        $user->name = $request->name;
         $user->password = bcrypt($request->password);
         $user->nickname = $request->nickname;
         $avatar_image_name = '';
@@ -68,7 +68,7 @@ class AuthController extends Controller
 
         return response([
             'status' => config('application.response_status')['success'],
-            'data' => $user,
+            'user' => $user,
             'errors' => [],
             'token' => $token
            ], 200);
@@ -96,9 +96,11 @@ class AuthController extends Controller
                 'msg' => config('application.invalid_iredentials')
             ], 400);
         }
+
         return response([
             'status' => config('application.response_status')['success'],
-            'token' => $token
+            'token' => $token,
+            'user' => Auth::user(),
         ])->header('Authorization', $token);
     }
 

@@ -10,6 +10,7 @@ import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 import store from './store';
 import Profile from './components/Profile.vue';
+import UpdateProfile from './components/UpdateProfile.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -57,6 +58,11 @@ const router = new VueRouter({
       path: '/profile',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/update_profile',
+      name: 'update_profile',
+      component: UpdateProfile
     }
   ]
 });

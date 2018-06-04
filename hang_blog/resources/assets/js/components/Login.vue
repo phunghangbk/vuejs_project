@@ -44,10 +44,12 @@
           email: this.email,
           password: this.password
         }).then((response) => {
+          console.log(response.data);
           if (response.data.status == 'error') {
             this.infoError = true;
           } else {
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             this.$store.commit('LOGIN_USER');
             this.$router.push('/dashboard');
           }

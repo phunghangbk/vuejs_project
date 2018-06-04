@@ -12,14 +12,8 @@
     </div>
     <form autocomplete="off" @submit.prevent="register" v-if="!success" method="post">
       <div class="form-group" v-bind:class="{'has-error': error && errors.name}">
-        <label for="firstName">Your First Name</label>
-        <input type="text" id="firstName" class="form-control" v-model="first_name" required>
-        <span class="help-block" v-if="error && errors.name">{{errors.name[0]}}</span>
-      </div>
-
-      <div class="form-group" :class="{'has-error': error && errors.name}">
-        <label for="lastName">Your Last Name</label>
-        <input type="text" id="lastName" class="form-control" v-model="last_name" required>
+        <label for="name">Your Full Name</label>
+        <input type="text" id="name" class="form-control" v-model="name" required>
         <span class="help-block" v-if="error && errors.name">{{errors.name[0]}}</span>
       </div>
 
@@ -70,8 +64,7 @@
   export default {
     data(){
       return {
-        first_name: '',
-        last_name: '',
+        name: '',
         email: '',
         nickname: '',
         avatar_image: null,
@@ -91,8 +84,7 @@
       register() {
         var app = this
         axios.post(api.register, {
-          first_name: app.first_name,
-          last_name: app.last_name,
+          name: app.name,
           email: app.email,
           nickname: app.nickname,
           password: app.password,
@@ -105,6 +97,7 @@
             console.log(app.errors);
           } else if (resp.data.status == 'success') {
             localStorage.setItem('token', resp.data.token);
+            localStorage.setItem('user', JSON.stringify(resp.data.user));
             this.$store.commit('LOGIN_USER');
             this.$router.push('/dashboard');
             app.success = true;
