@@ -8,4 +8,5 @@ export const register = url('/auth/register')
 export const logout = url('/auth/logout')
 export const user = url('/auth/user')
 export const update_profile = url('/update_profile')
+export const update_password = url('/update_password')
 

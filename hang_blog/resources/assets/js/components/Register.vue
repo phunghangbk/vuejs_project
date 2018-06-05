@@ -55,7 +55,7 @@
 
       <div class="form-group" :class="{'has-error': (error && custom_errors.password_confirmation) || errors.has('password_confirmation')}">
         <label for="password">Password Confirm</label>
-        <input v-validate="'required|confirmed:password'" name="password_confirmation" type="password" class="form-control" placeholder="Password, Again" data-vv-as="password" v-model="password_confirmation">
+        <input v-validate="{ required: true, is: password }" name="password_confirmation" type="password" class="form-control" placeholder="Password, Again" data-vv-as="password" v-model="password_confirmation">
         <span class="help-block" v-if="error && custom_errors.password_confirmation">{{custom_errors.password_confirmation[0]}}</span>
         <span class="help-block" v-if="errors.has('password_confirmation')">{{errors.first('password_confirmation')}}</span>
       </div>
@@ -73,7 +73,7 @@
   Vue.use(VeeValidate);
 
   export default {
-    data(){
+    data() {
       return {
         name: '',
         email: '',
@@ -112,6 +112,8 @@
             this.$store.commit('LOGIN_USER');
             this.$router.push('/dashboard');
             this.success = true;
+          } else {
+            this.error = true;
           }
         }).catch(error => {
           console.log(error);
@@ -142,9 +144,11 @@
         reader.readAsDataURL(file);
       },
       validateBeforeSubmit() {
-        console.log(this.password)
-        console.log(this.password_confirmation)
-        console.log(this.errors)
+        if (this.errors.items.length <= 0) {
+          this.register();
+        } else {
+          this.error = true;
+        }
       }
     }
   }

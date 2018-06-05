@@ -11,6 +11,7 @@ import Logout from './components/Logout.vue';
 import store from './store';
 import Profile from './components/Profile.vue';
 import UpdateProfile from './components/UpdateProfile.vue';
+import UpdatePassword from './components/UpdatePassword';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -63,6 +64,11 @@ const router = new VueRouter({
       path: '/update_profile',
       name: 'update_profile',
       component: UpdateProfile
+    },
+    {
+      path: '/update_password',
+      name: 'update_password',
+      component: UpdatePassword
     }
   ]
 });

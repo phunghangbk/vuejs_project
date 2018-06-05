@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
         ];
         $messages = [
-            'password.regex' => 'Password needs to contain at least one uppercase, lowercase letters and one number'
+            'password.regex' => config('application.password_regex')
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 

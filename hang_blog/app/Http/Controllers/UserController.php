@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use JWTAuth;
@@ -30,10 +31,6 @@ class UserController extends Controller
             $user = Auth::user();
             if (! empty($request->name)) {
                 $user->name = $request->name;
-            }
-
-            if (! empty($request->password)) {
-                $user->password = bcrypt($request->password);
             }
 
             if (! empty($request->nickname)) {
@@ -71,8 +68,50 @@ class UserController extends Controller
             \Log::error($e->getMessage());
             return response()->json([
                 'status' => config('application.response_status')['error'],
-                'errors' => $e->getMessage()
+                'errors' => ['error' => $e->getMessage()]
             ]);
+        }
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        $hashedPassword = $user->password;
+        if (empty($request->old_password) || ! Hash::check($request->old_password, $hashedPassword)) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['old_password' => config('application.old_password_invalid')]
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'new_password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+            ]);
+
+            $messages = [
+                'new_password.regex' => config('application.password_regex')
+            ];
+
+            if ($validator->fails()) {
+                return response([
+                    'status' => config('application.response_status')['error'],
+                    'errors' => $validator->errors()
+                ]);
+            }
+
+            $user->password = bcrypt($request->new_password);
+            try {
+                $user->save();
+                return response()->json([
+                    'user' => $user,
+                    'status' => config('application.response_status')['success']
+                ]);
+            } catch (Exception $e) {
+                \Log::error($e->getMessage());
+                return response()->json([
+                    'status' => config('application.response_status')['error'],
+                    'errors' => ['error' => $e->getMessage()]
+                ]);
+            }
         }
     }
 }
