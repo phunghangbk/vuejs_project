@@ -40,12 +40,6 @@
         <input type="file" id="coverImage" class="form-control">
         <span class="help-block" v-if="error && errors.cover_image">{{errors.cover_image[0]}}</span>
       </div>
-
-      <div class="form-group" :class="{'has-error': error && errors.password}">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" v-model="password" required>
-        <span class="help-block" v-if="error && errors.password">{{errors.password[0]}}</span>
-      </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
   </div>
@@ -61,17 +55,18 @@
         nickname: '',
         avatar_image: null,
         cover_image: null,
-        password: '',
         error: false,
         errors: {},
         success: false,
-        user: {}
+        user: {},
+        change_avatar: false,
+        change_cover: false
       };
     },
 
     beforeCreate () {
       if (! this.$store.state.isLogged) {
-        this.router.push('/login')
+        this.$router.push('/login')
       }
     },
 
@@ -82,33 +77,31 @@
           this.user = resp.data.user;
           this.name = this.user.name;
           this.nickname = this.user.nickname;
-          this.avatar_image = this.user.avatar_image;
-          this.cover_image = this.user.cover_image;
-          console.log(this.user);
+          this.avatar_image = '/avatar_images/' + this.user.avatar_image;
+          this.cover_image = '/cover_images/' + this.user.cover_image;
         }).catch(error =>{
           console.log(error);
         });
       } else {
         this.name = this.user.name;
         this.nickname = this.user.nickname;
-        this.avatar_image = this.user.avatar_image;
-        this.cover_image = this.user.cover_image;
+        this.avatar_image = '/avatar_images/' + this.user.avatar_image;
+        this.cover_image = '/cover_images/' + this.user.cover_image;
       }
     },
 
     methods: {
       update() {
         axios.post(api.update_profile, {
-          name: this.name,
-          nickname: this.nickname,
-          password: this.password,
-          avatar_image: this.avatar_image,
-          cover_image: this.cover_image
+          name: this.name == this.user.name ? '' : this.name,
+          nickname: this.nickname == this.user.nickname ? '' : this.nickname,
+          avatar_image: this.change_avatar ? this.avatar_image : '',
+          cover_image: this.change_cover ? this.cover_image : ''
         }).then(resp => {
+          console.log(resp);
           if (resp.data.status == 'error') {
             this.error = true;
             this.errors = resp.data.errors;
-            console.log(this.errors);
           } else if (resp.data.status == 'success') {
             localStorage.setItem('user', JSON.stringify(resp.data.user));
             this.$router.push('/dashboard');
@@ -122,6 +115,7 @@
       },
       onAvartaImageChange(event) {
         let files = event.target.files || event.dataTransfer.files;
+        this.change_avatar = true;
         if (!files.length) {
           return;
         }
@@ -129,6 +123,7 @@
       },
       onCoverImageChange(event) {
         let coverfiles = event.target.files || event.dataTransfer.files;
+        this.change_cover = true;
         if (!coverfiles.length) {
           return;
         }

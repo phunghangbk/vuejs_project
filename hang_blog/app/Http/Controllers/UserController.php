@@ -27,9 +27,9 @@ class UserController extends Controller
             ]);
         }
         try {
-            $user = auth()->user();
-            if (! empty($request->first_name) || ! empty($request->last_name)) {
-                $user->name = $request->first_name . ' ' . $request->last_name;
+            $user = Auth::user();
+            if (! empty($request->name)) {
+                $user->name = $request->name;
             }
 
             if (! empty($request->password)) {
@@ -70,7 +70,8 @@ class UserController extends Controller
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return response()->json([
-                'status' => config('application.response_status')['error']
+                'status' => config('application.response_status')['error'],
+                'errors' => $e->getMessage()
             ]);
         }
     }
