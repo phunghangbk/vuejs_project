@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Support\Facades\Log;
 use Auth;
 use Validator;
+use App\VerifyUser;
+use Mail;
+use App\Mail\VerifyMail;
 
 class AuthController extends Controller
 {
@@ -31,47 +34,55 @@ class AuthController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
+        try {
+            // store user information to database
+            $user = new User;
+            $user->email = $request->email;
+            $user->name = $request->name;
+            $user->password = bcrypt($request->password);
+            $user->nickname = $request->nickname;
+            $avatar_image_name = '';
+            $cover_image_name = '';
 
-        // store user information to database
-        $user = new User;
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->password = bcrypt($request->password);
-        $user->nickname = $request->nickname;
-        $avatar_image_name = '';
-        $cover_image_name = '';
+            //avatar image
+            if ($request->avatar_image !== '' && $request->avatar_image !== null) {
+                $avatar_image_name = time().'.' . explode('/', explode(':', substr($request->avatar_image, 0, strpos($request->avatar_image, ';')))[1])[1];
+                $avatar_image = \Image::make($request->avatar_image);
+                $avatar_image->resize(720,720);
+                $avatar_image->save(public_path('avatar_images/').$avatar_image_name);
+            }
+            
 
-        //avatar image
-        if ($request->avatar_image !== '' && $request->avatar_image !== null) {
-            $avatar_image_name = time().'.' . explode('/', explode(':', substr($request->avatar_image, 0, strpos($request->avatar_image, ';')))[1])[1];
-            $avatar_image = \Image::make($request->avatar_image);
-            $avatar_image->resize(720,720);
-            $avatar_image->save(public_path('avatar_images/').$avatar_image_name);
+            //cover image
+            if ($request->cover_image !== '' && $request->cover_image !== null) {
+                $cover_image_name = time().'.' . explode('/', explode(':', substr($request->cover_image, 0, strpos($request->cover_image, ';')))[1])[1];
+                $cover_image = \Image::make($request->cover_image);
+                $cover_image->resize(1000, 1000);
+                $cover_image->save(public_path('cover_images/').$cover_image_name);
+            }
+
+            $user->avatar_image = $avatar_image_name;
+            $user->cover_image = $cover_image_name;
+            $user->save();
+
+            $verifyUser = VerifyUser::create([
+                'user_id' => $user->user_id,
+                'token' => str_random(40)
+            ]);
+
+            Mail::to($user->email)->send(new VerifyMail($user));
+
+            return response([
+                'status' => config('application.response_status')['success'],
+                'user' => $user,
+                'errors' => [],
+               ], 200);
+        } catch (\Exception $e) {
+            return response([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['error' => $e->getMessage()],
+               ]);
         }
-        
-
-        //cover image
-        if ($request->cover_image !== '' && $request->cover_image !== null) {
-            $cover_image_name = time().'.' . explode('/', explode(':', substr($request->cover_image, 0, strpos($request->cover_image, ';')))[1])[1];
-            $cover_image = \Image::make($request->cover_image);
-            $cover_image->resize(1000, 1000);
-            $cover_image->save(public_path('cover_images/').$cover_image_name);
-        }
-
-        $user->avatar_image = $avatar_image_name;
-        $user->cover_image = $cover_image_name;
-        $user->save();
-
-        // create JWT token
-        Log::info($user);
-        $token = JWTAuth::fromUser($user);
-
-        return response([
-            'status' => config('application.response_status')['success'],
-            'user' => $user,
-            'errors' => [],
-            'token' => $token
-           ], 200);
     }
 
     public function login(Request $request)
@@ -126,5 +137,24 @@ class AuthController extends Controller
             'status' => config('application.response_status')['success'],
             'msg' => 'Logged out Successfully.'
         ], 200);
+    }
+
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+        if(isset($verifyUser) ){
+            $user = $verifyUser->user;
+            if(!$user->verified) {
+                $verifyUser->user->verified = 1;
+                $verifyUser->user->save();
+                $status = config('application.verified_email');
+            }else{
+                $status = config('application.already_verified_email');
+            }
+        }else{
+            return redirect('/login')->with('warning', config('application.not_verified_email'));
+        }
+ 
+        return redirect('/login')->with('status', $status);
     }
 }

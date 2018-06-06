@@ -102,15 +102,14 @@
           avatar_image: this.avatar_image,
           cover_image: this.cover_image
         }).then(resp => {
+          console.log(resp);
           if (resp.data.status == 'error') {
             this.error = true;
             this.custom_errors = resp.data.errors;
             console.log(this.custom_errors);
           } else if (resp.data.status == 'success') {
-            localStorage.setItem('token', resp.data.token);
             localStorage.setItem('user', JSON.stringify(resp.data.user));
-            this.$store.commit('LOGIN_USER');
-            this.$router.push('/dashboard');
+            this.$router.push('/user_verify');
             this.success = true;
           } else {
             this.error = true;

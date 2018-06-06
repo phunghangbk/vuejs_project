@@ -35,4 +35,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function verifyUser()
+    {
+        return $this->hasOne('App\VerifyUser', 'user_id');
+    }
 }

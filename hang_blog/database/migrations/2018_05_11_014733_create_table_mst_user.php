@@ -22,6 +22,7 @@ class CreateTableMstUser extends Migration
             $table->string('avatar_image')->nullable();
             $table->string('cover_image')->nullable();
             $table->integer('roles')->default(1); // 1: user, 2: admin
+            $table->boolean('verified')->default(false);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
