@@ -142,19 +142,28 @@ class AuthController extends Controller
     public function verifyUser($token)
     {
         $verifyUser = VerifyUser::where('token', $token)->first();
-        if(isset($verifyUser) ){
+        $authentication_token = null;
+        if (isset($verifyUser) ){
             $user = $verifyUser->user;
-            if(!$user->verified) {
+            if(! $user->verified) {
+                $authentication_token = JWTAuth::fromUser($user);
                 $verifyUser->user->verified = 1;
                 $verifyUser->user->save();
-                $status = config('application.verified_email');
-            }else{
-                $status = config('application.already_verified_email');
+                $message = config('application.verified_email');
+            } else {
+                $message = config('application.already_verified_email');
             }
-        }else{
-            return redirect('/login')->with('warning', config('application.not_verified_email'));
+
+            return response([
+                'status' => config('application.response')['success'],
+                'message' => $message,
+                'authentication_token' => $authentication_token
+            ]);
         }
- 
-        return redirect('/login')->with('status', $status);
+        return response([
+            'status' => config('application.response')['error'],
+            'message' => config('application.not_verified_email'),
+            'authentication_token' => null
+        ]);
     }
 }

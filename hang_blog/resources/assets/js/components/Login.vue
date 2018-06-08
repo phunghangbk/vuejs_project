@@ -1,18 +1,24 @@
 <template>
-  <div>
-    <div class="alert alert-danger" v-if="infoError">
-      <p>There was an error, unable to sign in with those credentials.</p>
-    </div>
-    <form autocomplete="off" @submit.prevent="login" method="post">
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" v-model="password" required>
-      </div>
-      <button type="submit" class="btn btn-default">Sign in</button>
+  <div id="login">
+    <form id="msform" autocomplete="off" @submit.prevent="login" method="post">
+      <ul id="progressbar">
+        
+      </ul>
+      <fieldset>
+        <h2 class="fs-title">Login</h2>
+        <div>
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="user@example.com" v-model="email" required>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="password" required>
+        </div>
+        <div class="alert-danger" v-if="infoError">
+          <p>There was an error, unable to sign in with those credentials.</p>
+        </div>
+        <button type="submit" class="action-button">Sign in</button>
+      </fieldset>
     </form>
   </div>
 </template>
@@ -62,3 +68,103 @@
     }
   }
 </script>
+
+<style scoped>
+  @import url(https://fonts.googleapis.com/css?family=Montserrat);
+  #login {
+    height: 100%;
+    /*Image only BG fallback*/
+    
+    /*background = gradient + image pattern combo*/
+    background: 
+      linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+  }
+
+  #msform {
+    width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
+  }
+
+  #msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 100% 10%;
+    margin-top: 50%;
+    
+    /*stacking fieldsets above each other*/
+    position: relative;
+  }
+
+  /*Hide all except first fieldset*/
+  #msform fieldset:not(:first-of-type) {
+    display: none;
+  }
+  /*inputs*/
+  #msform input, #msform textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+  }
+  /*buttons*/
+  #msform .action-button {
+    width: 100px;
+    background: #27AE60;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+  }
+  #msform .action-button:hover, #msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+  }
+
+  .fs-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+  }
+
+  body {
+    font-family: montserrat, arial, verdana;
+  }
+
+  label {
+    float: left;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin: 5px;
+  }
+
+  #progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+    padding-left: 30px;
+    padding-top: 20px;
+    width: 100%;
+  }
+  .alert-danger {
+    text-align: left;
+    font-size: 13px;
+    color: red;
+  }
+</style>

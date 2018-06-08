@@ -16,4 +16,4 @@ Route::get('/', function () {
 });
 Route::any('{all}', function () { return view('welcome'); })->where(['all' => '.*']);
 Route::post('auth/register', 'AuthController@register');
-Route::get('/user/verify/{token}', 'AuthController@verifyUser');
+Route::get('user/verify/{token}', 'AuthController@verifyUser');

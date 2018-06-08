@@ -11,8 +11,10 @@ import Logout from './components/Logout.vue';
 import store from './store';
 import Profile from './components/Profile.vue';
 import UpdateProfile from './components/UpdateProfile.vue';
-import UpdatePassword from './components/UpdatePassword';
-import UserVerify from './components/UserVerify';
+import UpdatePassword from './components/UpdatePassword.vue';
+import UserVerify from './components/UserVerify.vue';
+import VerificationEmail from './components/VerificationEmail.vue';
+
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -59,22 +61,43 @@ const router = new VueRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/update_profile',
       name: 'update_profile',
-      component: UpdateProfile
+      component: UpdateProfile,
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/update_password',
       name: 'update_password',
-      component: UpdatePassword
+      component: UpdatePassword,
+      meta: {
+        auth: true
+      }
     },
     {
-      path: 'user_verify',
+      path: '/user_verify',
       name: 'user_verify',
-      component: UserVerify
+      component: UserVerify,
+      meta: {
+        auth: false
+      }
+    },
+    {
+      path: '/user/verify/:token',
+      name: 'verification_email',
+      component: VerificationEmail,
+      props: true,
+      meta: {
+        auth: false
+      }
     }
   ]
 });
