@@ -1,53 +1,47 @@
 <template>
-  <div>
-    <div class="alert alert-danger" v-if="error && !success">
-      <p>
-        There was an error, unable to complete update your profile.
-      </p>
-    </div> 
-    <div class="alert alert-success" v-if="success">
-      <p>
-        Your profile has updated successfull.
-      </p>
+  <div class="container-fluid">
+    <profile></profile>
+    <link rel="stylesheet" type="text/css" href="/css/users.css">
+    <div class="row justify-content-center">
+      <div id="updateprofile" class="col-xs-12 col-sm-6 col-lg-4">
+        <form id="msform" autocomplete="off" @submit.prevent="update" v-if="!success" method="post">
+          <fieldset>
+            <h2 class="fs-title">Update Your Profile</h2>
+            <div :class="{'has-error': error && custom_errors.name}">
+              <label for="name">Your Full Name</label>
+              <input type="text" id="name" class="form-control" v-model="name" required>
+              <span class="help-block" v-if="error && custom_errors.name">{{custom_errors.name[0]}}</span>
+            </div>
+
+            <div :class="{'has-error': error && custom_errors.nickname}">
+              <label for="nickname">Nickname</label>
+              <input type="text" id="nickname" class="form-control" v-model="nickname">
+              <span class="help-block" v-if="error && custom_errors.nickname">{{custom_errors.nickname[0]}}</span>
+            </div>
+
+            <div class="alert alert-danger" v-if="error && !success">
+              <p>
+                There was an error, unable to complete update your profile.
+              </p>
+            </div>
+            <button type="submit" class="next action-button">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+      <div class="alert alert-success" v-if="success">
+        <p>
+          Your profile has updated successfull.
+        </p>
+      </div>
     </div>
-    <form autocomplete="off" @submit.prevent="update" v-if="!success" method="post">
-      <div class="form-group" :class="{'has-error': error && custom_errors.name}">
-        <label for="name">Your Full Name</label>
-        <input type="text" id="name" class="form-control" v-model="name" required>
-        <span class="help-block" v-if="error && custom_errors.name">{{custom_errors.name[0]}}</span>
-      </div>
-
-      <div class="form-group" :class="{'has-error': error && custom_errors.nickname}">
-        <label for="nickname">Nickname</label>
-        <input type="text" id="nickname" class="form-control" v-model="nickname">
-        <span class="help-block" v-if="error && custom_errors.nickname">{{custom_errors.nickname[0]}}</span>
-      </div>
-
-      <div class="form-group" :class="{'has-error': error && custom_errors.avarta_image}" @change="onAvartaImageChange">
-        <label for="avartaImage">Avarta Image</label>
-        <div class="col-md-3" v-if="avatar_image">
-          <img :src="avatar_image" class="img-responsive" height="70" width="90">
-        </div>
-        <input type="file" id="avartaImage" class="form-control">
-        <span class="help-block" v-if="error && custom_errors.avatar_image">{{custom_errors.avatar_image[0]}}</span>
-      </div>
-
-      <div class="form-group" :class="{'has-error': error && custom_errors.cover_image}" @change="onCoverImageChange">
-        <label for="coverImage">Cover Image</label>
-        <div class="col-md-3" v-if="cover_image">
-          <img :src="cover_image" class="img-responsive" height="70" width="90">
-        </div>
-        <input type="file" id="coverImage" class="form-control">
-        <span class="help-block" v-if="error && custom_errors.cover_image">{{custom_errors.cover_image[0]}}</span>
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
   import * as api from '../store/api.js'
+  import Profile from './Profile'
+
   export default {
     data(){
       return {
@@ -141,11 +135,65 @@
         };
         reader.readAsDataURL(file);
       }
+    },
+    components: {
+      Profile
     }
   }
 </script>
 
+<style scoped>
+.row {
+  background: white;
+}
+label {
+  float: left;
+  padding: 5px;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #2C3E50;
+}
 
+span {
+  float: left;
+  font-size: 13px;
+  color: red;
+  width: 100%;
+  display: flex;
+}
+
+.alert-danger {
+  text-align: left;
+  font-size: 13px;
+  color: red;
+}
+
+.uploadImage {
+  width: 100%; 
+  height: 50px; 
+  font-size: 0px; 
+  margin-bottom: 1rem; 
+  background-color: #0ebf67; 
+  background-image: url(https://abs.twimg.com/a/1498195419/img/t1/highline/empty_state/owner_empty_avatar.png); 
+  background-position: 50% center;
+  border-radius: 3px;
+  background-repeat: no-repeat;
+}
+
+#msform > fieldset > div > span.label {
+  float: left;
+  padding: 5px;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #2C3E50;
+}
+
+.image {
+  float: left;
+  text-align: left;
+  width: 100%;
+}
+</style>
 
 
 

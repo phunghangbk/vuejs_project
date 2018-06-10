@@ -1,19 +1,23 @@
 <template>
-  <div id="userverify">
-    <div class="content">
-      <ul id="progressbar">
-        <li>Account Setup</li>
-        <li class="active">Send Email Verification</li>
-        <li>Vericate Email Address</li>
-      </ul>
-      <div class="inline">
-        <div class="thankyou">
-          <h2>Thankyou for registration!</h2>
-        </div>
-        <div class="sentence">
-          We've sent an email to {{user.email}}.
-          Please click to the link in that message 
-          to active your account.
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div id="userverify" class="col-xs-12 col-sm-6 col-lg-4">
+        <div class="content">
+          <ul id="progressbar">
+            <li class="active">Account Setup</li>
+            <li class="active">Send Email Verification</li>
+            <li>Vericate Email Address</li>
+          </ul>
+          <div class="inline">
+            <div class="thankyou">
+              <h2>Thankyou for registration!</h2>
+            </div>
+            <div class="sentence">
+              We've sent an email to {{email}}.
+              Please click to the link in that message 
+              to active your account.
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,11 +28,17 @@
   export default {
     data() {
       return {
-        user: null
+        user: null,
+        email: null,
       }
     },
     created() {
       this.user = JSON.parse(localStorage.getItem('user'));
+      if (this.user == null || typeof this.user == 'undefined') {
+        this.email = '(you must input your information before)'
+      } else {
+        this.email = this.user.email
+      }
     }
   }
 </script>
@@ -36,14 +46,13 @@
 <style scoped>
 * {margin: 0; padding: 0;}
 
-#userverify {
+.row {
   height: 100%;
   background: 
   linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
 }
 
 .content {
-  width: 400px;
   margin: 50px auto;
   text-align: center;
   position: relative;
@@ -58,7 +67,6 @@
   padding: 20px 30px;
   box-sizing: border-box;
   width: 100%;
-  margin: 0 10%;
   position: relative;
 }
 

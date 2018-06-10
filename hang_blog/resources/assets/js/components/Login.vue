@@ -1,25 +1,28 @@
 <template>
-  <div id="login">
-    <form id="msform" autocomplete="off" @submit.prevent="login" method="post">
-      <ul id="progressbar">
-        
-      </ul>
-      <fieldset>
-        <h2 class="fs-title">Login</h2>
-        <div>
-          <label for="email">E-mail</label>
-          <input type="email" id="email" placeholder="user@example.com" v-model="email" required>
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-        <div class="alert-danger" v-if="infoError">
-          <p>There was an error, unable to sign in with those credentials.</p>
-        </div>
-        <button type="submit" class="action-button">Sign in</button>
-      </fieldset>
-    </form>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div id="login" class="col-xs-12 col-sm-6 col-lg-4">
+        <form id="msform" autocomplete="off" @submit.prevent="login" method="post">
+          <ul id="progressbar">
+          </ul>
+          <fieldset>
+            <h2 class="fs-title">Login</h2>
+            <div>
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="user@example.com" v-model="email" required>
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input type="password" id="password" v-model="password" required>
+            </div>
+            <div class="alert-danger" v-if="infoError">
+              <p>{{message}}</p>
+            </div>
+            <button type="submit" class="action-button">Sign in</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -34,7 +37,8 @@
         loader: false,
         infoError: false,
         email: '',
-        password: ''
+        password: '',
+        message: 'There was an error, unable to sign in with those credentials.'
       }
     },
     beforeCreate () {
@@ -50,14 +54,14 @@
           email: this.email,
           password: this.password
         }).then((response) => {
-          console.log(response.data);
-          if (response.data.status == 'error') {
-            this.infoError = true;
-          } else {
+          if (response.data.status == 'success') {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             this.$store.commit('LOGIN_USER');
             this.$router.push('/dashboard');
+          } else {
+            this.infoError = true;
+            this.message = response.data.msg;
           }
         }, () => {
           this.infoError = true
@@ -71,17 +75,13 @@
 
 <style scoped>
   @import url(https://fonts.googleapis.com/css?family=Montserrat);
-  #login {
+  .row {
     height: 100%;
-    /*Image only BG fallback*/
-    
-    /*background = gradient + image pattern combo*/
     background: 
       linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
   }
 
   #msform {
-    width: 400px;
     margin: 50px auto;
     text-align: center;
     position: relative;
@@ -95,10 +95,6 @@
     padding: 20px 30px;
     box-sizing: border-box;
     width: 100%;
-    margin: 100% 10%;
-    margin-top: 50%;
-    
-    /*stacking fieldsets above each other*/
     position: relative;
   }
 

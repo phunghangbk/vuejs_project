@@ -1,86 +1,90 @@
 <template>
-  <div id="registration">
-    <form id="msform" autocomplete="off" @submit.prevent="validateBeforeSubmit" v-if="!success" method="post">
-      <ul id="progressbar">
-        <li class="active">Account Setup</li>
-        <li>Send Email Verification</li>
-        <li>Vericate Email Address</li>
-      </ul>
-      <fieldset>
-        <h2 class="fs-title">Create your account</h2>
-        <h3 class="fs-subtitle">This is step 1</h3>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div id="registration" class="col-xs-12 col-sm-6 col-lg-4">
+        <form id="msform" autocomplete="off" @submit.prevent="validateBeforeSubmit" v-if="!success" method="post">
+          <ul id="progressbar">
+            <li class="active">Account Setup</li>
+            <li>Send Email Verification</li>
+            <li>Vericate Email Address</li>
+          </ul>
+          <fieldset>
+            <h2 class="fs-title">Create your account</h2>
+            <h3 class="fs-subtitle">This is step 1</h3>
 
-        <div :class="{'has-error': error && custom_errors.name}">
-          <label for="name">Your Full Name</label>
-          <input type="text" id="name" v-model="name" placeholder="Name" required>
-          <span class="help-block" v-if="error && custom_errors.name">{{custom_errors.name[0]}}</span>
-        </div>
-
-        <div :class="{'has-error': error && custom_errors.email}">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="user@example.com" v-model="email" required>
-          <span class="help-block" v-if="error && custom_errors.email">{{custom_errors.email[0]}}</span>
-        </div>
-
-        <div :class="{'has-error': error && custom_errors.nickname}">
-          <label for="nickname">Nickname</label>
-          <input type="text" id="nickname" v-model="nickname" placeholder="Nickname">
-          <span class="help-block" v-if="error && custom_errors.nickname">{{custom_errors.nickname[0]}}</span>
-        </div>
-
-        <div :class="{'has-error': error && custom_errors.avarta_image}" @change="onAvartaImageChange">
-          <span class="label">Avatar Image</span>
-          <span>
-            <div class="image" v-if="avatar_image">
-              <img :src="avatar_image" class="img-responsive" height="70" width="90">
+            <div :class="{'has-error': error && custom_errors.name}">
+              <label for="name">Your Full Name</label>
+              <input type="text" id="name" v-model="name" placeholder="Name" required>
+              <span class="help-block" v-if="error && custom_errors.name">{{custom_errors.name[0]}}</span>
             </div>
-            <label class="uploadImage">
-              <input type="file" accept="image/jpeg, image/png" multiple="" size="60" id="avartaImage">
-            </label>
-            <span class="help-block" v-if="error && custom_errors.avatar_image">{{custom_errors.avatar_image[0]}}</span>
-          </span>
-          
-        </div>
 
-        <div :class="{'has-error': error && custom_errors.cover_image}" @change="onCoverImageChange">
-          <span class="label">Cover Image</span>
-          <span>
-            <div class="image" v-if="cover_image">
-              <img :src="cover_image" class="img-responsive" height="70" width="90">
+            <div :class="{'has-error': error && custom_errors.email}">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="user@example.com" v-model="email" required>
+              <span class="help-block" v-if="error && custom_errors.email">{{custom_errors.email[0]}}</span>
             </div>
-            <label class="uploadImage">
-              <input type="file" id="coverImage">
-            </label>
-            <span class="help-block" v-if="error && custom_errors.cover_image">{{custom_errors.cover_image[0]}}</span>
-          </span>
-        </div>
-          
-        <div :class="{'has-error': (error && custom_errors.password) || errors.has('password')}">
-          <label for="password">Password</label>
-          <input v-validate="'required|min:6|regex:^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+$'" name="password" id="password" type="password" v-model="password" placeholder="Password">
-          <span class="help-block" v-if="errors.has('password')">{{errors.first('password')}}</span>
-        </div>
 
-        <div :class="{'has-error': (error && custom_errors.password_confirmation) || errors.has('password_confirmation')}">
-          <label for="password">Password Confirm</label>
-          <input v-validate="{ required: true, is: password }" name="password_confirmation" type="password" placeholder="Password, Again" data-vv-as="password" v-model="password_confirmation">
-          <span class="help-block" v-if="error && custom_errors.password_confirmation">{{custom_errors.password_confirmation[0]}}</span>
-          <span class="help-block" v-if="errors.has('password_confirmation')">{{errors.first('password_confirmation')}}</span>
-        </div>
+            <div :class="{'has-error': error && custom_errors.nickname}">
+              <label for="nickname">Nickname</label>
+              <input type="text" id="nickname" v-model="nickname" placeholder="Nickname">
+              <span class="help-block" v-if="error && custom_errors.nickname">{{custom_errors.nickname[0]}}</span>
+            </div>
 
-        <div class="alert alert-danger" v-if="error && !success">
-          <p>
-            There was an error, unable to complete registration.
-          </p>
-        </div>
-        <div class="alert alert-success" v-if="success">
-          <p>
-            Registration completed. You can now <router-link :to="{name: 'login'}">sign in.</router-link>
-          </p>
-        </div>
-        <button type="submit" class="next action-button">Submit</button>
-      </fieldset>
-    </form>
+            <div :class="{'has-error': error && custom_errors.avarta_image}" @change="onAvartaImageChange">
+              <span class="label">Avatar Image</span>
+              <span>
+                <div class="image" v-if="avatar_image">
+                  <img :src="avatar_image" class="img-responsive" height="70" width="90">
+                </div>
+                <label class="uploadImage">
+                  <input type="file" accept="image/jpeg, image/png" multiple="" size="60" id="avartaImage">
+                </label>
+                <span class="help-block" v-if="error && custom_errors.avatar_image">{{custom_errors.avatar_image[0]}}</span>
+              </span>
+              
+            </div>
+
+            <div :class="{'has-error': error && custom_errors.cover_image}" @change="onCoverImageChange">
+              <span class="label">Cover Image</span>
+              <span>
+                <div class="image" v-if="cover_image">
+                  <img :src="cover_image" class="img-responsive" height="70" width="90">
+                </div>
+                <label class="uploadImage">
+                  <input type="file" id="coverImage">
+                </label>
+                <span class="help-block" v-if="error && custom_errors.cover_image">{{custom_errors.cover_image[0]}}</span>
+              </span>
+            </div>
+              
+            <div :class="{'has-error': (error && custom_errors.password) || errors.has('password')}">
+              <label for="password">Password</label>
+              <input v-validate="'required|min:6|regex:^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+$'" name="password" id="password" type="password" v-model="password" placeholder="Password">
+              <span class="help-block" v-if="errors.has('password')">{{errors.first('password')}}</span>
+            </div>
+
+            <div :class="{'has-error': (error && custom_errors.password_confirmation) || errors.has('password_confirmation')}">
+              <label for="password">Password Confirm</label>
+              <input v-validate="{ required: true, is: password }" name="password_confirmation" type="password" placeholder="Password, Again" data-vv-as="password" v-model="password_confirmation">
+              <span class="help-block" v-if="error && custom_errors.password_confirmation">{{custom_errors.password_confirmation[0]}}</span>
+              <span class="help-block" v-if="errors.has('password_confirmation')">{{errors.first('password_confirmation')}}</span>
+            </div>
+
+            <div class="alert alert-danger" v-if="error && !success">
+              <p>
+                There was an error, unable to complete registration.
+              </p>
+            </div>
+            <div class="alert alert-success" v-if="success">
+              <p>
+                Registration completed. You can now <router-link :to="{name: 'login'}">sign in.</router-link>
+              </p>
+            </div>
+            <button type="submit" class="next action-button">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -177,7 +181,7 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 * {margin: 0; padding: 0;}
 
-#registration {
+.row {
   height: 100%;
   background: 
     linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
@@ -188,7 +192,6 @@ body {
 }
 /*form styles*/
 #msform {
-  width: 400px;
   margin: 50px auto;
   text-align: center;
   position: relative;
@@ -201,7 +204,6 @@ body {
   padding: 20px 30px;
   box-sizing: border-box;
   width: 100%;
-  margin: 0 10%;
   position: relative;
 }
 #msform fieldset:not(:first-of-type) {
@@ -260,9 +262,7 @@ body {
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
-  /*CSS counters to number the steps*/
   counter-reset: step;
-  padding-left: 30px;
   padding-top: 20px;
   width: 100%;
 }
@@ -290,13 +290,12 @@ body {
 /*progressbar connectors*/
 #progressbar li:after {
   content: '';
-  width: 100%;
+  width: 89%;
   height: 2px;
   background: white;
   position: absolute;
-  left: -50%;
+  left: -43%;
   top: 9px;
-  z-index: -1; /*put it behind the numbers*/
 }
 #progressbar li:first-child:after {
   /*connector not needed before the first step*/
@@ -340,6 +339,7 @@ span {
   background-image: url(https://abs.twimg.com/a/1498195419/img/t1/highline/empty_state/owner_empty_avatar.png); 
   background-position: 50% center;
   border-radius: 3px;
+  background-repeat: no-repeat;
 }
 
 #msform > fieldset > div > span.label {

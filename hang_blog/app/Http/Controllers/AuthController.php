@@ -98,6 +98,22 @@ class AuthController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
+        $user = User::where('email', $request->email)->first();
+        if (! isset($user)) {
+            return response([
+                'status' => config('application.response_status')['error'],
+                'error' => config('application.invalid_iredentials'),
+                'msg' => config('application.invalid_iredentials')
+            ]);
+        }
+
+        if ($user->verified == 0) {
+            return response([
+                'status' => config('application.response_status')['error'],
+                'error' => config('application.need_virified_email'),
+                'msg' => config('application.need_virified_email')
+            ]);
+        }
 
         $credentials = $request->only('email', 'password');
         if ( ! $token = JWTAuth::attempt($credentials)) {
@@ -105,7 +121,7 @@ class AuthController extends Controller
                 'status' => config('application.response_status')['error'],
                 'error' => config('application.invalid_iredentials'),
                 'msg' => config('application.invalid_iredentials')
-            ], 400);
+            ]);
         }
 
         return response([
@@ -155,13 +171,13 @@ class AuthController extends Controller
             }
 
             return response([
-                'status' => config('application.response')['success'],
+                'status' => config('application.response_status')['success'],
                 'message' => $message,
                 'authentication_token' => $authentication_token
             ]);
         }
         return response([
-            'status' => config('application.response')['error'],
+            'status' => config('application.response_status')['error'],
             'message' => config('application.not_verified_email'),
             'authentication_token' => null
         ]);

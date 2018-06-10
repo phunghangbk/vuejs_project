@@ -1,39 +1,37 @@
 <template>
   <div id="app">
-    <div class="header">
-      <nav>
-        <ul class="header_right">
-          <li>
-            <router-link :to="{ name: 'home' }">
-              <div class="button_home">
-                Home
-              </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Blog</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link :to="{ name: 'home' }" class="nav-link">
+              Home
+              <span class="sr-only">(current)</span>
             </router-link>
           </li>
-          <li v-if="! $store.state.isLogged">
-            <router-link :to="{ name: 'login' }">
-              <div class="button_login">
-                Login
-              </div>
-            </router-link>
-          </li>                    
-          <li v-if="! $store.state.isLogged">
-            <router-link :to="{ name: 'register' }">
-              <div class="button_register">
-                Register
-              </div>
+          <li class="nav-item" v-if="! $store.state.isLogged">
+            <router-link :to="{ name: 'register' }" class="nav-link">
+              Register
             </router-link>
           </li>
-          <li v-if="$store.state.isLogged">
-            <router-link :to="{ name: 'logout' }">
-              <div class="button_logout">
-                Logout
-              </div>
+          <li class="nav-item" v-if="! $store.state.isLogged">
+            <router-link :to="{ name: 'login' }" class="nav-link">
+              Login
+            </router-link>
+          </li>
+          <li class="nav-item" v-if="$store.state.isLogged">
+            <router-link :to="{ name: 'logout' }" class="nav-link">
+              Logout
             </router-link>
           </li>
         </ul>
-      </nav>
-    </div>
+      </div>
+    </nav>
     <div class="panel-body">
       <router-view></router-view>
     </div>

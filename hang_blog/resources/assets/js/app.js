@@ -14,7 +14,8 @@ import UpdateProfile from './components/UpdateProfile.vue';
 import UpdatePassword from './components/UpdatePassword.vue';
 import UserVerify from './components/UserVerify.vue';
 import VerificationEmail from './components/VerificationEmail.vue';
-
+import ResetPasswordEmailForm from './components/ResetPasswordEmailForm.vue';
+import ResetPassword from './components/ResetPassword.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -94,6 +95,23 @@ const router = new VueRouter({
       path: '/user/verify/:token',
       name: 'verification_email',
       component: VerificationEmail,
+      props: true,
+      meta: {
+        auth: false
+      }
+    },
+    {
+      path: '/password/reset',
+      name: 'password_reset_form',
+      component: ResetPasswordEmailForm,
+      meta: {
+        auth: false
+      }
+    },
+    {
+      path: '/password/reset/:token',
+      name: 'password_reset_action',
+      component: ResetPassword,
       props: true,
       meta: {
         auth: false
