@@ -37,6 +37,7 @@
   import Vue from 'vue'
   import VueLazyload from 'vue-lazyload'
   import axios from 'axios'
+  import * as api from '../../store/api.js'
 
   Vue.use(VueLazyload)
   export default {

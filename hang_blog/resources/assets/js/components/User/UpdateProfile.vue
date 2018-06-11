@@ -40,7 +40,8 @@
 <script>
   import axios from 'axios'
   import Profile from './Profile'
-
+  import * as api from '../../store/api.js'
+  
   export default {
     data(){
       return {

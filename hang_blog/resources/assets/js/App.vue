@@ -32,9 +32,7 @@
         </ul>
       </div>
     </nav>
-    <div class="panel-body">
       <router-view></router-view>
-    </div>
 
     <footer class="footer">
       <div class="container">

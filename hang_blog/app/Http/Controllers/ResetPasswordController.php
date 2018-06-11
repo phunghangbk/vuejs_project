@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         if (isset($resetPassword)) {
             $now = Carbon::now();
             $created_at = $resetPassword->created_at;
-            if ($now->diffInHours($created_at) > 1) {
+            if ($created_at == null || $now->diffInHours($created_at) > 1) {
                 return response([
                     'status' => config('application.response_status')['error'],
                     'message' => config('application.expired_token'),

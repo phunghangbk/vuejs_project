@@ -31,6 +31,7 @@
 
 <script>
   import axios from 'axios'
+  import * as api from '../../store/api.js'
 
   export default {
     data() {
@@ -40,6 +41,11 @@
         error: false,
         custom_errors: {},
         message: 'There was an error, unable to send email to your email address.'
+      }
+    },
+    beforeCreate () {
+      if (this.$store.state.isLogged) {
+        this.$router.push('/dashboard')
       }
     },
     methods: {

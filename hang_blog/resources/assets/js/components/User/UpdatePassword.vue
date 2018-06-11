@@ -47,7 +47,8 @@
   import axios from 'axios'
   import VeeValidate from 'vee-validate'
   import Vue from 'vue'
-
+  import * as api from '../../store/api.js'
+  
   Vue.use(VeeValidate);
 
   export default {

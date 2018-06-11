@@ -52,6 +52,7 @@
   import axios from 'axios'
   import VeeValidate from 'vee-validate'
   import Vue from 'vue'
+  import * as api from '../../store/api.js'
 
   Vue.use(VeeValidate);
 
@@ -72,6 +73,11 @@
         custom_errors: {},
         password: null,
         password_confirmation: null,
+      }
+    },
+    beforeCreate () {
+      if (this.$store.state.isLogged) {
+        this.$router.push('/dashboard')
       }
     },
     created() {
