@@ -5,17 +5,17 @@ import VueAxios from 'vue-axios';
 import App from './App.vue';
 import Home from './components/Home.vue';
 import Dashboard from './components/Dashboard.vue';
-import Register from './components/Register.vue';
-import Login from './components/Login.vue';
-import Logout from './components/Logout.vue';
+import Register from './components/Auth/Register.vue';
+import Login from './components/Auth/Login.vue';
+import Logout from './components/Auth/Logout.vue';
 import store from './store';
-import Profile from './components/Profile.vue';
-import UpdateProfile from './components/UpdateProfile.vue';
-import UpdatePassword from './components/UpdatePassword.vue';
-import UserVerify from './components/UserVerify.vue';
-import VerificationEmail from './components/VerificationEmail.vue';
-import ResetPasswordEmailForm from './components/ResetPasswordEmailForm.vue';
-import ResetPassword from './components/ResetPassword.vue';
+import Profile from './components/User/Profile.vue';
+import UpdateProfile from './components/User/UpdateProfile.vue';
+import UpdatePassword from './components/User/UpdatePassword.vue';
+import UserVerify from './components/Auth/UserVerify.vue';
+import VerificationEmail from './components/Auth/VerificationEmail.vue';
+import ResetPasswordEmailForm from './components/User/ResetPasswordEmailForm.vue';
+import ResetPassword from './components/User/ResetPassword.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -60,12 +60,13 @@ const router = new VueRouter({
       component: Logout
     },
     {
-      path: '/profile',
+      path: '/profile/:nicknameParameter',
       name: 'profile',
       component: Profile,
       meta: {
-        auth: true
-      }
+        auth: false
+      },
+      props: true
     },
     {
       path: '/update_profile',

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center h-100">
       <div id="login" class="col-xs-12 col-sm-6 col-lg-4">
         <form id="msform" autocomplete="off" @submit.prevent="login" method="post">
           <ul id="progressbar">
@@ -28,7 +28,6 @@
 
 <script>
   import axios from 'axios'
-  import * as api from '../store/api.js'
 
   export default {
     name: 'login',

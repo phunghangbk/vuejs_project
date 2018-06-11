@@ -17,12 +17,18 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         // Validate input data
+        Validator::extend('without_spaces', function($attr, $value){
+            return ! preg_match('/\s/',$value);
+        });
+
         $rules = [
             'email' => 'required|string|email|max:255|unique:mst_user',
-            'password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+            'password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'nickname' => 'required|without_spaces|unique:mst_user'
         ];
         $messages = [
-            'password.regex' => config('application.password_regex')
+            'password.regex' => config('application.password_regex'),
+            'nickname.without_spaces' => config('application.without_spaces')
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -132,10 +138,18 @@ class AuthController extends Controller
     }
 
     public function user(Request $request)
-    {
+    {;
+        $user = User::where('nickname', $request->nickname)->first();
+        if (empty($user)) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'user' => null
+            ]);
+        }
+
         return response()->json([
             'status' => config('application.response_status')['success'],
-            'user' => Auth::user()
+            'user' => $user
         ]);
     }
 

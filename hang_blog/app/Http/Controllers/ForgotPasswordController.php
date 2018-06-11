@@ -53,7 +53,8 @@ class ForgotPasswordController extends Controller
 
             return response([
                 'status' => config('application.response_status')['success'],
-                'errors' => []
+                'errors' => [],
+                'msg' => ''
             ]);
         } catch (\Exception $e) {
             return response([

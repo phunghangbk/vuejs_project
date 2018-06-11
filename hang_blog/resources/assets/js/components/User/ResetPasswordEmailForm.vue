@@ -31,7 +31,6 @@
 
 <script>
   import axios from 'axios'
-  import * as api from '../store/api.js'
 
   export default {
     data() {

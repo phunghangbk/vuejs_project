@@ -50,7 +50,6 @@
 </template>
 <script>
   import axios from 'axios'
-  import * as api from '../store/api.js'
   import VeeValidate from 'vee-validate'
   import Vue from 'vue'
 

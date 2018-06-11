@@ -13,20 +13,6 @@ class UserController extends Controller
 {
     public function updateProfile(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password'=> 'required|min:6|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
-        ]);
-
-        $messages = [
-            'password.regex' => 'Password needs to contain at least one uppercase, lowercase letters and one number'
-        ];
-
-        if ($validator->fails()) {
-            return response([
-                'status' => config('application.response_status')['error'],
-                'errors' => $validator->errors()
-            ]);
-        }
         try {
             $user = Auth::user();
             if (! empty($request->name)) {
@@ -34,10 +20,25 @@ class UserController extends Controller
             }
 
             if (! empty($request->nickname)) {
+                if (preg_match('/\s/',$request->nickname)) {
+                    return response()->json([
+                        'user' => $user,
+                        'status' => config('application.response_status')['error'],
+                        'errors' => ['nickname' => [config('application.without_spaces')]]
+                    ]);
+                }
+
+                if ($this->checkUniqueNickname($user, $request->nickname)) {
+                    return response()->json([
+                        'user' => $user,
+                        'status' => config('application.response_status')['error'],
+                        'errors' => ['nickname' => [config('application.nickname_duplicate')]]
+                    ]);
+                }
+
                 $user->nickname = $request->nickname;
             }
             
-
             $avatar_image_name = '';
             $cover_image_name = '';
 
@@ -62,11 +63,13 @@ class UserController extends Controller
             $user->save();
             return response()->json([
                 'user' => $user,
-                'status' => config('application.response_status')['success']
+                'status' => config('application.response_status')['success'],
+                'errors' => []
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return response()->json([
+                'user' => null,
                 'status' => config('application.response_status')['error'],
                 'errors' => ['error' => $e->getMessage()]
             ]);
@@ -113,5 +116,17 @@ class UserController extends Controller
                 ]);
             }
         }
+    }
+
+    private function checkUniqueNickname($user, $nickname) {
+        if ($user->nickname == $nickname) {
+            return true;
+        } 
+        $users = User::where('nickname', $nickname)->get();
+        if (! empty($users)) {
+            return false;
+        }
+
+        return true;
     }
 }

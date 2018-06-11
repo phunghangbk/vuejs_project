@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Blog</a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: rgb(102, 185, 101)">
+      <a class="navbar-brand" href="/">Blog</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav d-flex flex-lg-row flex-md-column align-items-start">
           <li class="nav-item active">
             <router-link :to="{ name: 'home' }" class="nav-link">
               Home
@@ -35,10 +35,19 @@
     <div class="panel-body">
       <router-view></router-view>
     </div>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Copyright(C) Hang Phung</span>
+      </div>
+    </footer>
   </div>
 </template>
 
 <style scoped>
+  .panel-body {
+    min-height: 100%;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

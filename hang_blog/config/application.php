@@ -14,4 +14,6 @@ return [
     'need_virified_email' => 'Your email address has\'nt been verify. You need to click to the link has sent to your email.',
     'invalid_user' => 'Is invalid user.',
     'expired_token' => 'This token is expired. Please send new password reset request.',
+    'without_spaces' => 'Nickname must has no white spaces.',
+    'nickname_duplicate' => 'Nickname is duplicate'
 ];
