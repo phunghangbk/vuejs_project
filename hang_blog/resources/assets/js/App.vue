@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: rgb(102, 185, 101)">
+    <nav :class="[navBar, 'navbar', 'navbar-fixed-top', 'fixed-top', 'navbar-expand-lg', 'navbar-light']" style="background-color: rgb(102, 185, 101)">
       <a class="navbar-brand" href="/">Blog</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,23 +9,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav d-flex flex-lg-row flex-md-column align-items-start">
           <li class="nav-item active">
-            <router-link :to="{ name: 'home' }" class="nav-link">
+            <router-link @click.native="closeMenu()" :to="{ name: 'home' }" class="nav-link">
               Home
               <span class="sr-only">(current)</span>
             </router-link>
           </li>
           <li class="nav-item" v-if="! $store.state.isLogged">
-            <router-link :to="{ name: 'register' }" class="nav-link">
+            <router-link @click.native="closeMenu()" :to="{ name: 'register' }" class="nav-link">
               Register
             </router-link>
           </li>
           <li class="nav-item" v-if="! $store.state.isLogged">
-            <router-link :to="{ name: 'login' }" class="nav-link">
+            <router-link @click.native="closeMenu()" :to="{ name: 'login' }" class="nav-link">
               Login
             </router-link>
           </li>
           <li class="nav-item" v-if="$store.state.isLogged">
-            <router-link :to="{ name: 'logout' }" class="nav-link">
+            <router-link @click.native="closeMenu()" :to="{ name: 'logout' }" class="nav-link">
               Logout
             </router-link>
           </li>
@@ -42,6 +42,53 @@
   </div>
 </template>
 
+<script>
+  export default {
+    data() {
+      return {
+        navBar: {
+          collapse: false,
+          open: false,
+        },
+        scrollState: 0,
+      }
+    },
+    methods: {
+      scrollDetect(home, down, up) {
+        const currentScroll = this.scrollTop();
+        if (this.scrollTop() === 0) {
+          home();
+        } else if (currentScroll > (this.scrollState)) {
+          down();
+        } else {
+          up();
+        }
+        this.scrollState = this.scrollTop();
+      },
+      scrollTop() {
+        return window.scrollY;
+      },
+      scrollHome() {
+      },
+      scrollDown() {
+        this.navBar.collapse = true;
+        this.navBar.open = false;
+      },
+      scrollUp() {
+        this.navBar.collapse = false;
+        this.navBar.open = true;
+      },
+      closeMenu() {
+        $('.navbar-collapse').collapse('hide');
+      }
+    },
+    created() {
+      window.addEventListener('scroll', () => {
+        this.scrollDetect(this.scrollHome, this.scrollDown, this.scrollUp);
+      })
+    }
+  }
+</script>
 <style scoped>
   .panel-body {
     min-height: 100%;
