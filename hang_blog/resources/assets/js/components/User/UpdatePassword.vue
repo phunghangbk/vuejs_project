@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div id="updatepassword" class="col-xs-12 col-sm-6 col-lg-4">
         <form id="msform" autocomplete="off" @submit.prevent="validateBeforeSubmit" v-if="!success" method="post">
@@ -105,6 +105,10 @@
 </script>
 
 <style scoped>
+.custom-container {
+  margin-top: 56px;
+  height: 100vh;
+}
 .row {
   height: 100%;
   background: 

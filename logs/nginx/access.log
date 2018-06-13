@@ -1,6 +1,0 @@
-172.18.0.1 - - [09/May/2018:03:25:07 +0000] "GET / HTTP/1.1" 403 170 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"
-172.18.0.1 - - [09/May/2018:03:25:12 +0000] "GET / HTTP/1.1" 403 170 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"
-172.18.0.1 - - [09/May/2018:03:26:03 +0000] "GET / HTTP/1.1" 403 170 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"
-172.18.0.1 - - [09/May/2018:03:27:12 +0000] "GET / HTTP/1.1" 200 1823 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"
-172.18.0.1 - - [09/May/2018:03:27:23 +0000] "GET / HTTP/1.1" 200 1823 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"
-172.18.0.1 - - [09/May/2018:03:27:41 +0000] "GET / HTTP/1.1" 200 1823 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0" "-"

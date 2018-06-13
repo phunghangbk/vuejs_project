@@ -1,5 +1,0 @@
-2018/05/09 03:25:07 [error] 5#5: *1 directory index of "/var/www/html/hang_blog/public/" is forbidden, client: 172.18.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost:8696"
-2018/05/09 03:25:12 [error] 5#5: *1 directory index of "/var/www/html/hang_blog/public/" is forbidden, client: 172.18.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost:8696"
-2018/05/09 03:26:03 [error] 5#5: *1 directory index of "/var/www/html/hang_blog/public/" is forbidden, client: 172.18.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost:8696"
-2018/05/09 03:30:01 [emerg] 1#1: unexpected "}" in /etc/nginx/conf.d/default.conf:18
-2018/05/09 03:32:46 [emerg] 1#1: unexpected "}" in /etc/nginx/conf.d/default.conf:18

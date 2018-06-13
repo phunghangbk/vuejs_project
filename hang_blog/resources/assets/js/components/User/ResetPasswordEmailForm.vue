@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <link rel="stylesheet" type="text/css" href="/css/users.css">
     <div class="row justify-content-center">
       <div id="resetpasswordform" class="col-xs-12 col-sm-6 col-lg-4">
@@ -75,6 +75,10 @@
 </script>
 
 <style scoped>
+.custom-container {
+  margin-top: 56px;
+  height: 100vh;
+}
 label {
   float: left;
   padding: 5px;

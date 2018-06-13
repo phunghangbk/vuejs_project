@@ -169,6 +169,7 @@
 <style scoped>
   .row {
     background: white;
+    margin-top: 56px;
   }
 
   .coverImage {

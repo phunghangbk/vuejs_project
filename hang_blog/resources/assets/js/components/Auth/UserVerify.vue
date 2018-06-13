@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div id="userverify" class="col-xs-12 col-sm-6 col-lg-4">
         <div class="content">
@@ -45,7 +45,9 @@
 
 <style scoped>
 * {margin: 0; padding: 0;}
-
+.custom-container {
+  height: 100vh;
+}
 .row {
   height: 100%;
   background: 
