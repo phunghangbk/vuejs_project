@@ -12,6 +12,8 @@ import UserVerify from '../components/Auth/UserVerify.vue';
 import VerificationEmail from '../components/Auth/VerificationEmail.vue';
 import ResetPasswordEmailForm from '../components/User/ResetPasswordEmailForm.vue';
 import ResetPassword from '../components/User/ResetPassword.vue';
+import InsertPostForm from '../components/Post/InsertPostForm.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -110,6 +112,14 @@ const router = new VueRouter({
       props: true,
       meta: {
         auth: false
+      }
+    },
+    {
+      path: '/post/insert',
+      name: 'insert_post',
+      component: InsertPostForm,
+      meta: {
+        auth: true
       }
     }
   ]
