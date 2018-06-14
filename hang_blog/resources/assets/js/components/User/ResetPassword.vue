@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <link rel="stylesheet" type="text/css" href="/css/users.css">
     <div class="row justify-content-center">
       <div id="resetpassword" class="col-xs-12 col-sm-6 col-lg-4">
@@ -123,6 +123,10 @@
 </script>
 
 <style scoped>
+.custom-container {
+  height: 100vh;
+  margin-top: 56px;
+}
 label {
   float: left;
   padding: 5px;

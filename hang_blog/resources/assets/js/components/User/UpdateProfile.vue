@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <profile :nickname-parameter="nickname"></profile>
     <link rel="stylesheet" type="text/css" href="/css/users.css">
     <div class="row justify-content-center">
@@ -110,6 +110,9 @@
 </script>
 
 <style scoped>
+.custom-container {
+  margin-top: 56px;
+}
 .row {
   background: white;
 }

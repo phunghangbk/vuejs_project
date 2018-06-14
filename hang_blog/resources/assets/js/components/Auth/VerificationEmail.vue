@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div id="verification_email" class="col-xs-12 col-sm-6 col-lg-4">
         <div class="content">
@@ -78,6 +78,9 @@
 </script>
 
 <style scoped>
+.custom-container {
+  height: 100vh;
+}
 .row {
   height: 100%;
   background: 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid h-100">
+  <div class="container-fluid custom-container">
     <div class="row justify-content-center h-100">
       <div id="login" class="col-xs-12 col-sm-6 col-lg-4">
         <form id="msform" autocomplete="off" @submit.prevent="login" method="post">
@@ -75,6 +75,9 @@
 
 <style scoped>
   @import url(https://fonts.googleapis.com/css?family=Montserrat);
+  .custom-container {
+    height: 100vh;
+  }
   .row {
     height: 100%;
     background: 
