@@ -25,7 +25,7 @@
     },
     data () {
       return {
-        content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
+        content: null,
         editorOption: {
           modules: {
             toolbar: [
