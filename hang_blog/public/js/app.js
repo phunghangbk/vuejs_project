@@ -28957,7 +28957,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.custom-container[data-v-380e2565] {\n  margin-top: 70px;\n}\n.quill-code[data-v-380e2565] {\n  border: none;\n  height: auto;\n> code {\n    width: 100%;\n    margin: 0;\n    padding: 1rem;\n    border: 1px solid #ccc;\n    border-top: none;\n    border-radius: 0;\n    height: 10rem;\n    overflow-y: auto;\n    resize: vertical;\n}\n}\n", ""]);
+exports.push([module.i, "\n.custom-container[data-v-380e2565] {\n  margin-top: 56px;\n  height: 100vh;\n}\n.quill-code[data-v-380e2565] {\n  border: none;\n  height: auto;\n> code {\n    width: 100%;\n    margin: 0;\n    padding: 1rem;\n    border: 1px solid #ccc;\n    border-top: none;\n    border-radius: 0;\n    height: 10rem;\n    overflow-y: auto;\n    resize: vertical;\n}\n}\n", ""]);
 
 // exports
 
@@ -28968,14 +28968,18 @@ exports.push([module.i, "\n.custom-container[data-v-380e2565] {\n  margin-top: 7
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill_dist_quill_core_css__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill_dist_quill_core_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_quill_dist_quill_core_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quill_dist_quill_snow_css__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quill_dist_quill_snow_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_quill_dist_quill_snow_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill_dist_quill_bubble_css__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill_dist_quill_bubble_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_quill_dist_quill_bubble_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_quill_editor__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_quill_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_quill_editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quill__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_quill__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_quill_editor__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_quill_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_quill_editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_quill_dist_quill_core_css__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_quill_dist_quill_core_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_quill_dist_quill_core_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_dist_quill_snow_css__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_dist_quill_snow_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_quill_dist_quill_snow_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_quill_dist_quill_bubble_css__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_quill_dist_quill_bubble_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_quill_dist_quill_bubble_css__);
 //
 //
 //
@@ -28991,6 +28995,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -28999,7 +29004,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    quillEditor: __WEBPACK_IMPORTED_MODULE_3_vue_quill_editor__["quillEditor"]
+    quillEditor: __WEBPACK_IMPORTED_MODULE_2_vue_quill_editor__["quillEditor"]
   },
   data: function data() {
     return {

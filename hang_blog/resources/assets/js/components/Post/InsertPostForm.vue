@@ -14,11 +14,12 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import Quill from 'quill'
+  import { quillEditor } from 'vue-quill-editor'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
-  import { quillEditor } from 'vue-quill-editor'
-
   export default {
     components: {
       quillEditor
@@ -77,7 +78,8 @@
 
 <style scoped>
   .custom-container {
-    margin-top: 70px;
+    margin-top: 56px;
+    height: 100vh;
   }
 
   .quill-code {
