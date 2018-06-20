@@ -17,6 +17,12 @@
   import Vue from 'vue'
   import Quill from 'quill'
   import { quillEditor } from 'vue-quill-editor'
+  import { ImageResize } from 'quill-image-resize-module'
+  import { ImageDrop } from 'quill-image-drop-module'
+
+  Quill.register('modules/imageResize', ImageResize)
+  Quill.register('modules/imageDrop', ImageDrop)
+
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
@@ -45,6 +51,22 @@
               ['clean'],
               ['link', 'image', 'video']
             ],
+            history: {
+              delay: 1000,
+              maxStack: 50,
+              userOnly: false
+            },
+
+            imageDrop: true,
+
+            imageResize: {
+              displayStyles: {
+                backgroundColor: 'black',
+                border: 'none',
+                color: 'white'
+              },
+              modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
+            }
           }
         }
       }
