@@ -40811,7 +40811,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.custom-container[data-v-380e2565] {\n  margin-top: 56px;\n  height: 100vh;\n}\n.quill-code[data-v-380e2565] {\n  border: none;\n  height: auto;\n> code {\n    width: 100%;\n    margin: 0;\n    padding: 1rem;\n    border: 1px solid #ccc;\n    border-top: none;\n    border-radius: 0;\n    height: 10rem;\n    overflow-y: auto;\n    resize: vertical;\n}\n}\n", ""]);
+exports.push([module.i, "\n.custom-container[data-v-380e2565] {\n  margin-top: 56px;\n  height: 100vh;\n}\n.custom-editor[data-v-380e2565] {\n  height: 30rem;\n}\n.title_content[data-v-380e2565] {\n}\n", ""]);
 
 // exports
 
@@ -40836,6 +40836,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_quill_dist_quill_snow_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_quill_dist_quill_snow_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_quill_dist_quill_bubble_css__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_quill_dist_quill_bubble_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_quill_dist_quill_bubble_css__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43605,39 +43610,59 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid custom-container" }, [
-    _c(
-      "div",
-      { staticClass: "row justify-content-center" },
-      [
-        _c("quill-editor", {
-          ref: "myQuillEditor",
-          staticClass: "col-lg-8",
-          attrs: { options: _vm.editorOption },
-          on: {
-            blur: function($event) {
-              _vm.onEditorBlur($event)
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-xs-12 col-lg-8" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("quill-editor", {
+            ref: "myQuillEditor",
+            staticClass: "custom-editor col-xs-12",
+            attrs: { options: _vm.editorOption },
+            on: {
+              blur: function($event) {
+                _vm.onEditorBlur($event)
+              },
+              focus: function($event) {
+                _vm.onEditorFocus($event)
+              },
+              ready: function($event) {
+                _vm.onEditorReady($event)
+              }
             },
-            focus: function($event) {
-              _vm.onEditorFocus($event)
-            },
-            ready: function($event) {
-              _vm.onEditorReady($event)
+            model: {
+              value: _vm.content,
+              callback: function($$v) {
+                _vm.content = $$v
+              },
+              expression: "content"
             }
-          },
-          model: {
-            value: _vm.content,
-            callback: function($$v) {
-              _vm.content = $$v
-            },
-            expression: "content"
-          }
-        })
-      ],
-      1
-    )
+          })
+        ],
+        1
+      )
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title form-group row" }, [
+      _c("label", { staticClass: "col-sm-2 col-form-label" }, [
+        _vm._v("Title")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "col-sm-8 title_content form-control",
+        attrs: { id: "title_content" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

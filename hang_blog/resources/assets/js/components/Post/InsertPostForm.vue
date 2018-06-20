@@ -1,14 +1,19 @@
 <template>
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
-      <!-- bidirectional data binding（双向数据绑定） -->
-      <quill-editor class="col-lg-8" v-model="content"
-                    ref="myQuillEditor"
-                    :options="editorOption"
-                    @blur="onEditorBlur($event)"
-                    @focus="onEditorFocus($event)"
-                    @ready="onEditorReady($event)">
-      </quill-editor>
+      <div class="col-xs-12 col-lg-8">
+        <div class="title form-group row">
+            <label class="col-sm-2 col-form-label">Title</label>
+            <textarea class="col-sm-8 title_content form-control" id="title_content"></textarea>
+        </div>
+        <quill-editor class="custom-editor col-xs-12" v-model="content"
+                      ref="myQuillEditor"
+                      :options="editorOption"
+                      @blur="onEditorBlur($event)"
+                      @focus="onEditorFocus($event)"
+                      @ready="onEditorReady($event)">
+        </quill-editor>
+      </div>
     </div>
   </div>
 </template>
@@ -104,19 +109,11 @@
     height: 100vh;
   }
 
-  .quill-code {
-    border: none;
-    height: auto;
-    > code {
-      width: 100%;
-      margin: 0;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-top: none;
-      border-radius: 0;
-      height: 10rem;
-      overflow-y: auto;
-      resize: vertical;
-    }
+  .custom-editor {
+    height: 30rem;
+  }
+
+  .title_content {
+
   }
 </style>
