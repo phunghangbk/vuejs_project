@@ -19,6 +19,7 @@ class CreateTableMstPost extends Migration
             $table->string('image')->nullable();
             $table->text('content')->default('');
             $table->integer('status')->default(1); //1: published 2: hidden
+            $table->text('introduction')->default('');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
