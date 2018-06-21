@@ -41,7 +41,6 @@
                 </label>
                 <span class="help-block" v-if="error && custom_errors.avatar_image">{{custom_errors.avatar_image[0]}}</span>
               </span>
-              
             </div>
 
             <div :class="{'has-error': error && custom_errors.cover_image}" @change="onCoverImageChange">

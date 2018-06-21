@@ -2,10 +2,40 @@
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div class="col-xs-12 col-lg-8">
-        <div class="title form-group row">
-            <label class="col-sm-2 col-form-label">Title</label>
-            <textarea class="col-sm-8 title_content form-control" id="title_content"></textarea>
+        <div class="title form-group row form-inline">
+          <label class="col-sm-2 col-form-label">Title</label>
+          <input type="text" class="col-sm-8 title_content form-control" id="title_content" v-model="title">
         </div>
+
+        <div class="image" v-if="image">
+          <img :src="image" class="img-responsive" height="70" width="90">
+        </div>
+        <div class="form-group row form-inline" @change="onImageChange">
+          <label class="col-sm-2 justify-content-center col-form-label">Image</label>
+          <label class="uploadImage col-sm-8 col-form-label">
+            <input type="file" accept="image/jpeg, image/png" multiple="" size="60" id="headerImg" class="d-none">
+          </label>
+        </div>
+
+        <div class="introduction form-group row form-inline">
+          <label class="col-sm-2 col-form-label">Introduction</label>
+          <textarea class="col-sm-8 form-control" id="introduction" v-model="introduction"></textarea>
+        </div>
+
+        <div class="status form-group row">
+          <label class="col-sm-2 col-form-label">Status</label>
+          <div class="col-sm-8">
+            <div class="form-check form-check-inline">
+              <input type="radio" name="status" class="form-check-input" id="statusPublish" value="1" v-model="status">
+              <label class="form-check-label" for="statusPublish">Publish</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" name="status" class="form-check-input" id="statusOnlyme" value="2" v-model="status">
+              <label class="form-check-label" for="statusOnlyme">Only me</label>
+            </div>
+          </div>
+        </div>
+
         <quill-editor class="custom-editor col-xs-12" v-model="content"
                       ref="myQuillEditor"
                       :options="editorOption"
@@ -13,6 +43,10 @@
                       @focus="onEditorFocus($event)"
                       @ready="onEditorReady($event)">
         </quill-editor>
+
+        <div class="col-xs-12 submitButton">
+          <button type="button" class="btn btn-success" @click="contentCode">Submit</button>
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +72,10 @@
     data () {
       return {
         content: null,
+        title: null,
+        status: 1,
+        image: null,
+        introduction: null,
         editorOption: {
           modules: {
             toolbar: [
@@ -90,12 +128,27 @@
       onEditorChange({ quill, html, text }) {
         console.log('editor change!', quill, html, text)
         this.content = html
+      },
+      contentCode() {
+        return this.content
+      },
+      onImageChange(event) {
+        let files = event.target.files || event.dataTransfer.files;
+        if (! files.length) {
+          return;
+        }
+        let reader = new FileReader();
+        let vm = this;
+        reader.onload = (e) => {
+          vm["image"] = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
       }
     },
     computed: {
       editor() {
         return this.$refs.myQuillEditor.quill
-      }
+      },
     },
     mounted() {
       console.log('this is current quill instance object', this.editor)
@@ -110,10 +163,42 @@
   }
 
   .custom-editor {
-    height: 30rem;
+    height: 20rem;
   }
 
-  .title_content {
+  .title {
+    margin-top: 1rem;
+  }
 
+  .submitButton {
+    margin-top: 6rem;
+  }
+
+  .quill-code {
+    border: none;
+    height: auto;
+    > code {
+      width: 100%;
+      margin: 0;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-radius: 0;
+      height: 10rem;
+      overflow-y: auto;
+      resize: vertical;
+    }
+  }
+
+  .uploadImage {
+    width: 100%; 
+    height: 50px; 
+    font-size: 0px; 
+    margin-bottom: 1rem; 
+    background-color: #0ebf67; 
+    background-position: 50% center;
+    border-radius: 3px;
+    background-repeat: no-repeat;
+    background-image: url(https://abs.twimg.com/a/1498195419/img/t1/highline/empty_state/owner_empty_avatar.png); 
   }
 </style>

@@ -115,8 +115,8 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/post/insert',
-      name: 'insert_post',
+      path: '/post/create',
+      name: 'create_post',
       component: InsertPostForm,
       meta: {
         auth: true
