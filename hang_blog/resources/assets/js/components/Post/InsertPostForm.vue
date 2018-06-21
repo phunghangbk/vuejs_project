@@ -2,50 +2,75 @@
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div class="col-xs-12 col-lg-8">
-        <div class="title form-group row form-inline">
-          <label class="col-sm-2 col-form-label">Title</label>
-          <input type="text" class="col-sm-8 title_content form-control" id="title_content" v-model="title">
+        <div :class="{'has-error': error && custom_errors.title}">
+          <div class="title form-group row form-inline">
+            <label class="col-sm-2 col-form-label">Title</label>
+            <input type="text" class="col-sm-8 title_content form-control" id="title_content" v-model="title">
+          </div>
+          <span class="help-block" v-if="error && custom_errors.title">{{custom_errors.title[0]}}</span>
         </div>
 
-        <div class="image" v-if="image">
-          <img :src="image" class="img-responsive" height="70" width="90">
-        </div>
-        <div class="form-group row form-inline" @change="onImageChange">
-          <label class="col-sm-2 justify-content-center col-form-label">Image</label>
-          <label class="uploadImage col-sm-8 col-form-label">
-            <input type="file" accept="image/jpeg, image/png" multiple="" size="60" id="headerImg" class="d-none">
-          </label>
-        </div>
-
-        <div class="introduction form-group row form-inline">
-          <label class="col-sm-2 col-form-label">Introduction</label>
-          <textarea class="col-sm-8 form-control" id="introduction" v-model="introduction"></textarea>
+        <div :class="{'has-error': error && custom_errors.image}">
+          <div class="image" v-if="image">
+            <img :src="image" class="img-responsive" height="70" width="90">
+          </div>
+          <div class="form-group row form-inline" @change="onImageChange">
+            <label class="col-sm-2 justify-content-center col-form-label">Image</label>
+            <label class="uploadImage col-sm-8 col-form-label">
+              <input type="file" accept="image/jpeg, image/png" multiple="" size="60" id="headerImg" class="d-none">
+            </label>
+          </div>
+          <span class="help-block" v-if="error && custom_errors.image">{{custom_errors.image[0]}}</span>
         </div>
 
-        <div class="status form-group row">
-          <label class="col-sm-2 col-form-label">Status</label>
-          <div class="col-sm-8">
-            <div class="form-check form-check-inline">
-              <input type="radio" name="status" class="form-check-input" id="statusPublish" value="1" v-model="status">
-              <label class="form-check-label" for="statusPublish">Publish</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input type="radio" name="status" class="form-check-input" id="statusOnlyme" value="2" v-model="status">
-              <label class="form-check-label" for="statusOnlyme">Only me</label>
+        <div :class="{'has-error': error && custom_errors.introduction}">
+          <div class="introduction form-group row form-inline">
+            <label class="col-sm-2 col-form-label">Introduction</label>
+            <textarea class="col-sm-8 form-control" id="introduction" v-model="introduction"></textarea>
+          </div>
+          <span class="help-block" v-if="error && custom_errors.introduction">{{custom_errors.introduction[0]}}</span>
+        </div>
+
+        <div :class="{'has-error': error && custom_errors.status}">
+          <div class="status form-group row">
+            <label class="col-sm-2 col-form-label">Status</label>
+            <div class="col-sm-8">
+              <div class="form-check form-check-inline">
+                <input type="radio" name="status" class="form-check-input" id="statusPublish" value="1" v-model="status">
+                <label class="form-check-label" for="statusPublish">Publish</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="status" class="form-check-input" id="statusOnlyme" value="2" v-model="status">
+                <label class="form-check-label" for="statusOnlyme">Only me</label>
+              </div>
             </div>
           </div>
+          <span class="help-block" v-if="error && custom_errors.status">{{custom_errors.status[0]}}</span>
         </div>
 
-        <quill-editor class="custom-editor col-xs-12" v-model="content"
-                      ref="myQuillEditor"
-                      :options="editorOption"
-                      @blur="onEditorBlur($event)"
-                      @focus="onEditorFocus($event)"
-                      @ready="onEditorReady($event)">
-        </quill-editor>
+        <div :class="{'has-error': error && custom_errors.content}">
+          <quill-editor class="custom-editor col-xs-12" v-model="content"
+                        ref="myQuillEditor"
+                        :options="editorOption"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)">
+          </quill-editor>
+          <span class="help-block" v-if="error && custom_errors.content">{{custom_errors.content[0]}}</span>
+        </div>
 
         <div class="col-xs-12 submitButton">
-          <button type="button" class="btn btn-success" @click="contentCode">Submit</button>
+          <button type="button" class="btn btn-success" @click="createPost">Submit</button>
+        </div>
+        <div class="alert alert-danger" v-if="error && !success">
+          <p>
+            There was an error, unable to complete post article.
+          </p>
+        </div>
+        <div class="alert alert-success" v-if="success">
+          <p>
+            Post artical successfull!!
+          </p>
         </div>
       </div>
     </div>
@@ -53,6 +78,8 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import * as api from '../../store/api.js'
   import Vue from 'vue'
   import Quill from 'quill'
   import { quillEditor } from 'vue-quill-editor'
@@ -76,6 +103,9 @@
         status: 1,
         image: null,
         introduction: null,
+        success: false,
+        error: false,
+        custom_errors: [], 
         editorOption: {
           modules: {
             toolbar: [
@@ -129,8 +159,29 @@
         console.log('editor change!', quill, html, text)
         this.content = html
       },
-      contentCode() {
-        return this.content
+      createPost() {
+        axios.post(api.post_create, {
+          title: this.title,
+          image: this.image,
+          introduction: this.introduction,
+          status: this.status,
+          content: this.content
+        })
+        .then(resp => {
+          console.log(resp);
+          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+            this.success = true
+          } else {
+            this.error = true;
+            if (typeof resp.data.errors != 'undefined') {
+              this.custom_errors = resp.data.errors;
+            }
+          }
+        })
+        .catch(error => {
+          this.error = true;
+          console.log(error.response)
+        })
       },
       onImageChange(event) {
         let files = event.target.files || event.dataTransfer.files;

@@ -32,3 +32,5 @@ Route::get('/user/verify/{token}', 'AuthController@verifyUser');
 Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'ResetPasswordController@reset');
 Route::post('password/reset_action', 'ResetPasswordController@reset_action');
+
+Route::post('post/create', 'Post\PostController@create');

@@ -12,4 +12,5 @@ export const update_password = url('/update_password')
 export const verificate_email = url('/user/verify/')
 export const reset_password = url('/password/reset/')
 export const reset_action = url('/password/reset_action')
+export const post_create = url('/post/create')
 
