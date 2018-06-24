@@ -44213,7 +44213,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
         loading: '/images/loading.gif'
       },
       loaded: false,
-      page: 1
+      page: 1,
+      is_busy: false
     };
   },
 
@@ -44251,7 +44252,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
       $(window).scroll(function () {
         var bottomOfWindow = $(window).scrollTop() + $(window).height() >= $('#blogList').height();
         if (bottomOfWindow && !_this2.stop) {
-          console.log('this.page=' + _this2.page);
+          if (_this2.is_busy == true) {
+            return false;
+          }
+
+          if (_this2.stop == true) {
+            return false;
+          }
+
+          _this2.is_busy = true;
           __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["d" /* post_list */] + '?nickname=' + _this2.nickname + '&page=' + _this2.page).then(function (resp) {
             console.log(resp.data.list);
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
@@ -44260,7 +44269,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
                 _this2.page = _this2.page + 1;
               } else {
                 _this2.stop = true;
-                return false;
               }
               for (var i = 0; i < resp.data.list.data.length; i++) {
                 list.push(resp.data.list.data[i]);
@@ -44270,6 +44278,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
                 _this2.custom_errors = resp.data.errors;
               }
             }
+            _this2.is_busy = false;
           });
         }
       });

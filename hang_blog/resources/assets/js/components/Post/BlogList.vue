@@ -44,6 +44,7 @@
         },
         loaded: false,
         page: 1,
+        is_busy: false
       }
     },
     // beforeMount() {
@@ -78,7 +79,15 @@
         $(window).scroll(() => {
           let bottomOfWindow = $(window).scrollTop() + $(window).height() >= $('#blogList').height()
           if (bottomOfWindow && ! this.stop) {
-            console.log('this.page=' + this.page)
+            if (this.is_busy == true){
+              return false
+            }
+
+            if (this.stop == true){
+              return false
+            }
+
+            this.is_busy = true
             axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
             .then(resp => {
               console.log(resp.data.list)
@@ -88,7 +97,6 @@
                   this.page = this.page + 1
                 } else {
                   this.stop = true
-                  return false
                 }
                 for (let i = 0; i < resp.data.list.data.length; i++) {
                   list.push(resp.data.list.data[i])
@@ -98,6 +106,7 @@
                   this.custom_errors = resp.data.errors
                 }
               }
+              this.is_busy = false
             });
           }
         });
