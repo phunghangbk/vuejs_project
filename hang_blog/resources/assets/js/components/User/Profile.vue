@@ -163,7 +163,7 @@
         };
         reader.readAsDataURL(file);
       },
-    }
+    },
   }
 </script>
 <style scoped>

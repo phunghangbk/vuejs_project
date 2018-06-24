@@ -138,7 +138,7 @@ class AuthController extends Controller
     }
 
     public function user(Request $request)
-    {;
+    {
         $user = User::where('nickname', $request->nickname)->first();
         if (empty($user)) {
             return response()->json([

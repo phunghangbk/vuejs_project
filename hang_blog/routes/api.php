@@ -21,6 +21,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::post('auth/logout', 'AuthController@logout');
   Route::post('/update_profile', 'UserController@updateProfile');
   Route::post('/update_password', 'UserController@updatePassword');
+  Route::post('post/create', 'Post\PostController@create');
 });
 
 Route::group(['middleware' => 'jwt.refresh'], function(){
@@ -33,4 +34,6 @@ Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'ResetPasswordController@reset');
 Route::post('password/reset_action', 'ResetPasswordController@reset_action');
 
-Route::post('post/create', 'Post\PostController@create');
+Route::get('post/list', 'Post\PostController@list');
+Route::get('post/{post_id}', 'Post\PostController@getPost');
+

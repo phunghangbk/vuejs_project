@@ -62,16 +62,6 @@
         <div class="col-xs-12 submitButton">
           <button type="button" class="btn btn-success" @click="createPost">Submit</button>
         </div>
-        <div class="alert alert-danger" v-if="error && !success">
-          <p>
-            There was an error, unable to complete post article.
-          </p>
-        </div>
-        <div class="alert alert-success" v-if="success">
-          <p>
-            Post artical successfull!!
-          </p>
-        </div>
       </div>
     </div>
   </div>
@@ -85,13 +75,17 @@
   import { quillEditor } from 'vue-quill-editor'
   import { ImageResize } from 'quill-image-resize-module'
   import { ImageDrop } from 'quill-image-drop-module'
-
+  import Toasted from 'vue-toasted'
   Quill.register('modules/imageResize', ImageResize)
   Quill.register('modules/imageDrop', ImageDrop)
 
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
+
+  Vue.use(Toasted, {
+    iconPack : 'material'
+  })
   export default {
     components: {
       quillEditor
@@ -171,15 +165,55 @@
           console.log(resp);
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.success = true
+            Vue.toasted.show('Post article successfully!!', { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000,
+              type: 'success',
+              icon: 'check',
+              action: {
+                text: 'Close',
+                  onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+              }
+            })
           } else {
             this.error = true;
             if (typeof resp.data.errors != 'undefined') {
               this.custom_errors = resp.data.errors;
             }
+            
+            Vue.toasted.show('There was an error, unable to complete post article.', { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000,
+              type: 'error',
+              icon: 'error',
+              action: {
+                text: 'Close',
+                  onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+              }
+            })
           }
         })
         .catch(error => {
-          this.error = true;
+          this.error = true
+          Vue.toasted.show('There was an error, unable to complete post article.', { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000,
+              type: 'error',
+              icon: 'error',
+              action: {
+                text: 'Close',
+                  onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+              }
+            })
           console.log(error.response)
         })
       },
@@ -221,10 +255,6 @@
     margin-top: 1rem;
   }
 
-  .submitButton {
-    margin-top: 6rem;
-  }
-
   .quill-code {
     border: none;
     height: auto;
@@ -251,5 +281,9 @@
     border-radius: 3px;
     background-repeat: no-repeat;
     background-image: url(https://abs.twimg.com/a/1498195419/img/t1/highline/empty_state/owner_empty_avatar.png); 
+  }
+
+  .help-block {
+    color: red;
   }
 </style>

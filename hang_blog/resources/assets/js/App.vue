@@ -89,7 +89,7 @@
     }
   }
 </script>
-<style scoped>
+<style>
   .panel-body {
     min-height: 100%;
   }
@@ -168,6 +168,10 @@
     letter-spacing: 4px;
     color: white;
     text-decoration: none;
+  }
+
+  .ql-container.ql-snow {
+    height: 60% !important
   }
   @media only screen and (max-width: 768px) {
     #app .header .header_right {

@@ -15,5 +15,8 @@ return [
     'invalid_user' => 'Is invalid user.',
     'expired_token' => 'This token is expired. Please send new password reset request.',
     'without_spaces' => 'Nickname must has no white spaces.',
-    'nickname_duplicate' => 'Nickname is duplicate'
+    'nickname_duplicate' => 'Nickname is duplicate',
+    'has_no_post' => 'Cannot find this post.',
+    'permission' => 'You must logging in to post article',
+    'has_no_user' => 'Cannot find this user post'
 ];

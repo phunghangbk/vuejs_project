@@ -40,4 +40,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\VerifyUser', 'user_id');
     }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post\Post', 'user_id');
+    }
 }

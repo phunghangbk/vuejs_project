@@ -13,6 +13,8 @@ import VerificationEmail from '../components/Auth/VerificationEmail.vue';
 import ResetPasswordEmailForm from '../components/User/ResetPasswordEmailForm.vue';
 import ResetPassword from '../components/User/ResetPassword.vue';
 import InsertPostForm from '../components/Post/InsertPostForm.vue';
+import User from '../components/User/User.vue';
+import Blog from '../components/Post/Blog.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -121,6 +123,24 @@ const router = new VueRouter({
       meta: {
         auth: true
       }
+    },
+    {
+      path: '/user/:nickname/post/:post_id',
+      name: 'post_content',
+      component: Blog,
+      meta: {
+        auth: false,
+      },
+      props: true
+    },
+    {
+      path: '/user/:nickname',
+      name: 'user_blog',
+      component: User,
+      meta: {
+        auth: false
+      },
+      props: true
     }
   ]
 });
