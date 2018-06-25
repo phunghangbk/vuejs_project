@@ -38,6 +38,11 @@
   import VueLazyload from 'vue-lazyload'
   import axios from 'axios'
   import * as api from '../../store/api.js'
+  import Toasted from 'vue-toasted'
+
+  Vue.use(Toasted, {
+    iconPack : 'material'
+  })
 
   Vue.use(VueLazyload)
   export default {
@@ -82,6 +87,19 @@
         })
         .catch (error => {
           console.log(error)
+          Vue.toasted.show('Cannot find this user.Please check user nickename in url.', { 
+            theme: "bubble", 
+            position: "top-center", 
+            duration : 5000,
+            type: 'error',
+            icon: 'error',
+            action: {
+              text: 'Close',
+                onClick : (e, toastObject) => {
+                  toastObject.goAway(0);
+                }
+            }
+          })
         })
       },
 

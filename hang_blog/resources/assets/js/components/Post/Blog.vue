@@ -1,6 +1,32 @@
 <template>
   <div id="blog">
     <profile :nickname-parameter="nickname"></profile>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-10 col-lg-8">
+          <div class="row justify-content-center">
+            <div v-if="loaded" class="title col-xs-12">
+              {{post.title}}
+            </div>
+          </div>
+          <div>
+            <hr>
+          </div>
+          <div class="row justify-content-center">
+            <div v-if="loaded" class="image col-xs-12">
+              <img :src="getImg(post.image)" height="500" width="350" class="img-fluid">
+            </div>
+          </div>
+          <div>
+            <hr>
+          </div>
+          <div class="row justify-content-center">
+            <div v-if="loaded" class="content col-xs-12" v-html="post.content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,7 +49,8 @@
     },
     data() {
       return {
-        post: []
+        post: null,
+        loaded: false,
       }
     },
     created() {
@@ -38,10 +65,15 @@
         })
         .then (resp => {
           console.log(resp)
+          this.loaded = true
+          this.post = resp.data.post[0]
         })
         .catch (error => {
-
+          console.log(error)
         })
+      },
+      getImg(name) {
+        return '/post/images/' + name;
       }
     },
     components: {
@@ -50,6 +82,11 @@
   }
 </script>
 
-<style>
-  
+<style scoped>
+hr {
+  border: none;
+  height: 4px;
+  color: #28a745;
+  background-color: #28a745;
+}
 </style>
