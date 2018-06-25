@@ -89,7 +89,7 @@
             this.custom_errors = resp.data.errors;
           } else if (resp.data.status == 'success') {
             localStorage.setItem('user', JSON.stringify(resp.data.user));
-            this.$router.push('/dashboard');
+            this.$router.push('/user/' + resp.data.user.nickname);
             this.success = true;
           } else {
             this.error = true;

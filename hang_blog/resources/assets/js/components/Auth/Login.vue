@@ -40,6 +40,7 @@
       return {
         loader: false,
         infoError: false,
+        user: null,
         email: '',
         password: '',
         message: 'There was an error, unable to sign in with those credentials.'
@@ -47,7 +48,8 @@
     },
     beforeCreate () {
       if (this.$store.state.isLogged) {
-        this.$router.push('/dashboard')
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.$router.push('/user/' + this.user.nickname);
       }
     },
     methods: {
@@ -62,7 +64,7 @@
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             this.$store.commit('LOGIN_USER');
-            this.$router.push('/dashboard');
+            this.$router.push('/user/' + response.data.user.nickname);
           } else {
             this.infoError = true;
             this.message = response.data.msg;

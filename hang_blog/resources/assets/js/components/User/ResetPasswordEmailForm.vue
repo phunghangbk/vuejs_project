@@ -45,7 +45,8 @@
     },
     beforeCreate () {
       if (this.$store.state.isLogged) {
-        this.$router.push('/dashboard')
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.$router.push('/user/' + this.user.nickname);
       }
     },
     methods: {

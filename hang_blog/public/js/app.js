@@ -37420,7 +37420,8 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
   },
   beforeCreate: function beforeCreate() {
     if (this.$store.state.isLogged) {
-      this.$router.push('/dashboard');
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.$router.push('/user/' + this.user.nickname);
     }
   },
 
@@ -38104,6 +38105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       loader: false,
       infoError: false,
+      user: null,
       email: '',
       password: '',
       message: 'There was an error, unable to sign in with those credentials.'
@@ -38111,7 +38113,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   beforeCreate: function beforeCreate() {
     if (this.$store.state.isLogged) {
-      this.$router.push('/dashboard');
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.$router.push('/user/' + this.user.nickname);
     }
   },
 
@@ -38129,7 +38132,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data.user));
           _this.$store.commit('LOGIN_USER');
-          _this.$router.push('/dashboard');
+          _this.$router.push('/user/' + response.data.user.nickname);
         } else {
           _this.infoError = true;
           _this.message = response.data.msg;
@@ -39008,7 +39011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(resp);
         if (resp.data.status == 'success') {
           localStorage.setItem('user', JSON.stringify(resp.data.user));
-          _this2.$router.push('/dashboard');
+          _this2.$router.push('/user/' + resp.data.user.nickname);
           _this2.success = true;
         } else {
           _this2.error = true;
@@ -39406,7 +39409,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
           _this.custom_errors = resp.data.errors;
         } else if (resp.data.status == 'success') {
           localStorage.setItem('user', JSON.stringify(resp.data.user));
-          _this.$router.push('/dashboard');
+          _this.$router.push('/user/' + resp.data.user.nickname);
           _this.success = true;
         } else {
           _this.error = true;
@@ -40327,7 +40330,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   beforeCreate: function beforeCreate() {
     if (this.$store.state.isLogged) {
-      this.$router.push('/dashboard');
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.$router.push('/user/' + this.user.nickname);
     }
   },
 
@@ -40673,7 +40677,8 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
   },
   beforeCreate: function beforeCreate() {
     if (this.$store.state.isLogged) {
-      this.$router.push('/dashboard');
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.$router.push('/user/' + this.user.nickname);
     }
   },
   created: function created() {
