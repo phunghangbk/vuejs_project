@@ -29,6 +29,25 @@
           </span>
         </div>
         </div>
+        <div v-if="is_signedin && loaded" class="editButton btn btn-success">
+            <a href="/update_profile">
+              <i class="fa fa-edit"></i>
+              Edit Profile
+            </a>
+        </div>
+
+        <div class="listButtonBar">
+          <div class="btn-group" role="group">
+            <a v-if="is_signedin && loaded" href="/post/create" class="writeButton btn">
+              <i class="fa fa-plus-circle"></i>
+              Write
+            </a>
+            <a v-if="loaded" :href="listURL(nickname)" class="listButton btn">
+              <i class="fa fa-list-alt"></i>
+              Posted List
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -107,6 +126,9 @@
         return '/' + type + '/' + name;
       },
 
+      listURL(nickname) {
+        return '/user/' + nickname;
+      },
       update_avatar() {
         axios.post(api.update_profile, {
           avatar_image: this.change_avatar ? this.avatarTemp : '',
@@ -228,6 +250,7 @@
     position: relative;
     width: 160px;
     border: 4px solid #fff;
+    z-index: 10;
   }
 
   .nickname {
@@ -266,5 +289,44 @@
     position:  absolute;
     top: 200px;
     color: white;
+    z-index: 100;
+  }
+  .editButton > a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .editButton {
+    position: absolute;
+    right: 40px;
+    top: 256px;
+    color: white;
+    background-clip: padding-box;
+    border-color: rgba(0, 0, 0, .4);
+    background-color: #28a745;
+    border-radius: 3px;
+  }
+
+  .editButton > a { 
+    padding: 10px;
+  }
+
+  a.writeButton, a.listButton {
+    text-decoration: none;
+    color: #6c757d;
+    height: 85%;
+    padding-top: 9px;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px;
+  }
+
+  .listButtonBar {
+    height: 52px;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    top: 306px;
+  }
+  a.writeButton:hover, a.listButton:hover {
+    background: #28a745;
   }
 </style>

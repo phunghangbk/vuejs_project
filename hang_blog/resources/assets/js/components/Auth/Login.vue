@@ -18,7 +18,11 @@
             <div class="alert-danger" v-if="infoError">
               <p>{{message}}</p>
             </div>
+            <div>
+              <router-link :to="{ name: 'password_reset_form' }">Forget password?</router-link>
+            </div>
             <button type="submit" class="action-button">Sign in</button>
+            <router-view></router-view>
           </fieldset>
         </form>
       </div>

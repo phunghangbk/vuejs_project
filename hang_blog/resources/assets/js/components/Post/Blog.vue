@@ -6,7 +6,9 @@
         <div class="col-xs-12 col-sm-10 col-lg-8">
           <div class="row justify-content-center">
             <div v-if="loaded" class="title col-xs-12">
-              {{post.title}}
+              <h1>
+                {{post.title}}
+              </h1>
             </div>
           </div>
           <div>
@@ -14,13 +16,13 @@
           </div>
           <div class="row justify-content-center">
             <div v-if="loaded" class="image col-xs-12">
-              <img :src="getImg(post.image)" height="500" width="350" class="img-fluid">
+              <img v-lazy="{src: getImg(post.image), loading: lazyload.loading, error: lazyload.error}" height="500" width="350" class="img-fluid">
             </div>
           </div>
           <div>
             <hr>
           </div>
-          <div class="row justify-content-center">
+          <div class="row">
             <div v-if="loaded" class="content col-xs-12" v-html="post.content">
             </div>
           </div>
@@ -51,6 +53,10 @@
       return {
         post: null,
         loaded: false,
+        lazyload: {
+          error: '/images/post_image.jpg',
+          loading: '/images/loading.gif'
+        },
       }
     },
     created() {
@@ -88,5 +94,12 @@ hr {
   height: 4px;
   color: #28a745;
   background-color: #28a745;
+}
+
+.title {
+  font-family: "Libre Baskerville",Georgia,serif;
+  font-size: 28px;
+  line-height: 1.25;
+  margin-top: 10px;
 }
 </style>

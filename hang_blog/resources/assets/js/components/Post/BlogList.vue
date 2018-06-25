@@ -2,8 +2,8 @@
   <div id="blogList">
     <div class="container">
       <div class="row justify-content-around">
-        <div class="col-xs-12 col-lg-6 col-sm-6 postContent" v-for="item in list">
-          <a href="">
+        <div class="col-xs-12 col-lg-6 col-sm-6 postContent" style="padding: 0px 10px;" v-for="item in list">
+          <a v-if="loaded" :href="detailURL(item.post_id)">
             <div class="image">
               <img v-show="loaded" v-lazy="{src: getImg(item.image), loading: lazyload.loading, error: lazyload.error}" height="500" width="350" class="img-fluid" />
             </div>
@@ -47,9 +47,6 @@
         is_busy: false
       }
     },
-    // beforeMount() {
-    //   this.infiniteHandler();
-    // },
     methods: {
       infiniteHandler() {
         axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
@@ -113,6 +110,9 @@
       },
       getImg(name) {
         return '/post/images/' + name;
+      },
+      detailURL(post_id) {
+        return '/user/' + this.nickname + '/post/' + post_id;
       }
     },
     mounted() {
@@ -130,6 +130,8 @@
     color: #666;
     font-family: "Libre Baskerville",Georgia,serif;
     font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   .postContent {

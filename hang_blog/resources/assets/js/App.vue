@@ -24,6 +24,23 @@
               Login
             </router-link>
           </li>
+
+          <li class="nav-item dropdown" v-if="$store.state.isLogged">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: left;">
+              Setting
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <router-link class="dropdown-item" @click.native="closeMenu()" :to="{ name: 'update_profile' }">
+                Update Profile
+              </router-link>
+              <router-link class="dropdown-item" @click.native="closeMenu()" :to="{ name: 'update_password' }">
+                Update Password
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+
           <li class="nav-item" v-if="$store.state.isLogged">
             <router-link @click.native="closeMenu()" :to="{ name: 'logout' }" class="nav-link">
               Logout
@@ -116,7 +133,7 @@
   html, body {
     height: 100%;
     margin: 0;
-    padding: 40px 0 0 0;
+    padding: 10px 0 0 0;
   }
 
   #footer {
