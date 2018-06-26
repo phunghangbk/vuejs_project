@@ -15,4 +15,6 @@ export const reset_action = url('/password/reset_action')
 export const post_create = url('/post/create')
 export const post_list = url('/post/list')
 export const post = url('/post/')
+export const post_update = url('/post/update/')
+export const post_delete = url('/post/delete/')
 

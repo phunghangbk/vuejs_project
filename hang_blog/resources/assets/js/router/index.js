@@ -15,6 +15,8 @@ import ResetPassword from '../components/User/ResetPassword.vue';
 import InsertPostForm from '../components/Post/InsertPostForm.vue';
 import User from '../components/User/User.vue';
 import Blog from '../components/Post/Blog.vue';
+import UpdatePostForm from '../components/Post/UpdatePostForm.vue';
+import DeletePost from '../components/Post/DeletePost.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -139,6 +141,24 @@ const router = new VueRouter({
       component: User,
       meta: {
         auth: false
+      },
+      props: true
+    },
+    {
+      path: '/post/:post_id/update',
+      name: 'post_update',
+      component: UpdatePostForm,
+      meta: {
+        auth: true
+      },
+      props: true
+    },
+    {
+      path: '/post/:post_id/delete',
+      name: 'post_delete',
+      component: DeletePost,
+      meta: {
+        auth: true
       },
       props: true
     }

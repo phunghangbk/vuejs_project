@@ -67,14 +67,134 @@ class PostController extends Controller
         }
     }
 
+    public function delete($post_id)
+    {
+        $user = Auth::user();
+        if (empty($user)) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['error' => config('application.delete_permission')]
+            ]);
+        }
+
+        if (empty($post_id)) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['error' => config('application.cannot_delete_post')]
+            ]);
+        }
+
+        try {
+            Post::where('post_id', $post_id)->where('user_id', $user->user_id)->delete();
+            return response()->json([
+                'status' => config('application.response_status')['success'],
+                'errors' => []
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['error' => $e->getMessage()]
+            ]);
+        }
+    }
+
+    public function update($post_id, Request $request) 
+    {
+        $user = Auth::user();
+        if (empty($user)) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => ['error' => config('application.update_permission')],
+                'post' => null
+            ]);
+        }
+
+        if (empty($post_id)) {
+            return response()->json([
+                'status' => config(['application.response_status'])['error'],
+                'errors' => ['error' => config('application.cannot_update_post')],
+                'post' => null
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => config('application.response_status')['error'],
+                'errors' => $validator->errors(),
+                'post' => null
+            ]);
+        }
+
+        try {
+            $post = Post::where('post_id', $post_id)->where('user_id', $user->user_id)->first();
+            if (empty($post)) {
+                return response()->json([
+                    'status' => config(['application.response_status'])['error'],
+                    'errors' => ['error' => config('application.cannot_update_post')],
+                    'post' => null
+                ]);
+            }
+
+            if (! empty($request->title)) {
+                $post->title = $request->title;
+            }
+
+            if (! empty($request->status)) {
+                $post->status = $request->status;
+            }
+
+            if (! empty($request->introduction)) {
+                $post->introduction = $request->introduction;
+            }
+
+            if (! empty($request->image)) {
+                $image_name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+                $image = \Image::make($request->image);
+                $image->resize(300,350);
+                $image->save(public_path('post/images/') . $image_name);
+                $post->image = $image_name;
+            }
+
+            if (! empty($request->content)) {
+                $post->content = $request->content;
+            }
+
+            if (! empty($request->title) || 
+                ! empty($request->status) ||
+                ! empty($request->introduction) ||
+                ! empty($request->image) ||
+                ! empty($request->content)
+            ) {
+                $post->save();
+            }
+            return response()->json([
+                'status' => config('application.response_status')['success'],
+                'errors' => [],
+                'post' => $post
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => config(['application.response_status'])['error'],
+                'errors' => ['error' => config('application.cannot_update_post')],
+                'post' => null
+            ]);
+        }
+    }
+
     public function getPost($post_id, Request $request)
     {
         try {
             $user = User::with(['posts' => function ($query) use ($post_id) {
                 $query->where('post_id', $post_id);
             }])->where('nickname', $request->nickname)->first();
+            \Log::info(json_encode($request));
             $post = $user->posts;
-            if (empty($post)) {
+
+            if (empty($post) || $post == '[]') {
                 return response()->json([
                     'status' => config('application.response_status')['error'],
                     'errors' => ['post_id' => config('application.has_no_post')],

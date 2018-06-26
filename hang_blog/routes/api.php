@@ -22,6 +22,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::post('/update_profile', 'UserController@updateProfile');
   Route::post('/update_password', 'UserController@updatePassword');
   Route::post('post/create', 'Post\PostController@create');
+  Route::post('post/update/{post_id}', 'Post\PostController@update');
+  Route::post('post/delete/{post_id}', 'Post\PostController@delete');
 });
 
 Route::group(['middleware' => 'jwt.refresh'], function(){

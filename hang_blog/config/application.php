@@ -18,5 +18,9 @@ return [
     'nickname_duplicate' => 'Nickname is duplicate',
     'has_no_post' => 'Cannot find this post.',
     'permission' => 'You must logging in to post article',
-    'has_no_user' => 'Cannot find this user post'
+    'has_no_user' => 'Cannot find this user post',
+    'cannot_delete_post' => 'Cannot delete this post.',
+    'delete_permission' => 'You cannot delete this post.',
+    'update_permission' => 'You cannot update this post.',
+    'cannot_update_post' => 'Cannot update this post.'
 ];

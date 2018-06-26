@@ -5,7 +5,7 @@
         <div :class="{'has-error': error && custom_errors.title}">
           <div class="title form-group row form-inline">
             <label class="col-sm-2 col-form-label">Title</label>
-            <input type="text" class="col-sm-8 title_content form-control" id="title_content" v-model="title">
+            <input type="text" class="col-sm-8 title_content form-control" id="title_content" v-model="title" @change="titleChange">
           </div>
           <span class="help-block" v-if="error && custom_errors.title">{{custom_errors.title[0]}}</span>
         </div>
@@ -13,6 +13,9 @@
         <div :class="{'has-error': error && custom_errors.image}">
           <div class="image" v-if="image">
             <img :src="image" class="img-responsive" height="70" width="90">
+          </div>
+          <div class="image" v-if="temp_image && ! image">
+            <img :src="'/post/images/'+temp_image" class="img-responsive" height="70" width="90">
           </div>
           <div class="form-group row form-inline" @change="onImageChange">
             <label class="col-sm-2 justify-content-center col-form-label">Image</label>
@@ -26,7 +29,7 @@
         <div :class="{'has-error': error && custom_errors.introduction}">
           <div class="introduction form-group row form-inline">
             <label class="col-sm-2 col-form-label">Introduction</label>
-            <textarea class="col-sm-8 form-control" id="introduction" v-model="introduction"></textarea>
+            <textarea class="col-sm-8 form-control" id="introduction" v-model="introduction" @change="introductionChange"></textarea>
           </div>
           <span class="help-block" v-if="error && custom_errors.introduction">{{custom_errors.introduction[0]}}</span>
         </div>
@@ -36,11 +39,11 @@
             <label class="col-sm-2 col-form-label">Status</label>
             <div class="col-sm-8">
               <div class="form-check form-check-inline">
-                <input type="radio" name="status" class="form-check-input" id="statusPublish" value="1" v-model="status">
+                <input type="radio" name="status" class="form-check-input" id="statusPublish" value="1" v-model="status" @change="statusChange">
                 <label class="form-check-label" for="statusPublish">Publish</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="status" class="form-check-input" id="statusOnlyme" value="2" v-model="status">
+                <input type="radio" name="status" class="form-check-input" id="statusOnlyme" value="2" v-model="status" @change="statusChange">
                 <label class="form-check-label" for="statusOnlyme">Only me</label>
               </div>
             </div>
@@ -54,18 +57,19 @@
                         :options="editorOption"
                         @blur="onEditorBlur($event)"
                         @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
+                        @ready="onEditorReady($event)"
+                        @change="contentChange">
           </quill-editor>
           <span class="help-block" v-if="error && custom_errors.content">{{custom_errors.content[0]}}</span>
         </div>
 
         <div class="col-xs-12 submitButton">
-          <button type="button" class="btn btn-success" @click="createPost">Submit</button>
+          <button type="button" class="btn btn-success" @click="updatePost">Submit</button>
         </div>
       </div>
       <div v-if="success">
         <span style="color: green;">
-          Post article successfully!!
+          Update article successfully!!
         </span>
       </div>
     </div>
@@ -73,16 +77,14 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import axios from 'axios'
   import * as api from '../../store/api.js'
-  import Vue from 'vue'
   import Quill from 'quill'
   import { quillEditor } from 'vue-quill-editor'
   import { ImageResize } from 'quill-image-resize-module'
   import { ImageDrop } from 'quill-image-drop-module'
   import Toasted from 'vue-toasted'
-  Quill.register('modules/imageResize', ImageResize)
-  Quill.register('modules/imageDrop', ImageDrop)
 
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
@@ -91,20 +93,31 @@
   Vue.use(Toasted, {
     iconPack : 'material'
   })
+
   export default {
-    components: {
-      quillEditor
+    props: {
+      post_id: {
+        required: true
+      }
     },
     data () {
       return {
+        user_id: null,
+        nickname: null,
         content: null,
         title: null,
         status: 1,
         image: null,
+        temp_image: null,
         introduction: null,
         success: false,
         error: false,
         custom_errors: [], 
+        titlechange: false,
+        imagechange: false,
+        introductionchange: false,
+        statuschange: false,
+        contentchange: false,
         editorOption: {
           modules: {
             toolbar: [
@@ -144,33 +157,84 @@
       }
     },
 
+    beforeCreate () {
+      if (! this.$store.state.isLogged) {
+        this.$router.push('/login')
+      }
+    },
+
+    created () {
+      let user = JSON.parse(localStorage.getItem('user'))
+      this.user_id = user.user_id
+      this.nickname = user.nickname
+      console.log(this.nickname)
+      this.fetchData()
+    },
+
     methods: {
-      onEditorBlur(quill) {
-        console.log('editor blur!', quill)
-      },
-      onEditorFocus(quill) {
-        console.log('editor focus!', quill)
-      },
-      onEditorReady(quill) {
-        console.log('editor ready!', quill)
-      },
-      onEditorChange({ quill, html, text }) {
-        console.log('editor change!', quill, html, text)
-        this.content = html
-      },
-      createPost() {
-        axios.post(api.post_create, {
-          title: this.title,
-          image: this.image,
-          introduction: this.introduction,
-          status: this.status,
-          content: this.content
+      fetchData() {
+        axios.get(api.post + this.post_id, {
+          params: {
+            nickname: this.nickname
+          }
         })
-        .then(resp => {
-          console.log(resp);
+        .then (resp => {
+          console.log(resp)
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
-            this.success = true
-            Vue.toasted.show('Post article successfully!!', { 
+            this.loaded = true
+            let post = resp.data.post[0]
+            this.title = post.title
+            this.temp_image = post.image
+            this.introduction = post.introduction
+            this.status = post.status
+            this.content = post.content
+          } else {
+            this.error = true
+            this.custom_errors = resp.data.errors
+            Vue.toasted.show('Cannot find the post with id is ' + this.post_id, { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000,
+              type: 'error',
+              icon: 'error',
+              action: {
+                text: 'Close',
+                  onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+              }
+            })
+          }          
+        })
+        .catch (error => {
+          console.log(error)
+          Vue.toasted.show('Cannot find the post with id is ' + this.post_id, { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000,
+              type: 'error',
+              icon: 'error',
+              action: {
+                text: 'Close',
+                  onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+              }
+            })
+        })
+      },
+      updatePost() {
+        axios.post(api.post_update + this.post_id, {
+          title: this.titlechange ? this.title : '',
+          image: this.imagechange ? this.image : '',
+          introduction: this.introductionchange ? this.introduction : '',
+          status: this.statuschange ? this.status : '',
+          content: this.contentchange ? this.content : ''
+        })
+        .then (resp => {
+          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+            this.success = true;
+            Vue.toasted.show('Update article successfully!!', { 
               theme: "bubble", 
               position: "top-center", 
               duration : 5000,
@@ -184,12 +248,9 @@
               }
             })
           } else {
-            this.error = true;
-            if (typeof resp.data.errors != 'undefined') {
-              this.custom_errors = resp.data.errors;
-            }
-            
-            Vue.toasted.show('There was an error, unable to complete post article.', { 
+            this.error = true
+            this.custom_errors = resp.data.errors
+            Vue.toasted.show('An error has occurred. Cannot update this article', { 
               theme: "bubble", 
               position: "top-center", 
               duration : 5000,
@@ -204,37 +265,67 @@
             })
           }
         })
-        .catch(error => {
-          this.error = true
-          Vue.toasted.show('There was an error, unable to complete post article.', { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 5000,
-              type: 'error',
-              icon: 'error',
-              action: {
-                text: 'Close',
-                  onClick : (e, toastObject) => {
-                    toastObject.goAway(0);
-                  }
-              }
-            })
-          console.log(error.response)
+        .catch (error => {
+          console.log(error)
+          Vue.toasted.show('An error has occurred. Cannot update this article', { 
+            theme: "bubble", 
+            position: "top-center", 
+            duration : 5000,
+            type: 'error',
+            icon: 'error',
+            action: {
+              text: 'Close',
+                onClick : (e, toastObject) => {
+                  toastObject.goAway(0);
+                }
+            }
+          })
         })
+      },
+      onEditorBlur(quill) {
+        console.log('editor blur!', quill)
+      },
+      onEditorFocus(quill) {
+        console.log('editor focus!', quill)
+      },
+      onEditorReady(quill) {
+        console.log('editor ready!', quill)
+      },
+      onEditorChange({ quill, html, text }) {
+        console.log('editor change!', quill, html, text)
+        this.content = html
       },
       onImageChange(event) {
         let files = event.target.files || event.dataTransfer.files;
         if (! files.length) {
           return;
         }
+        this.imagechange = true;
         let reader = new FileReader();
         let vm = this;
         reader.onload = (e) => {
           vm["image"] = e.target.result;
         };
         reader.readAsDataURL(files[0]);
+      },
+      titleChange() {
+        console.log('titlechange')
+        this.titlechange = true
+      },
+      introductionChange() {
+        console.log('introductionchange')
+        this.introductionchange = true;
+      },
+      statusChange() {
+        console.log('statuschange')
+        this.statuschange = true;
+      },
+      contentChange() {
+        console.log('contentchange')
+        this.contentchange = true;
       }
     },
+
     computed: {
       editor() {
         return this.$refs.myQuillEditor.quill
@@ -242,6 +333,9 @@
     },
     mounted() {
       console.log('this is current quill instance object', this.editor)
+    },
+    components: {
+      quillEditor
     }
   }
 </script>

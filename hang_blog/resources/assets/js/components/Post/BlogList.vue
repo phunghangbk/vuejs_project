@@ -2,7 +2,7 @@
   <div id="blogList">
     <div class="container">
       <div class="row justify-content-around">
-        <div class="col-xs-12 col-lg-6 col-sm-6 postContent" style="padding: 0px 10px;" v-for="item in list">
+        <div class="col-xs-12 col-lg-6 col-sm-6 postContent" style="padding: 0px 10px;" v-for="(item, index) in list">
           <a v-if="loaded" :href="detailURL(item.post_id)">
             <div class="image">
               <img v-show="loaded" v-lazy="{src: getImg(item.image), loading: lazyload.loading, error: lazyload.error}" height="500" width="350" class="img-fluid" />
@@ -12,6 +12,36 @@
               {{item.introduction}}
             </div>
           </a>
+          <div v-if="loaded && is_signedin" class="btn updateButton">
+            <a :href="'/post/' + item.post_id + '/update'">
+              <i class="fas fa-pencil-alt"></i>
+              Update
+            </a>
+          </div>
+          <div v-if="loaded && is_signedin" class="btn deleteButton" data-toggle="modal" :data-target="'#deleteModal' + index">
+            <i class="fas fa-trash"></i>
+            Delete
+          </div>
+          <delete-post ref="deletePostComponent" :post-id="item.post_id"></delete-post>
+          <div class="modal fade" :id="'deleteModal'+index" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Warnning: Cannot restore after delete action.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost(index)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -24,6 +54,7 @@
   import axios from 'axios'
   import * as api from '../../store/api.js'
   import infiniteScroll from 'vue-infinite-scroll'
+  import DeletePost from './DeletePost'
   Vue.use(infiniteScroll)
 
   export default {
@@ -44,8 +75,17 @@
         },
         loaded: false,
         page: 1,
-        is_busy: false
+        is_busy: false,
+        is_signedin: false
       }
+    },
+    created() {
+      if (this.$store.state.isLogged) {
+        this.is_signedin = true
+      }
+    },
+    components: {
+      DeletePost
     },
     methods: {
       infiniteHandler() {
@@ -113,6 +153,10 @@
       },
       detailURL(post_id) {
         return '/user/' + this.nickname + '/post/' + post_id;
+      },
+      deletePost(index) {
+        console.log(this.$refs)
+        this.$refs.deletePostComponent[index].delete()
       }
     },
     mounted() {
@@ -153,5 +197,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .updateButton > a, .deleteButton > a {
+    text-decoration: none;
+    color: #6c757d;
+  }
+
+  .updateButton, .deleteButton {
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px;
+  }
+
+  .updateButton:hover, .deleteButton:hover {
+    background-color: #11902e;
   }
 </style>

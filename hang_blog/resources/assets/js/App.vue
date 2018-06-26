@@ -24,7 +24,11 @@
               Login
             </router-link>
           </li>
-
+          <li class="nav-item" v-if="$store.state.isLogged && user">
+            <router-link @click.native="closeMenu()" :to="'/user/' + user.nickname" class="nav-link">
+              Article List
+            </router-link>
+          </li>
           <li class="nav-item dropdown" v-if="$store.state.isLogged">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: left;">
               Setting
@@ -40,7 +44,7 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
-
+          
           <li class="nav-item" v-if="$store.state.isLogged">
             <router-link @click.native="closeMenu()" :to="{ name: 'logout' }" class="nav-link">
               Logout
@@ -68,6 +72,13 @@
           open: false,
         },
         scrollState: 0,
+        user: null
+      }
+    },
+    mounted() {
+      if (this.$store.state.isLogged) {
+        this.user = JSON.parse(localStorage.getItem('user'));
+        console.log(this.user.nickname);
       }
     },
     methods: {

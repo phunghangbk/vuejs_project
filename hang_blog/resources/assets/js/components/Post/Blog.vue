@@ -1,9 +1,46 @@
 <template>
   <div id="blog">
     <profile :nickname-parameter="nickname"></profile>
-    <div class="container">
+    <div class="container custom-container">
       <div class="row justify-content-center">
-        <div class="col-xs-12 col-sm-10 col-lg-8">
+        <div v-if="!is_error" class="col-xs-12 col-sm-10 col-lg-8">
+          <div class="row justify-content-end">
+            <div class="dropdown">
+              <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog" id="dropdownMenu"></i>
+                Setting
+              </div>
+              
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <a :href="'/post/' + post_id + '/update'" class="dropdown-item">Update</a>
+                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#deleteModal">Delete</a>
+              </div>
+              <delete-post ref="deletePostComponent" :post-id="post_id"></delete-post>
+            </div>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Warnning: Cannot restore after delete action.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div>
+            <hr>
+          </div>
           <div class="row justify-content-center">
             <div v-if="loaded" class="title col-xs-12">
               <h1>
@@ -16,16 +53,21 @@
           </div>
           <div class="row justify-content-center">
             <div v-if="loaded" class="image col-xs-12">
-              <img v-lazy="{src: getImg(post.image), loading: lazyload.loading, error: lazyload.error}" height="500" width="350" class="img-fluid">
+              <img v-lazy="{src: getImg(post.image), loading: lazyload.loading, error: lazyload.error}" class="img-fluid">
             </div>
           </div>
           <div>
             <hr>
           </div>
           <div class="row">
-            <div v-if="loaded" class="content col-xs-12" v-html="post.content">
+            <div v-if="loaded" style="text-align: left;" class="content col-xs-12" v-html="post.content">
             </div>
           </div>
+        </div>
+        <div v-if="is_error">
+          <span class="help-block">
+            {{error}}
+          </span>
         </div>
       </div>
     </div>
@@ -38,6 +80,7 @@
   import axios from 'axios'
   import * as api from '../../store/api.js'
   import Profile from '../User/Profile'
+  import DeletePost from './DeletePost'
 
   export default {
     name: 'Blog',
@@ -57,6 +100,8 @@
           error: '/images/post_image.jpg',
           loading: '/images/loading.gif'
         },
+        error: '',
+        is_error: false
       }
     },
     created() {
@@ -71,19 +116,35 @@
         })
         .then (resp => {
           console.log(resp)
-          this.loaded = true
-          this.post = resp.data.post[0]
+          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+            this.loaded = true
+            this.post = resp.data.post[0]
+          } else {
+            this.is_error = true
+            if (typeof resp.data.errors != 'undefined' && resp.data.errors['post_id']) {
+              this.error += resp.data.errors['post_id'] + '\n';
+            }
+
+            if (typeof resp.data.errors != 'undefined' && resp.data.errors['error']) {
+              this.error += resp.data.errors['error'] + '\n';
+            }
+          }
         })
         .catch (error => {
-          console.log(error)
+          this.is_error = true
+          this.error = 'An error has occured. Cannot load this post. Please try later.';
         })
       },
       getImg(name) {
         return '/post/images/' + name;
+      },
+
+      deletePost() {
+        this.$refs.deletePostComponent.delete()
       }
     },
     components: {
-      Profile
+      Profile, DeletePost
     }
   }
 </script>
@@ -101,5 +162,12 @@ hr {
   font-size: 28px;
   line-height: 1.25;
   margin-top: 10px;
+}
+
+.custom-container {
+  min-height: 100vh;
+}
+span {
+  color: red;
 }
 </style>
