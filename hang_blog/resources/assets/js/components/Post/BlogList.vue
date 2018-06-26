@@ -22,26 +22,30 @@
             <i class="fas fa-trash"></i>
             Delete
           </div>
+          <!-- <div v-if="loaded && $store.state.isLogged" class="likeButton btn" :class="{'btn-primary': liked}" @click="toggleLike(item.post_id)">
+            <i class="fa fa-thumbs-o-up"></i> 
+              {{ likesCount(item.post_id) }}
+          </div> -->
           <delete-post ref="deletePostComponent" :post-id="item.post_id"></delete-post>
           <div class="modal fade" :id="'deleteModal'+index" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Warnning: Cannot restore after delete action.
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost(index)">Delete</button>
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Warnning: Cannot restore after delete action.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost(index)">Delete</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -76,13 +80,13 @@
         loaded: false,
         page: 1,
         is_busy: false,
-        is_signedin: false
+        is_signedin: false,
+        user: null,
+        temp_user: null,
       }
     },
     created() {
-      if (this.$store.state.isLogged) {
-        this.is_signedin = true
-      }
+      this.getUserInfo()
     },
     components: {
       DeletePost
@@ -157,6 +161,27 @@
       deletePost(index) {
         console.log(this.$refs)
         this.$refs.deletePostComponent[index].delete()
+      },
+      
+      getUserInfo() {
+        axios.get(api.user+'?nickname='+this.nickname)
+        .then (resp => {
+          console.log(resp)
+          if (resp.data.user) {
+            this.user = resp.data.user
+            console.log(this.user.user_id)
+            if (this.$store.state.isLogged) {
+              this.temp_user = JSON.parse(localStorage.getItem('user'))
+              if (this.user.user_id == this.temp_user.user_id) {
+                console.log('hang')
+                this.is_signedin = true
+              }
+            }
+          }
+        })
+        .catch (error => {
+          console.log(error)
+        })
       }
     },
     mounted() {
@@ -204,7 +229,7 @@
     color: #6c757d;
   }
 
-  .updateButton, .deleteButton {
+  .updateButton, .deleteButton, .likeButton {
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px;
   }
 

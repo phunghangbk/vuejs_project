@@ -17,4 +17,7 @@ export const post_list = url('/post/list')
 export const post = url('/post/')
 export const post_update = url('/post/update/')
 export const post_delete = url('/post/delete/')
+export const post_like = url('post/like')
+export const post_checkLiked = url('post/checkLiked')
+export const post_likesCount = url('post/likesCount')
 

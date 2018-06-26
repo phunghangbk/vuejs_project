@@ -5,7 +5,7 @@
       <div class="row justify-content-center">
         <div v-if="!is_error" class="col-xs-12 col-sm-10 col-lg-8">
           <div class="row justify-content-end">
-            <div class="dropdown">
+            <div v-if="loaded" class="dropdown">
               <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-cog" id="dropdownMenu"></i>
                 Setting

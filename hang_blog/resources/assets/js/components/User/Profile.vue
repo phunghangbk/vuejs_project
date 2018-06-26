@@ -44,7 +44,7 @@
             </a>
             <a v-if="loaded" :href="listURL(nickname)" class="listButton btn">
               <i class="fa fa-list-alt"></i>
-              Posted List
+              Article List
             </a>
           </div>
         </div>
@@ -73,6 +73,7 @@
     },
     data() {
       return {
+        user_id: null,
         nickname: '',
         avatar_image: '',
         cover_image: '',
@@ -92,17 +93,25 @@
     },
 
     created() {
-      this.is_signedin = this.$store.state.isLogged;
       this.fetchUserData();
     },
 
     methods: {
       fetchUserData() {
         axios.get(api.user+'?nickname='+this.nicknameParameter).then(resp => {
+          console.log(resp)
           this.nickname = resp.data.user.nickname ? resp.data.user.nickname : '';
           this.avatar_image = resp.data.user.avatar_image ? resp.data.user.avatar_image : '';
           this.cover_image = resp.data.user.cover_image ? resp.data.user.cover_image : '';
+          this.user_id = resp.data.user.user_id ? resp.data.user.user_id : ''
           this.loaded = true;
+
+          if (this.$store.state.isLogged) {
+            let temp_user = JSON.parse(localStorage.getItem('user'));
+            if (this.user_id == temp_user.user_id) {
+              this.is_signedin = true
+            }
+          }
         })
         .catch (error => {
           console.log(error)
