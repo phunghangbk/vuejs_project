@@ -15,12 +15,14 @@ class LikeController extends Controller
             $user = Auth::user();
             $postId = $request->postId;
             if (empty($postId) || empty($user)) {
+                \Log::info(1);
                 return response()->json([
                     'liked' => false
                 ]);
             }
 
             if (empty(Post::where('post_id', $postId)->first())) {
+                \Log::info(2);
                 return response()->json([
                     'liked' => false
                 ]);
@@ -30,6 +32,7 @@ class LikeController extends Controller
                 'post_id' => $postId
             ]);
         } catch (\Exception $e) {
+            \Log::info($e->getMessage());
             Like::where('post_id', $postId)->where('user_id', $user->user_id)->delete();
             return response()->json([
                 'liked' => false
@@ -45,6 +48,7 @@ class LikeController extends Controller
         $postId = $request->postId;
 
         if (empty($user) || empty($postId)) {
+            \Log::info(1);
             return response()->json([
                 'liked' => false
             ]);
@@ -53,11 +57,13 @@ class LikeController extends Controller
         try {
             $result = Like::where('user_id', $user->user_id)->where('post_id', $postId)->first();
             if (! empty($result)) {
+                \Log::info(2);
                 return response()->json([
                     'liked' => true
                 ]);
             }
         } catch (\Exception $e) {
+            \Log::info(3);
             return response()->json([
                 'liked' => false
             ]);

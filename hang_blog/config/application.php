@@ -22,5 +22,9 @@ return [
     'cannot_delete_post' => 'Cannot delete this post.',
     'delete_permission' => 'You cannot delete this post.',
     'update_permission' => 'You cannot update this post.',
-    'cannot_update_post' => 'Cannot update this post.'
+    'cannot_update_post' => 'Cannot update this post.',
+    'cannot_create_comment' => 'An error has occurred, cannot create your comment',
+    'comment_permission' => 'You must loggin to create/update/delete comment',
+    'cannot_update_comment' => 'An error has occurred, cannot update your comment',
+    'cannot_delete_comment' => 'An error has occurred, cannot delete your comment'
 ];

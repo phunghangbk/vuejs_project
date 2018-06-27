@@ -40,6 +40,7 @@
             postId: this.postId
           })
           .then(resp => {
+            console.log(resp)
             if (typeof resp.data.liked != 'undefined') {
               this.liked = resp.data.liked
             }
