@@ -25,65 +25,63 @@
       }
     },
 
-    beforeCreate() {
-      if (! this.$store.state.isLogged) {
-        this.$router.push('/login')
-      }
-    },
-
     methods: {
       delete() {
-        axios.post(api.post_delete + this.postId)
-        .then (resp => {
-          console.log(resp)
-          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
-            this.success = true;
-            Vue.toasted.show('Delete article successfully!!', { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 5000,
-              type: 'success',
-              icon: 'check',
-              action: {
-                text: 'Close',
-                  onClick : (e, toastObject) => {
-                    toastObject.goAway(0);
-                  }
-              }
-            })
-          } else {
+        if (! this.$store.state.isLogged) {
+          this.$router.push('/login')
+        } else {
+          axios.post(api.post_delete + this.postId)
+          .then (resp => {
+            console.log(resp)
+            if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+              this.success = true;
+              Vue.toasted.show('Delete article successfully!!', { 
+                theme: "bubble", 
+                position: "top-center", 
+                duration : 5000,
+                type: 'success',
+                icon: 'check',
+                action: {
+                  text: 'Close',
+                    onClick : (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                }
+              })
+            } else {
+              this.error = true
+              Vue.toasted.show(resp.data.errors['error'], { 
+                theme: "bubble", 
+                position: "top-center", 
+                duration : 5000,
+                type: 'error',
+                icon: 'error',
+                action: {
+                  text: 'Close',
+                    onClick : (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                }
+              })
+            }
+          })
+          .catch (error => {
             this.error = true
-            Vue.toasted.show(resp.data.errors['error'], { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 5000,
-              type: 'error',
-              icon: 'error',
-              action: {
-                text: 'Close',
-                  onClick : (e, toastObject) => {
-                    toastObject.goAway(0);
-                  }
-              }
-            })
-          }
-        })
-        .catch (error => {
-          this.error = true
-          Vue.toasted.show('An error has occurred. Cannot delete this article', { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 5000,
-              type: 'error',
-              icon: 'error',
-              action: {
-                text: 'Close',
-                  onClick : (e, toastObject) => {
-                    toastObject.goAway(0);
-                  }
-              }
-            })
-        })
+            Vue.toasted.show('An error has occurred. Cannot delete this article', { 
+                theme: "bubble", 
+                position: "top-center", 
+                duration : 5000,
+                type: 'error',
+                icon: 'error',
+                action: {
+                  text: 'Close',
+                    onClick : (e, toastObject) => {
+                      toastObject.goAway(0);
+                    }
+                }
+              })
+          })
+        }
       }
     }
   }

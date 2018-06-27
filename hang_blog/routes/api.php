@@ -37,8 +37,8 @@ Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'ResetPasswordController@reset');
 Route::post('password/reset_action', 'ResetPasswordController@reset_action');
 
-Route::get('post/list', 'Post\PostController@list');
-Route::get('post/{post_id}', 'Post\PostController@getPost');
+Route::get('posts', 'Post\PostController@list');
+Route::get('posts/{post_id}', 'Post\PostController@getPost');
 Route::get('post/checkLiked', 'Like\LikeController@isLiked');
 Route::get('post/likesCount', 'Like\LikeController@likesCount');
 

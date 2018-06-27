@@ -12,9 +12,9 @@ class LikeController extends Controller
     public function like(Request $request)
     {
         try { 
-            $userId = Auth::user();
+            $user = Auth::user();
             $postId = $request->postId;
-            if (empty($postId) || empty($userId)) {
+            if (empty($postId) || empty($user)) {
                 return response()->json([
                     'liked' => false
                 ]);
@@ -26,33 +26,32 @@ class LikeController extends Controller
                 ]);
             }
             Like::create([
-                'user_id' => $userId,
+                'user_id' => $user->user_id,
                 'post_id' => $postId
             ]);
-        catch (\Exception $e) {
-            Like::where('post_id', $postId)->where('user_id', $userId)->delete();
+        } catch (\Exception $e) {
+            Like::where('post_id', $postId)->where('user_id', $user->user_id)->delete();
             return response()->json([
                 'liked' => false
             ]);
         }
-
         return response()->json([
             'liked' => true
         ]);
     }
 
     public function isLiked(Request $request) {
-        $userId = Auth::user();
+        $user = Auth::user();
         $postId = $request->postId;
 
-        if (empty($userId) || empty($postId)) {
+        if (empty($user) || empty($postId)) {
             return response()->json([
                 'liked' => false
             ]);
         }
 
         try {
-            $result = Like::where('user_id', $userId)->where('post_id', $postId)->first();
+            $result = Like::where('user_id', $user->user_id)->where('post_id', $postId)->first();
             if (! empty($result)) {
                 return response()->json([
                     'liked' => true

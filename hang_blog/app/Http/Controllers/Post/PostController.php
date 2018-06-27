@@ -191,7 +191,6 @@ class PostController extends Controller
             $user = User::with(['posts' => function ($query) use ($post_id) {
                 $query->where('post_id', $post_id);
             }])->where('nickname', $request->nickname)->first();
-            \Log::info(json_encode($request));
             $post = $user->posts;
 
             if (empty($post) || $post == '[]') {
@@ -243,7 +242,6 @@ class PostController extends Controller
         } else {
             $list = Post::where('user_id', $user->user_id)->where('status', self::POST_PUBLISH)->paginate(self::PER_PAGE);
         }
-        \Log::info(json_encode($list));
         return response()->json([
             'status' => config('application.response_status')['success'],
             'errors' => [],

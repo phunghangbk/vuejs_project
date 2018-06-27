@@ -10,7 +10,7 @@
                 <i class="fas fa-cog" id="dropdownMenu"></i>
                 Setting
               </div>
-              
+              <like :post-id="post_id"></like>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <a :href="'/post/' + post_id + '/update'" class="dropdown-item">Update</a>
                 <a href="#" class="dropdown-item" data-toggle="modal" data-target="#deleteModal">Delete</a>
@@ -81,6 +81,7 @@
   import * as api from '../../store/api.js'
   import Profile from '../User/Profile'
   import DeletePost from './DeletePost'
+  import Like from '../Like/Like'
 
   export default {
     name: 'Blog',
@@ -115,7 +116,7 @@
           }
         })
         .then (resp => {
-          console.log(resp)
+          console.log(resp);
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.loaded = true
             this.post = resp.data.post[0]
@@ -144,7 +145,7 @@
       }
     },
     components: {
-      Profile, DeletePost
+      Profile, DeletePost, Like
     }
   }
 </script>
