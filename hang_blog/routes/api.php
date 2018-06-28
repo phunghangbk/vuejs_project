@@ -25,6 +25,9 @@ Route::group(['middleware' => 'jwt.auth'], function(){
   Route::post('post/update/{post_id}', 'Post\PostController@update');
   Route::post('post/delete/{post_id}', 'Post\PostController@delete');
   Route::post('post/like', 'Like\LikeController@like');
+  Route::post('comment/create', 'Comment\CommentController@create');
+  Route::post('comment/update/{commentId}', 'Comment\CommentController@update');
+  Route::post('comment/delete/{commentId}', 'Comment\CommentController@delete');
 });
 
 Route::group(['middleware' => 'jwt.refresh'], function(){
@@ -41,5 +44,8 @@ Route::get('posts', 'Post\PostController@list');
 Route::get('posts/{post_id}', 'Post\PostController@getPost');
 Route::get('post/checkLiked', 'Like\LikeController@isLiked');
 Route::get('post/likesCount', 'Like\LikeController@likesCount');
-
+Route::get('postcomments', 'Comment\CommentController@listByPost');
+Route::get('usercomments', 'Comment\CommentController@listByUser');
+Route::get('comments/{commentId}', 'Comment\CommentController@comments');
+Route::get('comment/count', 'Comment\CommentController@postCommentsCount');
 

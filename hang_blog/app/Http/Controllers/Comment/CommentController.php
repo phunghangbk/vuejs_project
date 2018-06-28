@@ -8,6 +8,7 @@ use Validator;
 use App\user;
 use App\Post\Post;
 use App\Comment\Comment;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -46,7 +47,7 @@ class CommentController extends Controller
                 'user_id' => $user->user_id,
                 'post_id' => $postId,
                 'content' => $content,
-                'parent_id' => $parent_id
+                'parent_id' => $parentId
             ]); 
         } catch (\Exception $e) {
             return response()->json([
@@ -63,7 +64,7 @@ class CommentController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update($commentId, Request $request)
     {
         try {
             $user = Auth::user();
@@ -73,7 +74,6 @@ class CommentController extends Controller
                     'errors' => ['error' => config('application.comment_permission')],
                 ]);
             }
-            $commentId = $request->commentId;
             if (empty($commentId)) {
                 return response()->json([
                     'status' => config('application.response_status')['error'],
@@ -111,7 +111,7 @@ class CommentController extends Controller
         ]);
     }
 
-    public function delete(Request $request)
+    public function delete($commentId)
     {
         try {
             $authUser = Auth::user();
@@ -123,12 +123,6 @@ class CommentController extends Controller
                 ]);
             }
 
-            $commentId = $request->commentId;
-            return response()->json([
-                'status' => config('application.response_status')['error'],
-                'errors' => ['error' => config('application.cannot_delete_comment')],
-            ]);
-
             $comment = Comment::where('comment_id', $commentId)->first();
             $createCmtUser = $comment->user();
             if ($createUser->user_id == $authUser->user_id) {
@@ -139,7 +133,7 @@ class CommentController extends Controller
                 if ($createPostUser->user_id == $authUser->user_id) {
                     $comment->delete();
                 } else {
-                    return return response()->json([
+                    return response()->json([
                         'status' => config('application.response_status')['error'],
                         'errors' => ['error' => config('application.cannot_delete_comment')],
                     ]);
@@ -163,7 +157,7 @@ class CommentController extends Controller
         $post = Post::where('post_id', $request->postId)->first();
         $comments = [];
         if (! empty($post)) {
-            $comments = $post->comments();
+            $comments = $post->comments()->with('user')->get();
         }
 
         return response()->json([
@@ -195,6 +189,20 @@ class CommentController extends Controller
     {
         return response()->json([
             'comments' => Comment::where('parent_id', $parentId)->get()
+        ]);
+    }
+
+    public function postCommentsCount(Request $request)
+    {
+        if (empty($request->postId)) {
+            return response()->json([
+                'count' => 0
+            ]);
+        }
+
+        $count = Comment::where('post_id', $request->postId)->count();
+        return response()->json([
+            'count' => $count
         ]);
     }
 }

@@ -14,7 +14,7 @@ class CreateTableMstPost extends Migration
     public function up()
     {
         Schema::create('mst_post', function (Blueprint $table) {
-            $table->increments('post_id');
+            $table->increments('post_id')->unsigned()->unique();
             $table->unsignedInteger('user_id');
             $table->string('title')->default('');
             $table->string('image')->nullable();

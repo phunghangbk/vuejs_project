@@ -69,6 +69,8 @@
             {{error}}
           </span>
         </div>
+
+        <comment :post-id="post_id"></comment>
       </div>
     </div>
   </div>
@@ -82,6 +84,7 @@
   import Profile from '../User/Profile'
   import DeletePost from './DeletePost'
   import Like from '../Like/Like'
+  import Comment from '../Comment/Comment'
 
   export default {
     name: 'Blog',
@@ -145,7 +148,7 @@
       }
     },
     components: {
-      Profile, DeletePost, Like
+      Profile, DeletePost, Like, Comment
     }
   }
 </script>
@@ -166,7 +169,7 @@ hr {
 }
 
 .custom-container {
-  min-height: 100vh;
+  min-height: 100%;
 }
 span {
   color: red;

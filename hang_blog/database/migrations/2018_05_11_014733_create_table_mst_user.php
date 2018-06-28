@@ -14,11 +14,11 @@ class CreateTableMstUser extends Migration
     public function up()
     {
         Schema::create('mst_user', function (Blueprint $table) {
-            $table->increments('user_id');
+            $table->increments('user_id')->unsigned()->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('nickname')->nullable();
+            $table->string('nickname')->unique();
             $table->string('avatar_image')->nullable();
             $table->string('cover_image')->nullable();
             $table->integer('roles')->default(1); // 1: user, 2: admin
