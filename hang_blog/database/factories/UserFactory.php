@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'password' => bcrypt('Hang27051993'), // secret
         'nickname' => str_random(10),
         'verified' => 1,
-        'avatar_image' => '1530153159.jpeg',
-        'cover_image' => '1530153159.jpeg'
+        'avatar_image' => 'avatar_image.jpeg',
+        'cover_image' => 'cover_image.jpeg'
     ];
 });

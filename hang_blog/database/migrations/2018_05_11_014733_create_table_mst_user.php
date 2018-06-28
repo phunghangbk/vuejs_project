@@ -35,6 +35,6 @@ class CreateTableMstUser extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('mst_user');
     }
 }

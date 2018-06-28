@@ -34,6 +34,6 @@ class CreateTableMstPost extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('mst_post');
     }
 }

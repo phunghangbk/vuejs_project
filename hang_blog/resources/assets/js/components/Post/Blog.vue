@@ -69,6 +69,7 @@
             {{error}}
           </span>
         </div>
+        <comment-list :post-id="post_id"></comment-list>
 
         <comment :post-id="post_id"></comment>
       </div>
@@ -85,6 +86,7 @@
   import DeletePost from './DeletePost'
   import Like from '../Like/Like'
   import Comment from '../Comment/Comment'
+  import CommentList from '../Comment/CommentList'
 
   export default {
     name: 'Blog',
@@ -148,7 +150,7 @@
       }
     },
     components: {
-      Profile, DeletePost, Like, Comment
+      Profile, DeletePost, Like, Comment, CommentList
     }
   }
 </script>

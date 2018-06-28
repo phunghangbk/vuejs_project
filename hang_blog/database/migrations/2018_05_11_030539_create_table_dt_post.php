@@ -32,6 +32,6 @@ class CreateTableDtPost extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('dt_post');
     }
 }

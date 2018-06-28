@@ -15,6 +15,10 @@
         <div>
           <hr>
         </div>
+        <div>
+          <hr>
+        </div>
+        <span class="sendComment">Send your comment</span>
         <div :class="{'has-error': error}">
           <quill-editor class="custom-editor col-xs-12" v-model="content"
                         ref="myQuillEditor"
@@ -192,7 +196,7 @@ hr {
   background-color: #28a745;
 }
 
-h2 {
+h2, .sendComment {
   font-size: 28px;
   font-family: "Libre Baskerville",Georgia,serif;
   font-weight: 700;
