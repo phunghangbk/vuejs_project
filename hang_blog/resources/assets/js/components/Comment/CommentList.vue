@@ -1,11 +1,11 @@
 <template>
   <div id="commentList">
-    <div class="container custom-container">
+    <div class="container custom-container" v-for="comment in comments">
       <div class="row justify-content-center">
-        <div class="leftColumn">
+        <div class="leftColumn col-xs-2">
           
         </div>
-        <div class="rightColumn">
+        <div class="rightColumn col-xs-10">
           
         </div>
       </div>
@@ -29,6 +29,20 @@
       lazyload: {
         error: '/images/profile_default.png',
         loading: '/images/loading.gif'
+      },
+      comments: []
+    },
+    methods: {
+      fetchData() {
+        axios.get(api.postcomments, {
+          params: {
+            postId: this.postId
+          }
+        })
+        .then (resp => {
+          console.log(resp)
+          this.comments = resp.data.comments
+        })
       }
     }
   }
