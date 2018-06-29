@@ -23,7 +23,7 @@ class CreateTableMstPost extends Migration
             $table->text('introduction')->default('');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->foreign('user_id')->references('user_id')->on('mst_user')->onDeletes('cascade');
+            $table->foreign('user_id')->references('user_id')->on('mst_user')->onDelete('cascade');
         });
     }
 

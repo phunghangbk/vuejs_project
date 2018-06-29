@@ -13,11 +13,6 @@
           <div><span class="commentTime">{{comment.created_at}}</span></div>
         </div>
         <div class="rightColumn col-lg-8 col-sm-12 col-xs-12">
-          <div class="updateDelete">
-            <comment-update :comment-id="comment.comment_id"></comment-update>
-            <comment-delete :comment-id="comment.comment_id"></comment-delete>
-            <like-comment :comment-id="comment.comment_id"></like-comment>
-          </div>
           <div>
             <hr>
           </div>
@@ -26,10 +21,11 @@
           <div>
             <hr>
           </div>
-          <button type="button" class="btn btn-link" @click="replyClick(comment.comment_id)" :id="'replyButton'+comment.comment_id">Reply</button>
-          <reply ref="replyComponent" :post-id="postId" :parent-id="comment.comment_id" :id="'replyForm'+comment.comment_id" style="display: none;"></reply>
         </div>
       </div>
+    </div>
+    <div class="replyButton">
+      <comment :post-id="postId" :parent-id="parentId"></comment>
     </div>
   </div>
 </template>
@@ -38,15 +34,15 @@
   import axios from 'axios'
   import * as api from '../../store/api.js'
   import * as imagePath from '../../router/imagePath.js'
-  import Reply from './Reply' 
-  import CommentUpdate from './CommentUpdate'
-  import CommentDelete from './CommentDelete'
-  import LikeComment from '../Like/LikeComment'
+  import Comment from './Comment'
 
   export default {
-    name: 'CommentList',
+    name: 'Reply',
     props: {
       postId: {
+        required: true
+      },
+      parentId: {
         required: true
       }
     },
@@ -54,17 +50,18 @@
       return {
         comments: [],
         loaded: false,
+        replyCount: 0,
+        countLoaded: false
       }
     },
     created() {
       this.fetchData()
-
     },
     methods: {
       fetchData() {
-        axios.get(api.postcomments, {
+        axios.get(api.commentFindByParent, {
           params: {
-            postId: this.postId
+            parentId: this.parentId
           }
         })
         .then (resp => {
@@ -76,25 +73,9 @@
       avatar(fileName) {
         return imagePath.avatarImagePath + fileName
       },
-      replyClick(commentId) {
-        $(function() {
-          $('#replyForm'+commentId).slideToggle('fast')
-          $('#replyButton'+commentId).text(function(_, txt) {
-            let ret=''
-            if (txt == 'Reply') {
-              ret = 'Hide'
-            } else {
-              ret = 'Reply'
-            }
-            return ret
-          }) 
-
-          return false;
-        })
-      },
     },
     components: {
-      Reply, CommentUpdate, CommentDelete, LikeComment
+      Comment
     }
   }
 </script>

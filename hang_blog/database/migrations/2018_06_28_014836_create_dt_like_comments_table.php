@@ -20,7 +20,7 @@ class CreateDtLikeCommentsTable extends Migration
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->foreign('user_id')->references('user_id')->on('mst_user')->onDeletes('cascade');
-            $table->foreign('comment_id')->references('comment_id')->on('dt_comments')->onDeletes('cascade');
+            $table->foreign('comment_id')->references('comment_id')->on('dt_comments')->onDelete('cascade');
             $table->unique(['comment_id', 'user_id']);
         });
     }

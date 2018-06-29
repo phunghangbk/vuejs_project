@@ -4,33 +4,36 @@ namespace App\Http\Controllers\Like;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Like\Like;
 use App\Post\Post;
 use Auth;
-class LikeController extends Controller
+use App\User;
+use App\Comment\Comment;
+use App\Like\LikeComment;
+
+class LikeCommentController extends Controller
 {
-    public function like(Request $request)
+     public function like(Request $request)
     {
         try { 
             $user = Auth::user();
-            $postId = $request->postId;
-            if (empty($postId) || empty($user)) {
+            $commentId = $request->commentId;
+            if (empty($commentId) || empty($user)) {
                 return response()->json([
                     'liked' => false
                 ]);
             }
 
-            if (empty(Post::where('post_id', $postId)->first())) {
+            if (empty(Comment::where('comment_id', $commentId)->first())) {
                 return response()->json([
                     'liked' => false
                 ]);
             }
-            Like::create([
+            LikeComment::create([
                 'user_id' => $user->user_id,
-                'post_id' => $postId
+                'comment_id' => $commentId
             ]);
         } catch (\Exception $e) {
-            Like::where('post_id', $postId)->where('user_id', $user->user_id)->delete();
+            LikeComment::where('comment_id', $commentId)->where('user_id', $user->user_id)->delete();
             return response()->json([
                 'liked' => false
             ]);
@@ -42,16 +45,16 @@ class LikeController extends Controller
 
     public function isLiked(Request $request) {
         $user = Auth::user();
-        $postId = $request->postId;
+        $commentId = $request->commentId;
 
-        if (empty($user) || empty($postId)) {
+        if (empty($user) || empty($commentId)) {
             return response()->json([
                 'liked' => false
             ]);
         }
 
         try {
-            $result = Like::where('user_id', $user->user_id)->where('post_id', $postId)->first();
+            $result = LikeComment::where('user_id', $user->user_id)->where('comment_id', $commentId)->first();
             if (! empty($result)) {
                 return response()->json([
                     'liked' => true
@@ -66,14 +69,14 @@ class LikeController extends Controller
 
     public function likesCount(Request $request)
     {
-        if (empty($request->postId)) {
+        if (empty($request->commentId)) {
             return response()->json([
                 'count' => 0
             ]);
         }
 
         try {
-            $count = Like::where('post_id', $request->postId)->count();
+            $count = LikeComment::where('comment_id', $request->commentId)->count();
             return response()->json([
                 'count' => $count
             ]);

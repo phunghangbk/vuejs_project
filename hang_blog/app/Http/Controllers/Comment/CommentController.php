@@ -96,7 +96,7 @@ class CommentController extends Controller
                 ]);
             }
             $comment->content = $content;
-            $content->save();
+            $comment->save();
         } catch (\Exception $e) {
             return response()->json([
                 'status' => config('application.response_status')['error'],
@@ -123,15 +123,15 @@ class CommentController extends Controller
                 ]);
             }
 
-            $comment = Comment::where('comment_id', $commentId)->first();
-            $createCmtUser = $comment->user();
-            if ($createUser->user_id == $authUser->user_id) {
+            $authUser = Auth::user();
+            $comment = Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first();
+            if (! empty($comment)) {
                 $comment->delete();
             } else {
-                $post = $comment->post();
-                $createPostUser = $post->user();
-                if ($createPostUser->user_id == $authUser->user_id) {
-                    $comment->delete();
+                $comment = Comment::where('comment_id', $request->commentId)->first();
+
+                if (! empty(Post::where('user_id', $authUser->user_id)->where('post_id', $comment->post_id)->first())) {
+                    $comment->delete(); 
                 } else {
                     return response()->json([
                         'status' => config('application.response_status')['error'],
@@ -154,25 +154,18 @@ class CommentController extends Controller
 
     public function listByPost(Request $request)
     {
-        $post = Post::where('post_id', $request->postId)->first();
-        $comments = [];
-        if (! empty($post)) {
-            $comments = $post->comments()->with('user')->get();
-        }
+        $post = Post::with(['comments' => function ($query) {
+            $query->with('user')->whereNull('parent_id');
+        }])->find($request->postId);
 
         return response()->json([
-            'comments' => $comments
+            'comments' => $post->comments
         ]);
     }
 
-    public function listByUser(Request $request)
+    public function findByParent(Request $request) 
     {
-        $user = User::where('user_id', $userId)->first();
-        $comments = [];
-        if (! empty($user)) {
-            $comments = $user->comments();
-        }
-
+        $comments = Comment::with('user')->where('parent_id', $request->parentId)->get();
         return response()->json([
             'comments' => $comments
         ]);
@@ -185,10 +178,11 @@ class CommentController extends Controller
         ]);
     }
 
-    public function findChildComment($parentId) 
+    public function countReply(Request $request)
     {
+        $count = Comment::where('parent_id', $request->parentId)->count();
         return response()->json([
-            'comments' => Comment::where('parent_id', $parentId)->get()
+            'count' => $count
         ]);
     }
 
@@ -203,6 +197,40 @@ class CommentController extends Controller
         $count = Comment::where('post_id', $request->postId)->count();
         return response()->json([
             'count' => $count
+        ]);
+    }
+    public function canDeleteComment(Request $request)
+    {
+        $authUser = Auth::user();
+        if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
+            return response()->json([
+                'canDeleteComment' => true
+            ]);
+        }
+
+        $comment = Comment::with(['post' => function ($query) use ($authUser) {
+            $query->where('user_id', $authUser->user_id);
+        }])->find('comment_id', $request->commentId);    
+        if (! empty($comment->post)) {
+            return response()->json([
+                'canDeleteComment' => true
+            ]); 
+        }
+
+        return response()->json([
+            'canDeleteComment' => false
+        ]); 
+    }
+    public function canUpdateComment(Request $request)
+    {
+        $authUser = Auth::user();
+        if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
+            return response()->json([
+                'canUpdateComment' => true
+            ]);
+        }
+        return response()->json([
+            'canUpdateComment' => false
         ]);
     }
 }

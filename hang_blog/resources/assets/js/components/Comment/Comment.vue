@@ -5,20 +5,6 @@
         <div>
           <hr>
         </div>
-        <div>
-          <span v-if="countLoaded" class="commentCount">
-            <h2>
-              {{commentsCount}} Comments
-            </h2>
-          </span>
-        </div>
-        <div>
-          <hr>
-        </div>
-        <div>
-          <hr>
-        </div>
-        <span class="sendComment">Send your comment</span>
         <div :class="{'has-error': error}">
           <quill-editor class="custom-editor col-xs-12" v-model="content"
                         ref="myQuillEditor"
@@ -62,8 +48,6 @@
     data() {
       return {
         content: '',
-        commentsCount: 0,
-        countLoaded: false,
         error: false,
         success: false,
         message: '',
@@ -88,9 +72,6 @@
           }
         }
       }
-    },
-    created() {
-      this.getCommentCount();
     },
     methods: {
       create() {
@@ -119,7 +100,6 @@
             console.log(resp)
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
               this.success = true
-              this.commentsCount++
               Vue.toasted.show('Your comment has sent successfully!!', { 
                 theme: "bubble", 
                 position: "top-center", 
@@ -168,19 +148,6 @@
           })
         }
       },
-      getCommentCount() {
-        axios.get(api.postCommentsCount, {
-          params: {
-            postId: this.postId
-          }
-        })
-        .then(resp => {
-          if (typeof resp.data.count != 'undefined') {
-            this.commentsCount = resp.data.count
-            this.countLoaded = true
-          }
-        })
-      }
     },
     components: {
       quillEditor
