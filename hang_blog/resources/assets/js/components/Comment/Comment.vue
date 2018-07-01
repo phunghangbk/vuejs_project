@@ -72,7 +72,8 @@
           .then(resp => {
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
               this.content = '';
-              this.$bus.$emit('changeAfterCreateComment', resp.data.comment, this.isReply)
+              let parentId = this.parentId ? this.parentId : ''
+              this.$bus.$emit('changeAfterCreateComment', resp.data.comment, this.isReply, parentId)
               this.$bus.$emit('changeCommentCount', 1)
               this.success = true
               Vue.toasted.show('Your comment has sent successfully!!', { 

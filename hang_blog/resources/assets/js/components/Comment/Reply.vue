@@ -111,8 +111,8 @@
         }
       })
 
-      this.$bus.$on('changeAfterCreateComment', (comment, isReply) => {
-        if (isReply) {
+      this.$bus.$on('changeAfterCreateComment', (comment, isReply, parentId) => {
+        if (isReply && parentId == this.parentId) {
           this.comments.push(comment)
         }
       })

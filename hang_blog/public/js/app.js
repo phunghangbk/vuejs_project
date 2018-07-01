@@ -46305,7 +46305,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
         }).then(function (resp) {
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             _this.content = '';
-            _this.$bus.$emit('changeAfterCreateComment', resp.data.comment, _this.isReply);
+            var parentId = _this.parentId ? _this.parentId : '';
+            _this.$bus.$emit('changeAfterCreateComment', resp.data.comment, _this.isReply, parentId);
             _this.$bus.$emit('changeCommentCount', 1);
             _this.success = true;
             __WEBPACK_IMPORTED_MODULE_0_vue___default.a.toasted.show('Your comment has sent successfully!!', {
@@ -46945,8 +46946,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     });
 
-    this.$bus.$on('changeAfterCreateComment', function (comment, isReply) {
-      if (isReply) {
+    this.$bus.$on('changeAfterCreateComment', function (comment, isReply, parentId) {
+      if (isReply && parentId == _this2.parentId) {
         _this2.comments.push(comment);
       }
     });
