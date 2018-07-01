@@ -99,7 +99,6 @@
     methods: {
       fetchUserData() {
         axios.get(api.user+'?nickname='+this.nicknameParameter).then(resp => {
-          console.log(resp)
           this.nickname = resp.data.user.nickname ? resp.data.user.nickname : '';
           this.avatar_image = resp.data.user.avatar_image ? resp.data.user.avatar_image : '';
           this.cover_image = resp.data.user.cover_image ? resp.data.user.cover_image : '';

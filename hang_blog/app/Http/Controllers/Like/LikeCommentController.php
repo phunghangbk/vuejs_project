@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Like;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Post\Post;
+use App\Model\Post\Model\Post;
 use Auth;
-use App\User;
-use App\Comment\Comment;
-use App\Like\LikeComment;
+use App\Model\User;
+use App\Model\Comment\Comment;
+use App\Model\Like\LikeComment;
 
 class LikeCommentController extends Controller
 {

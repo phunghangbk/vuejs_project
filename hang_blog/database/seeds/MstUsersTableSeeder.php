@@ -11,8 +11,8 @@ class MstUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create()->each(function ($u) {
-            $u->posts()->save(factory(App\Post\Post::class)->make());
+        factory(App\Model\User::class, 50)->create()->each(function ($u) {
+            $u->posts()->save(factory(App\Model\Post\Post::class)->make());
         });
     }
 }

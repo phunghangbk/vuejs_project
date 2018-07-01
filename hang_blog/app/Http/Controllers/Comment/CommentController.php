@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\user;
-use App\Post\Post;
-use App\Comment\Comment;
+use App\Model\User;
+use App\Model\Post\Post;
+use App\Model\Comment\Comment;
 use Auth;
 
 class CommentController extends Controller
@@ -49,6 +49,7 @@ class CommentController extends Controller
                 'content' => $content,
                 'parent_id' => $parentId
             ]); 
+            $comment->user = $user;
         } catch (\Exception $e) {
             return response()->json([
                 'status' => config('application.response_status')['error'],
@@ -80,8 +81,10 @@ class CommentController extends Controller
                     'errors' => ['error' => config('application.cannot_update_comment')],
                 ]);
             }
-            $comment = Comment::where('user_id', $user->user_id)->where('comment_id', $commentId)->first();
-            if (empty($comment)) {
+            $comment = Comment::with(['user' => function ($query) use ($user) {
+                $query->where('user_id', $user->user_id);
+            }])->find($commentId);
+            if (empty($comment) || empty($comment->user)) {
                 return response()->json([
                     'status' => config('application.response_status')['error'],
                     'errors' => ['error' => config('application.cannot_update_comment')],
@@ -124,11 +127,11 @@ class CommentController extends Controller
             }
 
             $authUser = Auth::user();
-            $comment = Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first();
+            $comment = Comment::where('user_id', $authUser->user_id)->where('comment_id', $commentId)->first();
             if (! empty($comment)) {
                 $comment->delete();
             } else {
-                $comment = Comment::where('comment_id', $request->commentId)->first();
+                $comment = Comment::where('comment_id', $commentId)->first();
 
                 if (! empty(Post::where('user_id', $authUser->user_id)->where('post_id', $comment->post_id)->first())) {
                     $comment->delete(); 
@@ -174,7 +177,7 @@ class CommentController extends Controller
     public function comments($commentId)
     {
         return response()->json([
-            'comment' => Comment::where('comment_id', $commentId)->first()
+            'comment' => Comment::with('user')->where('comment_id', $commentId)->first()
         ]);
     }
 
@@ -194,43 +197,44 @@ class CommentController extends Controller
             ]);
         }
 
-        $count = Comment::where('post_id', $request->postId)->count();
+        $post = Post::with('comments')->find($request->postId);
+        $count = count($post->comments);
         return response()->json([
             'count' => $count
         ]);
     }
-    public function canDeleteComment(Request $request)
-    {
-        $authUser = Auth::user();
-        if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
-            return response()->json([
-                'canDeleteComment' => true
-            ]);
-        }
+    // public function canDeleteComment(Request $request)
+    // {
+    //     $authUser = Auth::user();
+    //     if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
+    //         return response()->json([
+    //             'canDeleteComment' => true
+    //         ]);
+    //     }
 
-        $comment = Comment::with(['post' => function ($query) use ($authUser) {
-            $query->where('user_id', $authUser->user_id);
-        }])->find('comment_id', $request->commentId);    
-        if (! empty($comment->post)) {
-            return response()->json([
-                'canDeleteComment' => true
-            ]); 
-        }
+    //     $comment = Comment::with(['post' => function ($query) use ($authUser) {
+    //         $query->where('user_id', $authUser->user_id);
+    //     }])->find('comment_id', $request->commentId);    
+    //     if (! empty($comment->post)) {
+    //         return response()->json([
+    //             'canDeleteComment' => true
+    //         ]); 
+    //     }
 
-        return response()->json([
-            'canDeleteComment' => false
-        ]); 
-    }
-    public function canUpdateComment(Request $request)
-    {
-        $authUser = Auth::user();
-        if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
-            return response()->json([
-                'canUpdateComment' => true
-            ]);
-        }
-        return response()->json([
-            'canUpdateComment' => false
-        ]);
-    }
+    //     return response()->json([
+    //         'canDeleteComment' => false
+    //     ]); 
+    // }
+    // public function canUpdateComment(Request $request)
+    // {
+    //     $authUser = Auth::user();
+    //     if (! empty(Comment::where('user_id', $authUser->user_id)->where('comment_id', $request->commentId)->first())) {
+    //         return response()->json([
+    //             'canUpdateComment' => true
+    //         ]);
+    //     }
+    //     return response()->json([
+    //         'canUpdateComment' => false
+    //     ]);
+    // }
 }

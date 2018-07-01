@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Like;
+namespace App\Model\Like;
 
 use Illuminate\Database\Eloquent\Model;
 

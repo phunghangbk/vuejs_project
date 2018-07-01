@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Like;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Like\Like;
-use App\Post\Post;
+use App\Model\Like\Like;
+use App\Model\Post\Post;
 use Auth;
 class LikeController extends Controller
 {
@@ -14,6 +14,7 @@ class LikeController extends Controller
         try { 
             $user = Auth::user();
             $postId = $request->postId;
+            \Log::info($user);
             if (empty($postId) || empty($user)) {
                 return response()->json([
                     'liked' => false
@@ -42,8 +43,8 @@ class LikeController extends Controller
 
     public function isLiked(Request $request) {
         $user = Auth::user();
+        \Log::info($user);
         $postId = $request->postId;
-
         if (empty($user) || empty($postId)) {
             return response()->json([
                 'liked' => false

@@ -86,7 +86,6 @@
           name: this.name == this.user.name ? '' : this.name,
           nickname: this.nickname == this.user.nickname ? '' : this.nickname,
         }).then(resp => {
-          console.log(resp);
           if (resp.data.status == 'success') {
             localStorage.setItem('user', JSON.stringify(resp.data.user));
             this.$router.push('/user/' + resp.data.user.nickname);

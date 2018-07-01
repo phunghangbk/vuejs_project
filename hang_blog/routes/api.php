@@ -14,13 +14,13 @@ use Illuminate\Http\Request;
 */
 
 
-Route::post('auth/register', 'AuthController@register');
-Route::post('auth/login', 'AuthController@login');
+Route::post('auth/register', 'CustomAuthControllers\AuthController@register');
+Route::post('auth/login', 'CustomAuthControllers\AuthController@login');
 
 Route::group(['middleware' => 'jwt.auth'], function(){
-  Route::post('auth/logout', 'AuthController@logout');
-  Route::post('/update_profile', 'UserController@updateProfile');
-  Route::post('/update_password', 'UserController@updatePassword');
+  Route::post('auth/logout', 'CustomAuthControllers\AuthController@logout');
+  Route::post('/update_profile', 'CustomAuthControllers\UserController@updateProfile');
+  Route::post('/update_password', 'CustomAuthControllers\UserController@updatePassword');
   Route::post('post/create', 'Post\PostController@create');
   Route::post('post/update/{post_id}', 'Post\PostController@update');
   Route::post('post/delete/{post_id}', 'Post\PostController@delete');
@@ -32,14 +32,14 @@ Route::group(['middleware' => 'jwt.auth'], function(){
 });
 
 Route::group(['middleware' => 'jwt.refresh'], function(){
-  Route::get('auth/refresh', 'AuthController@refresh');
+  Route::get('auth/refresh', 'CustomAuthControllers\AuthController@refresh');
 });
-Route::get('auth/user', 'AuthController@user');
-Route::get('/user/verify/{token}', 'AuthController@verifyUser');
+Route::get('auth/user', 'CustomAuthControllers\AuthController@user');
+Route::get('/user/verify/{token}', 'CustomAuthControllers\AuthController@verifyUser');
 
-Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'ResetPasswordController@reset');
-Route::post('password/reset_action', 'ResetPasswordController@reset_action');
+Route::post('password/reset', 'CustomAuthControllers\ForgotPasswordController@sendResetLinkEmail');
+Route::get('password/reset/{token}', 'CustomAuthControllers\ResetPasswordController@reset');
+Route::post('password/reset_action', 'CustomAuthControllers\ResetPasswordController@reset_action');
 
 Route::get('posts', 'Post\PostController@list');
 Route::get('posts/{post_id}', 'Post\PostController@getPost');

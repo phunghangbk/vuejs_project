@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CustomAuthControllers;
 
 use Illuminate\Http\Request;
 use JWTAuth;
-use App\User;
+use App\Model\User;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Auth;
 use Validator;
-use App\VerifyUser;
+use App\Model\VerifyUser;
 use Mail;
 use App\Mail\VerifyMail;
 

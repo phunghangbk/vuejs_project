@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CustomAuthControllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use JWTAuth;
-use App\User;
-use App\ResetPassword;
+use App\Model\User;
+use App\Model\ResetPassword;
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 class ResetPasswordController extends Controller

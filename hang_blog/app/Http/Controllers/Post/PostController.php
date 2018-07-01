@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Post\Post;
-use App\Post\UserPost;
-use App\User;
+use App\Model\Post\Post;
+use App\Model\Post\UserPost;
+use App\Model\User;
 use Auth;
 
 

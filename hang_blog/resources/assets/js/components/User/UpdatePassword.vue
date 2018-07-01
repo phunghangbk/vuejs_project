@@ -83,7 +83,6 @@
           old_password: this.old_password,
           new_password: this.new_password
         }).then(resp => {
-          console.log(resp);
           if (resp.data.status == 'error') {
             this.error = true;
             this.custom_errors = resp.data.errors;

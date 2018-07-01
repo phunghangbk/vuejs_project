@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::any('{all}', function () { return view('welcome'); })->where(['all' => '.*']);
-Route::post('auth/register', 'AuthController@register');
-Route::get('user/verify/{token}', 'AuthController@verifyUser');
+Route::post('auth/register', 'CustomAuthControllers\AuthController@register');
+Route::get('user/verify/{token}', 'CustomAuthControllers\AuthController@verifyUser');

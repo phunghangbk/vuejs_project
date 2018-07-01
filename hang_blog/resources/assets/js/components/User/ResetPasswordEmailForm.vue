@@ -55,7 +55,6 @@
           email: this.email
         })
         .then(resp => {
-          console.log(resp);
           if (resp.data.status == 'success') {
             this.success = true;
           } else {

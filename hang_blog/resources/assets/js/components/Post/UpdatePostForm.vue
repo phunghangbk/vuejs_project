@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
+      <h1>Update Article</h1>
       <div v-if="!success" class="col-xs-12 col-lg-8">
         <div :class="{'has-error': error && custom_errors.title}">
           <div class="title form-group row form-inline">
@@ -179,7 +180,6 @@
           }
         })
         .then (resp => {
-          console.log(resp)
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.loaded = true
             let post = resp.data.post[0]
@@ -345,7 +345,9 @@
     margin-top: 56px;
     height: 100vh;
   }
-
+  h1 {
+    font-family: "Libre Baskerville",Georgia,serif;
+  }
   .custom-editor {
     height: 20rem;
   }

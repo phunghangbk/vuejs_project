@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
+      <h1>Create Article</h1>
       <div v-if="!success" class="col-xs-12 col-lg-8">
         <div :class="{'has-error': error && custom_errors.title}">
           <div class="title form-group row form-inline">
@@ -167,7 +168,6 @@
           content: this.content
         })
         .then(resp => {
-          console.log(resp);
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.success = true
             Vue.toasted.show('Post article successfully!!', { 
@@ -290,5 +290,8 @@
 
   .help-block {
     color: red;
+  }
+  h1 {
+    font-family: "Libre Baskerville",Georgia,serif;
   }
 </style>

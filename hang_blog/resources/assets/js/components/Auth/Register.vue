@@ -126,7 +126,6 @@
           avatar_image: this.avatar_image,
           cover_image: this.cover_image
         }).then(resp => {
-          console.log(resp);
           if (resp.data.status == 'error') {
             this.error = true;
             this.custom_errors = resp.data.errors;

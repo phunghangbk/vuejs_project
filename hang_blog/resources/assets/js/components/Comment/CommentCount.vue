@@ -53,9 +53,20 @@
           }
         })
       }
+    },
+    mounted() {
+      this.$bus.$on('changeCommentCount', (count) => {
+        if (count == 1) {
+          this.commentsCount++
+        } else if (count == -1) {
+          this.commentsCount--
+        }
+      })
     }
   }
 </script>
 <style scoped>
-  
+  h2 {
+    font-family: "Libre Baskerville",Georgia,serif;
+  }
 </style>

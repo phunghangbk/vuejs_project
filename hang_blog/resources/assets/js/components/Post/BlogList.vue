@@ -18,32 +18,13 @@
               Update
             </a>
           </div>
-          <div v-if="loaded && is_signedin" class="btn deleteButton" data-toggle="modal" :data-target="'#deleteModal' + index">
+          <div v-if="loaded && is_signedin" class="btn deleteButton" data-toggle="modal" data-target="deleteModal" @click="deletePost(item.post_id)">
             <i class="fas fa-trash"></i>
             Delete
           </div>
-          <like :post-id="item.post_id"></like>
-          <delete-post ref="deletePostComponent" :post-id="item.post_id"></delete-post>
-          <div class="modal fade" :id="'deleteModal'+index" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  Warnning: Cannot restore after delete action.
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost(index)">Delete</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <like :post-id="item.post_id"></like>          
         </div>
+        <delete-post :post-id="postId" @changeAfterDeletePost="updatePostList"></delete-post>
       </div>
     </div>
   </div>
@@ -55,8 +36,8 @@
   import axios from 'axios'
   import * as api from '../../store/api.js'
   import infiniteScroll from 'vue-infinite-scroll'
-  import DeletePost from './DeletePost'
   import Like from '../Like/Like'
+  import DeletePost from './DeletePost'
   Vue.use(infiniteScroll)
 
   export default {
@@ -81,13 +62,14 @@
         is_signedin: false,
         user: null,
         temp_user: null,
+        postId: null
       }
     },
     created() {
       this.getUserInfo()
     },
     components: {
-      DeletePost, Like
+      Like, DeletePost
     },
     methods: {
       infiniteHandler() {
@@ -114,38 +96,41 @@
           console.log(error.response)
         })
       },
-      scroll (list) {
+      fetchData() {
+        if (this.is_busy == true){
+          return false
+        }
+
+        if (this.stop == true){
+          return false
+        }
+
+        this.is_busy = true
+        axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
+        .then(resp => {
+          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+            this.loaded = true
+            if (resp.data.list.current_page < resp.data.list.last_page) {
+              this.page = this.page + 1
+            } else {
+              this.stop = true
+            }
+            for (let i = 0; i < resp.data.list.data.length; i++) {
+              this.list.push(resp.data.list.data[i])
+            }
+          } else {
+            if (typeof resp.data.errors != 'undefined') {
+              this.custom_errors = resp.data.errors
+            }
+          }
+          this.is_busy = false
+        });
+      },
+      scroll() {
         $(window).scroll(() => {
-          let bottomOfWindow = $(window).scrollTop() + $(window).height() >= $('#blogList').height()
+          let bottomOfWindow = $(window).scrollTop() + $(window).height() + 10 >= $('#blogList').height()
           if (bottomOfWindow && ! this.stop) {
-            if (this.is_busy == true){
-              return false
-            }
-
-            if (this.stop == true){
-              return false
-            }
-
-            this.is_busy = true
-            axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
-            .then(resp => {
-              if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
-                this.loaded = true
-                if (resp.data.list.current_page < resp.data.list.last_page) {
-                  this.page = this.page + 1
-                } else {
-                  this.stop = true
-                }
-                for (let i = 0; i < resp.data.list.data.length; i++) {
-                  list.push(resp.data.list.data[i])
-                }
-              } else {
-                if (typeof resp.data.errors != 'undefined') {
-                  this.custom_errors = resp.data.errors
-                }
-              }
-              this.is_busy = false
-            });
+            this.fetchData()
           }
         });
       },
@@ -154,9 +139,6 @@
       },
       detailURL(post_id) {
         return '/user/' + this.nickname + '/post/' + post_id;
-      },
-      deletePost(index) {
-        this.$refs.deletePostComponent[index].delete()
       },
       
       getUserInfo() {
@@ -175,11 +157,33 @@
         .catch (error => {
           console.log(error)
         })
+      },
+      deletePost(postId) {
+        this.postId = postId
+        $(function () {
+          $('#deleteModal').modal('show')
+        })
+      },
+      filterComments(postId) {
+        let post = this.list.filter(function (item) {
+          return item.post_id == postId
+        })
+        return post.length > 0 ? post[0] : null
+      },
+      updatePostList(postId) {
+        let deletedPost = this.filterComments(postId)
+        if (deletedPost) {
+          let index = $.inArray(deletedPost, this.list)
+          if (index != -1) {
+            this.list.splice(index, 1)
+          }
+        }
       }
     },
     mounted() {
+      this.fetchData()
       $(document).ready(() => {
-        this.scroll(this.list);
+        this.scroll();
       })
     }
   }

@@ -84,7 +84,6 @@
     created() {
       axios.get(api.reset_password+this.token)
       .then(resp => {
-        console.log(resp);
         if (resp.data.status == 'success' && resp.data.user != null) {
           this.success = true;
           this.user = resp.data.user;
@@ -106,7 +105,6 @@
           password: this.password
         })
         .then(resp => {
-          console.log(resp);
           if (resp.data.status == 'success') {
             this.reset_success = true;
           } else {

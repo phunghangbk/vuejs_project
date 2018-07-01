@@ -2,15 +2,11 @@
   <div id="commentForm" class="container-fluid custom-container">
     <div class="row justify-content-center">
       <div class="col-xs-12 col-sm-10 col-lg-8">
-        <div>
-          <hr>
-        </div>
         <div :class="{'has-error': error}">
-          <quill-editor class="custom-editor col-xs-12" v-model="content"
-                        ref="myQuillEditor"
-                        :options="editorOption">
-          </quill-editor>
-          <span class="help-block" v-if="error">An error has occurred</span>
+          <div class="form-group">
+            <textarea class="form-control" id="commentContent" rows="3" v-model="content"></textarea>
+            <span class="help-block"  v-if="error">An error has occurred</span>
+          </div>
         </div>
         <div class="sendButton">
           <button type="button" class="btn btn-success" @click="create" :disabled="! $store.state.isLogged">Send</button>
@@ -23,13 +19,7 @@
   import Vue from 'vue'
   import axios from 'axios'
   import * as api from '../../store/api.js'
-  import Quill from 'quill'
-  import { quillEditor } from 'vue-quill-editor'
   import Toasted from 'vue-toasted'
-
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
 
   Vue.use(Toasted, {
     iconPack : 'material'
@@ -43,6 +33,9 @@
       },
       parentId: {
         required: false
+      },
+      isReply: {
+        required: false
       }
     },
     data() {
@@ -51,26 +44,6 @@
         error: false,
         success: false,
         message: '',
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'indent': '-1' }, { 'indent': '+1' }],
-              [{ 'direction': 'rtl' }],
-              [{ 'size': ['small', false, 'large', 'huge'] }],
-              [{ 'font': [] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'align': [] }],
-              ['clean'],
-            ],
-            history: {
-              delay: 1000,
-              maxStack: 50,
-              userOnly: false
-            },
-          }
-        }
       }
     },
     methods: {
@@ -97,8 +70,10 @@
             content: this.content
           })
           .then(resp => {
-            console.log(resp)
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+              this.content = '';
+              this.$bus.$emit('changeAfterCreateComment', resp.data.comment, this.isReply)
+              this.$bus.$emit('changeCommentCount', 1)
               this.success = true
               Vue.toasted.show('Your comment has sent successfully!!', { 
                 theme: "bubble", 
@@ -150,7 +125,6 @@
       },
     },
     components: {
-      quillEditor
     }
   }
 </script>
@@ -171,5 +145,8 @@ h2, .sendComment {
 
 .sendButton {
   margin-top: .5rem;
+}
+#commentForm {
+  margin-top: 1rem;
 }
 </style>

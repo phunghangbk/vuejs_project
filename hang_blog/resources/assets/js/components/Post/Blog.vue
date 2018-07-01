@@ -1,12 +1,12 @@
 <template>
   <div id="blog">
     <profile :nickname-parameter="nickname"></profile>
-    <div class="container custom-container">
+    <div class="container-fluid custom-container">
       <div class="row justify-content-center">
         <div v-if="!is_error" class="col-xs-12 col-sm-10 col-lg-8">
           <div class="row justify-content-end">
-            <div v-if="loaded" class="dropdown">
-              <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div v-if="loaded" class="dropdown d-flex flex-row">
+              <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin: .5rem;">
                 <i class="fas fa-cog" id="dropdownMenu"></i>
                 Setting
               </div>
@@ -70,9 +70,12 @@
           </span>
         </div>
         <comment-list :post-id="post_id"></comment-list>
-
-        <comment :post-id="post_id"></comment>
       </div>
+      <div><hr></div>
+      <h1>
+        Sent your comment
+      </h1>
+      <comment :post-id="post_id"></comment>
     </div>
   </div>
 </template>
@@ -121,7 +124,6 @@
           }
         })
         .then (resp => {
-          console.log(resp);
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.loaded = true
             this.post = resp.data.post[0]
@@ -175,5 +177,8 @@ hr {
 }
 span {
   color: red;
+}
+h1 {
+  font-family: "Libre Baskerville",Georgia,serif;
 }
 </style>

@@ -1,5 +1,23 @@
 <template>
-  
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Do you want delete this article?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Warnning: Cannot restore after delete action.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deletePost">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
   import Vue from 'vue'
@@ -24,16 +42,18 @@
         error_message: ''
       }
     },
-
+    created() {
+      console.log(this.postId)
+    },
     methods: {
-      delete() {
+      deletePost() {
         if (! this.$store.state.isLogged) {
           this.$router.push('/login')
         } else {
           axios.post(api.post_delete + this.postId)
           .then (resp => {
-            console.log(resp)
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
+              this.$emit('changeAfterDeletePost', this.postId)
               this.success = true;
               Vue.toasted.show('Delete article successfully!!', { 
                 theme: "bubble", 

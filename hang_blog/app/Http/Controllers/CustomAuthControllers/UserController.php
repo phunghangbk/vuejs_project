@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CustomAuthControllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use JWTAuth;
-use App\User;
+use App\Model\User;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {

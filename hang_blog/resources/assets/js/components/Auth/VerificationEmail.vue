@@ -56,7 +56,6 @@
     created() {
       axios.get(api.verificate_email+this.token)
         .then(resp => {
-          console.log(resp)
           if (typeof resp.data.status != 'undefined' 
             && resp.data.status == 'success') {
             this.success = true;
