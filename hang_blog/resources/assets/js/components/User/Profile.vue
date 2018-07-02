@@ -169,7 +169,6 @@
             this.user = resp.data.user;
             localStorage.setItem('user', JSON.stringify(this.user));
             this.cover_image = this.user.cover_image;
-            console.log(this.cover_image);
             this.success = true;
           } else {
             this.error = true;

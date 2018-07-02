@@ -73,6 +73,7 @@
             if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
               this.content = '';
               let parentId = this.parentId ? this.parentId : ''
+              console.log(resp.data.comment)
               this.$bus.$emit('changeAfterCreateComment', resp.data.comment, this.isReply, parentId)
               this.$bus.$emit('changeCommentCount', 1)
               this.success = true

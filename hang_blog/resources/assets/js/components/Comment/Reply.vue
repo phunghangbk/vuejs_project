@@ -1,16 +1,20 @@
 <template>
   <div id="reply">
+    <div v-if="replyCount > 0" class="replyCount">
+      <i class="fa fa-arrow-circle-right"></i>
+      {{replyCount}} Replies
+    </div>
     <div :id="'replyList' + parentId" class="replyList">
       <div class="row replyItem" v-for="comment in comments">
           <div class="col-2">
-            <img v-if="loaded" :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
+            <img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
           </div>
           <div class="col-10">
             <div class="info row justify-content-around">
               <div class="col-sm-6 col-lg-6 col-xs-12 userName"><span><b style="font-weight: 700; font-size: 15px;">{{comment.user.name}}</b></span></div>
               <div class="col-sm-6 col-lg-6 col-xs-12 commentTime"><span><time>{{comment.created_at}}</time></span></div>
             </div>
-            <div v-if="loaded" class="commentContent row justify-content-start" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
+            <div class="commentContent row justify-content-start" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
             </div>
             <div class="updateDelete row">
               <div class="btn" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
@@ -21,7 +25,7 @@
                 <i class="fas fa-trash"></i>
                 Delete
               </div>
-              <like-comment :comment-id="comment.comment_id"></like-comment>
+              <like-comment :likes="comment.likes" :comment-id="comment.comment_id"></like-comment>
             </div>
           </div>
       </div>
@@ -44,33 +48,22 @@
       },
       parentId: {
         required: true
+      },
+      comments: {
+        required: true
       }
     },
     data() {
       return {
-        comments: [],
-        loaded: false,
         replyCount: 0,
-        countLoaded: false,
         commentId: null,
 
       }
     },
     created() {
-      this.fetchData()
+      this.replyCount = this.comments ? this.comments.length : 0
     },
     methods: {
-      fetchData() {
-        axios.get(api.commentFindByParent, {
-          params: {
-            parentId: this.parentId
-          }
-        })
-        .then (resp => {
-          this.comments = resp.data.comments
-          this.loaded = true
-        })
-      },
       avatar(fileName) {
         return imagePath.avatarImagePath + fileName
       },

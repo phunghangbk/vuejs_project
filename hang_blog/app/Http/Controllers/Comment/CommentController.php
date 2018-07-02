@@ -50,6 +50,8 @@ class CommentController extends Controller
                 'parent_id' => $parentId
             ]); 
             $comment->user = $user;
+            $comment->replies = [];
+            $comment->likes = [];
         } catch (\Exception $e) {
             return response()->json([
                 'status' => config('application.response_status')['error'],
@@ -81,7 +83,9 @@ class CommentController extends Controller
                     'errors' => ['error' => config('application.cannot_update_comment')],
                 ]);
             }
-            $comment = Comment::with(['user' => function ($query) use ($user) {
+            $comment = Comment::with(['likes', 'replies' => function ($query2) {
+                $query2->with('user');
+            }, 'user' => function ($query) use ($user) {
                 $query->where('user_id', $user->user_id);
             }])->find($commentId);
             if (empty($comment) || empty($comment->user)) {

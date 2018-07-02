@@ -3,7 +3,7 @@
     <comment-count :post-id="postId"></comment-count>
     <div class="row" v-for="comment in comments">
       <div class="col-2">
-        <img v-if="loaded" :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
+        <img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
       </div>
       <div class="col-10">
         <div class="info row justify-content-around">
@@ -14,7 +14,7 @@
             <span><time>{{comment.created_at}}</time></span>
           </div>
         </div>
-        <div v-if="loaded" class="commentContent row" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
+        <div class="commentContent row" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
         </div>
         <div class="updateDelete d-flex flex-row">
           <div class="btn" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
@@ -25,12 +25,12 @@
             <i class="fas fa-trash"></i>
             Delete
           </div>
-          <like-comment :comment-id="comment.comment_id"></like-comment>
+          <like-comment :likes="comment.likes" :comment-id="comment.comment_id"></like-comment>
           <div class="btn replyButton" data-toggle="modal" data-target="#replyModal" @click="replyComment(comment)">
             <i class="fa fa-reply"></i>Reply
           </div>
         </div>
-        <reply :post-id="postId" :parent-id="comment.comment_id" @deleteReply="deleteComment" @udpateReply="updateComment"></reply>
+        <reply :comments="comment.replies" :post-id="postId" :parent-id="comment.comment_id" @deleteReply="deleteComment" @udpateReply="updateComment"></reply>
       </div>
       <div>
       </div>
@@ -57,12 +57,13 @@
     props: {
       postId: {
         required: true
+      },
+      comments: {
+        required: true
       }
     },
     data() {
       return {
-        comments: [],
-        loaded: false,
         commentId: null,
         canDelete: false,
         comment: null,
@@ -72,23 +73,11 @@
       }
     },
     created() {
-      this.fetchData()
     },
     methods: {
       deleteComment(commentId) {
         this.commentId = commentId
         $('#deleteModalComment').modal('show')
-      },
-      fetchData() {
-        axios.get(api.postcomments, {
-          params: {
-            postId: this.postId
-          }
-        })
-        .then (resp => {
-          this.comments = resp.data.comments
-          this.loaded = true
-        })
       },
       filterComments(commentId) {
         let comment = this.comments.filter(function (item) {
@@ -166,7 +155,7 @@
     },
     components: {
       Reply, CommentUpdate, CommentDelete, LikeComment, CommentCount, ReplyForm
-    }
+    },
   }
 </script>
 <style scoped>

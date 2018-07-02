@@ -493,37 +493,37 @@ module.exports = __webpack_require__(38);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return login; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return register; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return login; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return register; });
 /* unused harmony export logout */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return user; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return update_profile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return update_password; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return verificate_email; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return reset_password; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return reset_action; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return post_create; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return post_list; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return post; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return post_update; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return post_delete; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return post_like; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return post_checkLiked; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return post_likesCount; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return postcomments; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return user; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return update_profile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return update_password; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return verificate_email; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return reset_password; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return reset_action; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return post_create; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return post_list; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return post; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return post_update; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return post_delete; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return post_like; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return post_checkLiked; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return post_likesCount; });
+/* unused harmony export postcomments */
 /* unused harmony export usercomments */
 /* unused harmony export comments */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return comment_create; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return comment_update; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return comment_delete; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return postCommentsCount; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return commentFindByParent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return comment_create; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return comment_update; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return comment_delete; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return postCommentsCount; });
+/* unused harmony export commentFindByParent */
 /* unused harmony export commentCountReply */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return canUpdateComment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return canDeleteComment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return comment_like; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return comment_checkLiked; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return comment_likesCount; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return comment_like; });
+/* unused harmony export comment_checkLiked */
+/* unused harmony export comment_likesCount */
 var base_url = 'http://localhost:8696/api';
 
 function url(path) {
@@ -38279,7 +38279,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
     register: function register() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["u" /* register */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["q" /* register */], {
         name: this.name,
         email: this.email,
         nickname: this.nickname,
@@ -38973,7 +38973,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.loader = true;
       this.infoError = false;
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["j" /* login */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["g" /* login */], {
         email: this.email,
         password: this.password
       }).then(function (response) {
@@ -39374,7 +39374,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     fetchUserData: function fetchUserData() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["z" /* user */] + '?nickname=' + this.nicknameParameter).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["v" /* user */] + '?nickname=' + this.nicknameParameter).then(function (resp) {
         _this.nickname = resp.data.user.nickname ? resp.data.user.nickname : '';
         _this.avatar_image = resp.data.user.avatar_image ? resp.data.user.avatar_image : '';
         _this.cover_image = resp.data.user.cover_image ? resp.data.user.cover_image : '';
@@ -39413,7 +39413,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     update_avatar: function update_avatar() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["y" /* update_profile */], {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["u" /* update_profile */], {
         avatar_image: this.change_avatar ? this.avatarTemp : ''
       }).then(function (resp) {
         _this2.change_avatar = false;
@@ -39437,7 +39437,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     update_cover: function update_cover() {
       var _this3 = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["y" /* update_profile */], {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["u" /* update_profile */], {
         cover_image: this.change_cover ? this.coverTemp : ''
       }).then(function (resp) {
         _this3.change_cover = false;
@@ -39445,7 +39445,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
           _this3.user = resp.data.user;
           localStorage.setItem('user', JSON.stringify(_this3.user));
           _this3.cover_image = _this3.user.cover_image;
-          console.log(_this3.cover_image);
           _this3.success = true;
         } else {
           _this3.error = true;
@@ -39842,7 +39841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     } else {
       this.user = JSON.parse(localStorage.getItem('user'));
       if (this.user == null || typeof this.user == 'undefined') {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["z" /* user */]).then(function (resp) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["v" /* user */]).then(function (resp) {
           _this.user = resp.data.user;
           _this.name = _this.user.name;
           _this.nickname = _this.user.nickname;
@@ -39861,7 +39860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     update: function update() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["y" /* update_profile */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["u" /* update_profile */], {
         name: this.name == this.user.name ? '' : this.name,
         nickname: this.nickname == this.user.nickname ? '' : this.nickname
       }).then(function (resp) {
@@ -40255,7 +40254,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
     update: function update() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["x" /* update_password */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["t" /* update_password */], {
         old_password: this.old_password,
         new_password: this.new_password
       }).then(function (resp) {
@@ -40920,7 +40919,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     var _this = this;
 
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["A" /* verificate_email */] + this.token).then(function (resp) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["w" /* verificate_email */] + this.token).then(function (resp) {
       if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
         _this.success = true;
         _this.message = resp.data.message;
@@ -41193,7 +41192,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendResetMail: function sendResetMail() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["w" /* reset_password */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["s" /* reset_password */], {
         email: this.email
       }).then(function (resp) {
         if (resp.data.status == 'success') {
@@ -41537,7 +41536,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
   created: function created() {
     var _this = this;
 
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["w" /* reset_password */] + this.token).then(function (resp) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["s" /* reset_password */] + this.token).then(function (resp) {
       if (resp.data.status == 'success' && resp.data.user != null) {
         _this.success = true;
         _this.user = resp.data.user;
@@ -41556,7 +41555,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
     reset: function reset() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["v" /* reset_action */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["r" /* reset_action */], {
         email: this.user.email,
         password: this.password
       }).then(function (resp) {
@@ -42087,7 +42086,7 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_vue_
     createPost: function createPost() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["n" /* post_create */], {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_1__store_api_js__["k" /* post_create */], {
         title: this.title,
         image: this.image,
         introduction: this.introduction,
@@ -45002,7 +45001,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
     infiniteHandler: function infiniteHandler() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["r" /* post_list */] + '?nickname=' + this.nickname + '&page=' + this.page).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["o" /* post_list */] + '?nickname=' + this.nickname + '&page=' + this.page).then(function (resp) {
         if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
           _this.loaded = true;
           if (resp.data.list.current_page < resp.data.list.last_page) {
@@ -45035,7 +45034,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
       }
 
       this.is_busy = true;
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["r" /* post_list */] + '?nickname=' + this.nickname + '&page=' + this.page).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["o" /* post_list */] + '?nickname=' + this.nickname + '&page=' + this.page).then(function (resp) {
         if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
           _this2.loaded = true;
           if (resp.data.list.current_page < resp.data.list.last_page) {
@@ -45073,7 +45072,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
     getUserInfo: function getUserInfo() {
       var _this4 = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["z" /* user */] + '?nickname=' + this.nickname).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["v" /* user */] + '?nickname=' + this.nickname).then(function (resp) {
         if (resp.data.user) {
           _this4.user = resp.data.user;
           if (_this4.$store.state.isLogged) {
@@ -45450,7 +45449,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!this.$store.state.isLogged) {
         this.$router.push('/login');
       } else {
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["p" /* post_like */], {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["m" /* post_like */], {
           postId: this.postId
         }).then(function (resp) {
           if (typeof resp.data.liked != 'undefined') {
@@ -45463,7 +45462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     getLikesCount: function getLikesCount() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["q" /* post_likesCount */], {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["n" /* post_likesCount */], {
         params: {
           postId: this.postId
         }
@@ -45477,7 +45476,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     checkLiked: function checkLiked() {
       var _this3 = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["m" /* post_checkLiked */], {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["j" /* post_checkLiked */], {
         params: {
           postId: this.postId
         }
@@ -45595,7 +45594,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
       if (!this.$store.state.isLogged) {
         this.$router.push('/login');
       } else {
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["o" /* post_delete */] + this.postId).then(function (resp) {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["l" /* post_delete */] + this.postId).then(function (resp) {
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             _this.$emit('changeAfterDeletePost', _this.postId);
             _this.success = true;
@@ -46141,11 +46140,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["k" /* post */] + this.post_id, {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_3__store_api_js__["h" /* post */] + this.post_id, {
         params: {
           nickname: this.nickname
         }
       }).then(function (resp) {
+        console.log(resp.data.post[0].comments);
         if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
           _this.loaded = true;
           _this.post = resp.data.post[0];
@@ -46298,7 +46298,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
         });
         return;
       } else {
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["e" /* comment_create */], {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["c" /* comment_create */], {
           postId: this.postId,
           parentId: this.parentId ? this.parentId : null,
           content: this.content
@@ -46306,6 +46306,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             _this.content = '';
             var parentId = _this.parentId ? _this.parentId : '';
+            console.log(resp.data.comment);
             _this.$bus.$emit('changeAfterCreateComment', resp.data.comment, _this.isReply, parentId);
             _this.$bus.$emit('changeCommentCount', 1);
             _this.success = true;
@@ -46609,12 +46610,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: {
     postId: {
       required: true
+    },
+    comments: {
+      required: true
     }
   },
   data: function data() {
     return {
-      comments: [],
-      loaded: false,
       commentId: null,
       canDelete: false,
       comment: null,
@@ -46623,26 +46625,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       createdAt: null
     };
   },
-  created: function created() {
-    this.fetchData();
-  },
+  created: function created() {},
 
   methods: {
     deleteComment: function deleteComment(commentId) {
       this.commentId = commentId;
       $('#deleteModalComment').modal('show');
-    },
-    fetchData: function fetchData() {
-      var _this = this;
-
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["t" /* postcomments */], {
-        params: {
-          postId: this.postId
-        }
-      }).then(function (resp) {
-        _this.comments = resp.data.comments;
-        _this.loaded = true;
-      });
     },
     filterComments: function filterComments(commentId) {
       var comment = this.comments.filter(function (item) {
@@ -46697,24 +46685,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this = this;
 
     this.$bus.$on('changeAfterDeleteBus', function (commentId) {
-      var deletedComment = _this2.filterComments(commentId);
+      var deletedComment = _this.filterComments(commentId);
       if (deletedComment) {
-        var index = $.inArray(deletedComment, _this2.comments);
+        var index = $.inArray(deletedComment, _this.comments);
         if (index != -1) {
-          _this2.comments.splice(index, 1);
+          _this.comments.splice(index, 1);
         }
       }
     });
     this.$bus.$on('changeAfterCreateComment', function (comment, isReply) {
       if (!isReply) {
-        _this2.comments.push(comment);
+        _this.comments.push(comment);
       }
     });
     this.$bus.$on('changeAfterUpdate', function (commentId, comment) {
-      _this2.updateAfterUpdate(commentId, comment);
+      _this.updateAfterUpdate(commentId, comment);
     });
   },
 
@@ -46860,6 +46848,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -46876,35 +46868,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     parentId: {
       required: true
+    },
+    comments: {
+      required: true
     }
   },
   data: function data() {
     return {
-      comments: [],
-      loaded: false,
       replyCount: 0,
-      countLoaded: false,
       commentId: null
 
     };
   },
   created: function created() {
-    this.fetchData();
+    this.replyCount = this.comments ? this.comments.length : 0;
   },
 
   methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["c" /* commentFindByParent */], {
-        params: {
-          parentId: this.parentId
-        }
-      }).then(function (resp) {
-        _this.comments = resp.data.comments;
-        _this.loaded = true;
-      });
-    },
     avatar: function avatar(fileName) {
       return __WEBPACK_IMPORTED_MODULE_3__router_imagePath_js__["a" /* avatarImagePath */] + fileName;
     },
@@ -46934,26 +46914,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this = this;
 
     this.$bus.$on('changeAfterDeleteBus', function (commentId) {
-      var deletedComment = _this2.filterComments(commentId);
+      var deletedComment = _this.filterComments(commentId);
       if (deletedComment) {
-        var index = $.inArray(deletedComment, _this2.comments);
+        var index = $.inArray(deletedComment, _this.comments);
         if (index != -1) {
-          _this2.comments.splice(index, 1);
+          _this.comments.splice(index, 1);
         }
       }
     });
 
     this.$bus.$on('changeAfterCreateComment', function (comment, isReply, parentId) {
-      if (isReply && parentId == _this2.parentId) {
-        _this2.comments.push(comment);
+      if (isReply && parentId == _this.parentId) {
+        _this.comments.push(comment);
       }
     });
 
     this.$bus.$on('changeAfterUpdate', function (commentId, comment) {
-      _this2.updateAfterUpdate(commentId, comment);
+      _this.updateAfterUpdate(commentId, comment);
     });
   },
 
@@ -47031,14 +47011,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: {
     commentId: {
       required: true
+    },
+    likes: {
+      required: true
     }
   },
   data: function data() {
     return {
       liked: false,
-      likesCount: 0,
-      likesCountLoaded: false,
-      checkLikedLoaded: false
+      likesCount: 0
     };
   },
   created: function created() {
@@ -47053,7 +47034,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!this.$store.state.isLogged) {
         this.$router.push('/login');
       } else {
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["g" /* comment_like */], {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["e" /* comment_like */], {
           commentId: this.commentId
         }).then(function (resp) {
           if (typeof resp.data.liked != 'undefined') {
@@ -47064,32 +47045,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     getLikesCount: function getLikesCount() {
-      var _this2 = this;
-
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["h" /* comment_likesCount */], {
-        params: {
-          commentId: this.commentId
-        }
-      }).then(function (resp) {
-        if (typeof resp.data.count != 'undefined') {
-          _this2.likesCount = resp.data.count;
-        }
-        _this2.likesCountLoaded = true;
-      });
+      this.likesCount = typeof this.likes != 'undefined' ? this.likes.length : 0;
     },
     checkLiked: function checkLiked() {
-      var _this3 = this;
-
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["d" /* comment_checkLiked */], {
-        params: {
-          commentId: this.commentId
+      if (typeof this.likes != 'undefined') {
+        for (var i = 0; i < this.likes.length; i++) {
+          if (JSON.parse(localStorage.getItem('user')).user_id == this.likes[i].user_id) {
+            this.liked = true;
+          }
         }
-      }).then(function (resp) {
-        if (typeof resp.data.liked != 'undefined') {
-          _this3.liked = resp.data.liked;
-        }
-        _this3.checkLikedLoaded = true;
-      });
+      }
     }
   }
 });
@@ -47107,15 +47072,13 @@ var render = function() {
         "div",
         {
           staticClass: "likeButton btn",
-          class: { "btn-primary": _vm.liked && _vm.checkLikedLoaded },
+          class: { "btn-primary": _vm.liked },
           on: { click: _vm.iLikeIt }
         },
         [
           _c("i", { staticClass: "fa fa-thumbs-o-up" }),
           _vm._v(" "),
-          _vm.likesCountLoaded
-            ? _c("span", [_vm._v("\n    " + _vm._s(_vm.likesCount) + "\n  ")])
-            : _vm._e()
+          _c("span", [_vm._v("\n    " + _vm._s(_vm.likesCount) + "\n  ")])
         ]
       )
     : _vm._e()
@@ -47261,9 +47224,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
       uContent: ''
     };
   },
-  created: function created() {
-    console.log(this.commentId);
-  },
+  created: function created() {},
 
   watch: {
     content: function content() {
@@ -47274,7 +47235,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_
     update: function update() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["i" /* comment_update */] + this.commentId, {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["f" /* comment_update */] + this.commentId, {
         content: this.uContent
       }).then(function (resp) {
         if (resp.data.status = "success") {
@@ -47552,18 +47513,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "reply" } }, [
+    _vm.replyCount > 0
+      ? _c("div", { staticClass: "replyCount" }, [
+          _c("i", { staticClass: "fa fa-arrow-circle-right" }),
+          _vm._v("\n    " + _vm._s(_vm.replyCount) + " Replies\n  ")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "replyList", attrs: { id: "replyList" + _vm.parentId } },
       _vm._l(_vm.comments, function(comment) {
         return _c("div", { staticClass: "row replyItem" }, [
           _c("div", { staticClass: "col-2" }, [
-            _vm.loaded
-              ? _c("img", {
-                  staticClass: "avatarimg img-fluid",
-                  attrs: { src: _vm.avatar(comment.user.avatar_image) }
-                })
-              : _vm._e()
+            _c("img", {
+              staticClass: "avatarimg img-fluid",
+              attrs: { src: _vm.avatar(comment.user.avatar_image) }
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-10" }, [
@@ -47594,16 +47560,14 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm.loaded
-              ? _c("div", {
-                  staticClass: "commentContent row justify-content-start",
-                  domProps: {
-                    innerHTML: _vm._s(
-                      comment.content.replace(/(?:\r\n|\r|\n)/g, "<br />")
-                    )
-                  }
-                })
-              : _vm._e(),
+            _c("div", {
+              staticClass: "commentContent row justify-content-start",
+              domProps: {
+                innerHTML: _vm._s(
+                  comment.content.replace(/(?:\r\n|\r|\n)/g, "<br />")
+                )
+              }
+            }),
             _vm._v(" "),
             _c(
               "div",
@@ -47650,7 +47614,10 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("like-comment", {
-                  attrs: { "comment-id": comment.comment_id }
+                  attrs: {
+                    likes: comment.likes,
+                    "comment-id": comment.comment_id
+                  }
                 })
               ],
               1
@@ -47834,7 +47801,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
     deleteAction: function deleteAction() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["f" /* comment_delete */] + this.commentId).then(function (resp) {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["d" /* comment_delete */] + this.commentId).then(function (resp) {
         if (typeof resp.data.status != 'undefined' && resp.data.status == "success") {
           _this2.$bus.$emit('changeAfterDeleteBus', _this2.commentId);
           _this2.$bus.$emit('changeCommentCount', -1);
@@ -48111,7 +48078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     getCommentCount: function getCommentCount() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["l" /* postCommentsCount */], {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["i" /* postCommentsCount */], {
         params: {
           postId: this.postId
         }
@@ -48545,12 +48512,10 @@ var render = function() {
       _vm._l(_vm.comments, function(comment) {
         return _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-2" }, [
-            _vm.loaded
-              ? _c("img", {
-                  staticClass: "avatarimg img-fluid",
-                  attrs: { src: _vm.avatar(comment.user.avatar_image) }
-                })
-              : _vm._e()
+            _c("img", {
+              staticClass: "avatarimg img-fluid",
+              attrs: { src: _vm.avatar(comment.user.avatar_image) }
+            })
           ]),
           _vm._v(" "),
           _c(
@@ -48588,16 +48553,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm.loaded
-                ? _c("div", {
-                    staticClass: "commentContent row",
-                    domProps: {
-                      innerHTML: _vm._s(
-                        comment.content.replace(/(?:\r\n|\r|\n)/g, "<br />")
-                      )
-                    }
-                  })
-                : _vm._e(),
+              _c("div", {
+                staticClass: "commentContent row",
+                domProps: {
+                  innerHTML: _vm._s(
+                    comment.content.replace(/(?:\r\n|\r|\n)/g, "<br />")
+                  )
+                }
+              }),
               _vm._v(" "),
               _c(
                 "div",
@@ -48644,7 +48607,10 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("like-comment", {
-                    attrs: { "comment-id": comment.comment_id }
+                    attrs: {
+                      likes: comment.likes,
+                      "comment-id": comment.comment_id
+                    }
                   }),
                   _vm._v(" "),
                   _c(
@@ -48672,6 +48638,7 @@ var render = function() {
               _vm._v(" "),
               _c("reply", {
                 attrs: {
+                  comments: comment.replies,
                   "post-id": _vm.postId,
                   "parent-id": comment.comment_id
                 },
@@ -48924,7 +48891,14 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("comment-list", { attrs: { "post-id": _vm.post_id } })
+              _vm.post
+                ? _c("comment-list", {
+                    attrs: {
+                      comments: _vm.post.comments,
+                      "post-id": _vm.post_id
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),
@@ -49299,7 +49273,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_vue_
     fetchData: function fetchData() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["k" /* post */] + this.post_id, {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["h" /* post */] + this.post_id, {
         params: {
           nickname: this.nickname
         }
@@ -49349,7 +49323,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_vue_
     updatePost: function updatePost() {
       var _this2 = this;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["s" /* post_update */] + this.post_id, {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__store_api_js__["p" /* post_update */] + this.post_id, {
         title: this.titlechange ? this.title : '',
         image: this.imagechange ? this.image : '',
         introduction: this.introductionchange ? this.introduction : '',

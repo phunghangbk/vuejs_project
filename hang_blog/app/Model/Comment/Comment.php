@@ -19,4 +19,13 @@ class Comment extends Model
     {
     	return $this->belongsTo('App\Model\Post\Post', 'post_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany('App\Model\Like\LikeComment', 'comment_id');
+    }
+
+    public function replies() {
+        return $this->hasMany('App\Model\Comment\Comment', 'parent_id');
+    }
 }

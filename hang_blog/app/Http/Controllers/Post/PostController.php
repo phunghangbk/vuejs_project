@@ -189,7 +189,11 @@ class PostController extends Controller
     {
         try {
             $user = User::with(['posts' => function ($query) use ($post_id) {
-                $query->where('post_id', $post_id);
+                $query->with(['comments' => function ($query2) {
+                    $query2->with(['user', 'likes', 'replies' => function ($query3) {
+                        $query3->with('user', 'likes');
+                    }])->whereNull('parent_id')->orWhere('parent_id', '');
+                }])->where('post_id', $post_id);
             }])->where('nickname', $request->nickname)->first();
             $post = $user->posts;
 

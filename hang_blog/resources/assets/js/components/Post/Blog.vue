@@ -69,7 +69,7 @@
             {{error}}
           </span>
         </div>
-        <comment-list :post-id="post_id"></comment-list>
+        <comment-list v-if="post" :comments="post.comments" :post-id="post_id"></comment-list>
       </div>
       <div><hr></div>
       <h1>
@@ -124,6 +124,7 @@
           }
         })
         .then (resp => {
+          console.log(resp.data.post[0].comments)
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.loaded = true
             this.post = resp.data.post[0]

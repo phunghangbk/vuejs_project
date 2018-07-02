@@ -76,7 +76,6 @@
       }
     },
     created() {
-      console.log(this.commentId)
     },
     watch: {
       content() {
