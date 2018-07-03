@@ -25,8 +25,8 @@
             </router-link>
           </li>
           <li class="nav-item" v-if="$store.state.isLogged && user">
-            <router-link @click.native="closeMenu()" :to="'/user/' + user.nickname" class="nav-link">
-              Article List
+            <router-link @click.native="closeMenu()" :to="{ name: 'users'}" class="nav-link">
+             User List
             </router-link>
           </li>
           <li class="nav-item dropdown" v-if="$store.state.isLogged">
@@ -41,14 +41,13 @@
                 Update Password
               </router-link>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <router-link style="text-align: center;" v-if="$store.state.isLogged" @click.native="closeMenu()" :to="{ name: 'logout' }" class="nav-link">
+                Logout
+              </router-link>
             </div>
           </li>
-          
-          <li class="nav-item" v-if="$store.state.isLogged">
-            <router-link @click.native="closeMenu()" :to="{ name: 'logout' }" class="nav-link">
-              Logout
-            </router-link>
+          <li>
+            <a v-if="user" :href="'/user/'+user.nickname"><img :src="avatar(user.avatar_image)" class="avatarimg"><span><b style="font-weight: 700;font-size: 14px;margin-left: 5px;color: white;">{{user.nickname}}</b></span></a>
           </li>
         </ul>
       </div>
@@ -64,6 +63,7 @@
 </template>
 
 <script>
+  import * as imagePath from './router/imagePath.js'
   export default {
     data() {
       return {
@@ -108,6 +108,9 @@
       },
       closeMenu() {
         $('.navbar-collapse').collapse('hide');
+      },
+      avatar(fileName) {
+        return imagePath.avatarImagePath + fileName
       }
     },
     created() {
@@ -200,6 +203,11 @@
 
   .ql-container.ql-snow {
     height: 60% !important
+  }
+  .avatarimg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
   }
   @media only screen and (max-width: 768px) {
     #app .header .header_right {

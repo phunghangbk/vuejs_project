@@ -3,7 +3,7 @@
     <h1>User List</h1>
     <div class="row justify-content-center">
       <table class="col-xs-12 col-lg-8 col-sm-10 table table-hover">
-        <thead>
+        <thead class="tablecontent">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Avatar</th>
@@ -27,6 +27,7 @@
       :items-per-page="pageOne.itemsPerPage"
       @pagechanged="onPagechanged"
       class="col-xs-12 col-lg-8 col-sm-10"
+      style="justify-content: center;"
     ></pagination>
     </div>
   </div>
@@ -89,5 +90,11 @@
     border-radius: 140px;
     height: 50px;
     width: 50px;
+  }
+  .custom-container {
+    margin-top: 50px;
+  }
+  th, h1 {
+    font-family: "Libre Baskerville",Georgia,serif;
   }
 </style>

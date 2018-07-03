@@ -8,7 +8,7 @@
       <div class="col-10">
         <div class="info row justify-content-around">
           <div class="col-sm-6 col-lg-6 col-xs-12 userName">
-            <span><b style="font-weight: 700; font-size: 15px;">{{comment.user.name}}</b></span>
+            <span><a :href="'/user/'+comment.user.nickname"><b style="font-weight: 700; font-size: 15px;">{{comment.user.name}}</b></a></span>
           </div>
           <div class="col-sm-6 col-lg-6 col-xs-12 commentTime">
             <span><time>{{comment.created_at}}</time></span>

@@ -15,7 +15,7 @@
             </div>
             <div class="col-10 info" style="text-align: left;">
               <div v-if="user" class="col-sm-6 col-lg-6 col-xs-12 userName">
-                <span><b style="font-weight: 700; font-size: 15px;">{{user.name}}</b></span>
+                <span><a :href="'/user/'+user.nickname"><b style="font-weight: 700; font-size: 15px;">{{user.name}}</b></a></span>
               </div>
               <div v-if="createdAt" class="col-sm-6 col-lg-6 col-xs-12 commentTime">
                 <span><time>{{createdAt}}</time></span>
@@ -70,5 +70,8 @@
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: left;
+  }
+  .info {
+    font-family: "Libre Baskerville",Georgia,serif;
   }
 </style>
