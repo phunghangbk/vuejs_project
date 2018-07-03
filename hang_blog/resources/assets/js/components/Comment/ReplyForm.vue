@@ -11,7 +11,7 @@
         <div class="modal-body">
           <div class="row parentComment">
             <div v-if="user" class="col-2 avatarImg">
-              <img :src="avatar(user.avatar_image)" class="avatarimg img-fluid">
+              <a :href="'/user/'+user.nickname"><img :src="avatar(user.avatar_image)" class="avatarimg img-fluid"></a>
             </div>
             <div class="col-10 info" style="text-align: left;">
               <div v-if="user" class="col-sm-6 col-lg-6 col-xs-12 userName">
@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div v-if="content" class="commentContent row justify-content-center" v-html="content.replace(/(?:\r\n|\r|\n)/g, '<br />')"></div>
+          <div v-if="content" class="commentContent row" v-html="content.replace(/(?:\r\n|\r|\n)/g, '<br />')"></div>
           <comment :post-id="postId" :parent-id="commentId" :is-reply="true"></comment>
         </div>
       </div>
@@ -65,5 +65,10 @@
 
 </script>
 <style scoped>
-  
+  .commentContent {
+    margin-left: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
 </style>

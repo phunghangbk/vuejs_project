@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="avatarImage">
-          <img v-show="loaded" v-lazy="{src: getImg(avatar_image, 'avatar_images'), loading: lazyload.loading, error: lazyload.error}" class="avatarimg img-fluid" />
+          <a :href="'/user/'+nickname"><img v-show="loaded" v-lazy="{src: getImg(avatar_image, 'avatar_images'), loading: lazyload.loading, error: lazyload.error}" class="avatarimg img-fluid" /></a>
           <div v-if="is_signedin" class="avatar_camera_icon">
             <label class="avatarLabel" @change="onAvartaImageChange">
               <i class="fa fa-camera">
@@ -24,9 +24,11 @@
         </div>
         <div class="nickname_wrap">
           <div class="nickname">
-          <span class="nickname_in_profile">
-            {{nickname}}
-          </span>
+            <a :href="'/user/'+nickname">
+            <span class="nickname_in_profile">
+              {{nickname}}
+            </span>
+            </a>
         </div>
         </div>
         <div v-if="is_signedin && loaded" class="editButton btn btn-success">
@@ -270,7 +272,8 @@
   }
 
   .nickname_in_profile {
-
+    text-decoration: none;
+    color: white;
   }
 
   .nickname_wrap {

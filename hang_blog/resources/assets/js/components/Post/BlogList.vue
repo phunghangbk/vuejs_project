@@ -22,7 +22,7 @@
             <i class="fas fa-trash"></i>
             Delete
           </div>
-          <like :post-id="item.post_id"></like>          
+          <like :likes="item.likes" :post-id="item.post_id"></like>          
         </div>
         <delete-post :post-id="postId" @changeAfterDeletePost="updatePostList"></delete-post>
       </div>
@@ -72,30 +72,6 @@
       Like, DeletePost
     },
     methods: {
-      infiniteHandler() {
-        axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
-        .then(resp => {
-          if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
-            this.loaded = true
-            if (resp.data.list.current_page < resp.data.list.last_page) {
-              this.page = this.page + 1
-            } else {
-              this.stop = true
-            }
-            for (let i = 0; i < resp.data.list.data.length; i++) {
-              this.list.push(resp.data.list.data[i])
-            }
-          } else {
-            if (typeof resp.data.errors != 'undefined') {
-              this.custom_errors = resp.data.errors
-            }
-          }
-        })
-        .catch(error => {
-          this.error = true
-          console.log(error.response)
-        })
-      },
       fetchData() {
         if (this.is_busy == true){
           return false
@@ -108,6 +84,7 @@
         this.is_busy = true
         axios.get(api.post_list + '?nickname=' + this.nickname + '&page=' + this.page)
         .then(resp => {
+          console.log(resp.data.list)
           if (typeof resp.data.status != 'undefined' && resp.data.status == 'success') {
             this.loaded = true
             if (resp.data.list.current_page < resp.data.list.last_page) {

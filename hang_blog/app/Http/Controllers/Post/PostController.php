@@ -189,7 +189,7 @@ class PostController extends Controller
     {
         try {
             $user = User::with(['posts' => function ($query) use ($post_id) {
-                $query->with(['comments' => function ($query2) {
+                $query->with(['likes', 'comments' => function ($query2) {
                     $query2->with(['user', 'likes', 'replies' => function ($query3) {
                         $query3->with('user', 'likes');
                     }])->whereNull('parent_id')->orWhere('parent_id', '');
@@ -242,9 +242,9 @@ class PostController extends Controller
             ]);
         }
         if (! empty($authUser) && $authUser->user_id == $user->user_id) {
-            $list = Post::where('user_id', $user->user_id)->paginate(self::PER_PAGE);
+            $list = Post::with('likes')->where('user_id', $user->user_id)->paginate(self::PER_PAGE);
         } else {
-            $list = Post::where('user_id', $user->user_id)->where('status', self::POST_PUBLISH)->paginate(self::PER_PAGE);
+            $list = Post::with('likes')->where('user_id', $user->user_id)->where('status', self::POST_PUBLISH)->paginate(self::PER_PAGE);
         }
         return response()->json([
             'status' => config('application.response_status')['success'],

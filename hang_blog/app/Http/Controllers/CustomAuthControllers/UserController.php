@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    const PER_PAGE = 20;
     public function updateProfile(Request $request)
     {
         try {
@@ -129,5 +130,16 @@ class UserController extends Controller
         }
 
         return true;
+    }
+
+    public function userList() {
+        \Log::info(Auth::user());
+        $currentUser = Auth::user();
+        if (! empty($currentUser)) {
+            $userList = User::where('user_id', '!=', $currentUser->user_id)->paginate(self::PER_PAGE);
+        } else {
+            $userList = User::paginate(self::PER_PAGE);
+        }
+        return response()->json(['userList' => $userList]);
     }
 }

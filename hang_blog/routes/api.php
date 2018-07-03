@@ -36,7 +36,7 @@ Route::group(['middleware' => 'jwt.refresh'], function(){
 });
 Route::get('auth/user', 'CustomAuthControllers\AuthController@user');
 Route::get('/user/verify/{token}', 'CustomAuthControllers\AuthController@verifyUser');
-
+Route::get('users', 'CustomAuthControllers\UserController@userList');
 Route::post('password/reset', 'CustomAuthControllers\ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'CustomAuthControllers\ResetPasswordController@reset');
 Route::post('password/reset_action', 'CustomAuthControllers\ResetPasswordController@reset_action');
@@ -55,4 +55,5 @@ Route::get('comment/canDeleteComment', 'Comment\CommentController@canDeleteComme
 Route::get('comment/canUpdateComment', 'Comment\CommentController@canUpdateComment');
 Route::get('comment/checkLiked', 'Like\LikeCommentController@isLiked');
 Route::get('comment/likesCount', 'Like\LikeCommentController@likesCount');
+
 

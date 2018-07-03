@@ -1,9 +1,9 @@
 <template>
   <div id="commentList" class="col-xs-12 col-lg-8 col-sm-10">
     <comment-count :post-id="postId"></comment-count>
-    <div class="row" v-for="comment in comments">
+    <div class="row commentListContent" v-for="comment in comments">
       <div class="col-2">
-        <img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
+        <a :href="'/user/'+comment.user.nickname"><img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid"></a>
       </div>
       <div class="col-10">
         <div class="info row justify-content-around">
@@ -16,23 +16,25 @@
         </div>
         <div class="commentContent row" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
         </div>
+
         <div class="updateDelete d-flex flex-row">
-          <div class="btn" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
+          <div class="btn btn-link" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
             <i class="fas fa-pencil-alt"></i>
             Update
           </div>
-          <div class="btn deleteButton" data-toggle="modal" data-target="#deleteModalComment" @click="deleteComment(comment.comment_id)">
+          <div class="btn deleteButton btn-link" data-toggle="modal" data-target="#deleteModalComment" @click="deleteComment(comment.comment_id)">
             <i class="fas fa-trash"></i>
             Delete
           </div>
           <like-comment :likes="comment.likes" :comment-id="comment.comment_id"></like-comment>
-          <div class="btn replyButton" data-toggle="modal" data-target="#replyModal" @click="replyComment(comment)">
+          <div class="btn btn-link replyButton" data-toggle="modal" data-target="#replyModal" @click="replyComment(comment)">
             <i class="fa fa-reply"></i>Reply
           </div>
         </div>
+        <div>
+          <hr>
+        </div>
         <reply :comments="comment.replies" :post-id="postId" :parent-id="comment.comment_id" @deleteReply="deleteComment" @udpateReply="updateComment"></reply>
-      </div>
-      <div>
       </div>
     </div>
     <comment-delete :comment-id="commentId"></comment-delete>
@@ -186,11 +188,20 @@
   }
   .replyButton {
     text-decoration: none;
-    color: #495057;
   }
   .commentContent {
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+  .commentListContent {
+    border: solid 1px #e6ecf0;
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    transition: .15s all ease-in-out;
+  }
+  div.btn {
+    font-family: "Libre Baskerville",Georgia,serif;
   }
   @media only screen and (max-width: 768px) {
     #commentList > div > div > div.info  > div.col-sm-6.col-lg-6.col-xs-12.commentTime {

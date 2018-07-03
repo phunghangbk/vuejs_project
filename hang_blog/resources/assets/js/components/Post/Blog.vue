@@ -10,7 +10,7 @@
                 <i class="fas fa-cog" id="dropdownMenu"></i>
                 Setting
               </div>
-              <like :post-id="post_id"></like>
+              <like :likes="post.likes" :post-id="post_id"></like>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <a :href="'/post/' + post_id + '/update'" class="dropdown-item">Update</a>
                 <a href="#" class="dropdown-item" data-toggle="modal" data-target="#deleteModal">Delete</a>

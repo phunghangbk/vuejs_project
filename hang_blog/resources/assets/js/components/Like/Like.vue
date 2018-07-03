@@ -1,7 +1,7 @@
 <template>
-  <div v-if="$store.state.isLogged" class="likeButton btn" :class="{'btn-primary': liked && checkLikedLoaded}" @click="iLikeIt">
+  <div v-if="$store.state.isLogged" class="likeButton btn" :class="{'btn-primary': liked}" @click="iLikeIt">
     <i class="fa fa-thumbs-o-up"></i> 
-    <span v-if="likesCountLoaded">
+    <span>
       {{ likesCount }}
     </span>
   </div>
@@ -16,14 +16,15 @@
     props: {
       postId: {
         required: true
+      },
+      likes: {
+
       }
     },
     data() {
       return {
         liked: false,
         likesCount: 0,
-        likesCountLoaded: false,
-        checkLikedLoaded: false
       }
     },
 
@@ -48,30 +49,16 @@
         }
       },
       getLikesCount() {
-        axios.get(api.post_likesCount, {
-          params: {
-            postId: this.postId
-          }
-        })
-        .then (resp => {
-          if (typeof resp.data.count != 'undefined') {
-            this.likesCount = resp.data.count
-          }
-          this.likesCountLoaded = true
-        })
+        this.likesCount = typeof this.likes != 'undefined' ? this.likes.length : 0
       },
       checkLiked() {
-        axios.get(api.post_checkLiked, {
-          params: {
-            postId: this.postId
+        if (typeof this.likes != 'undefined') {
+          for (var i = 0; i < this.likes.length; i++) {
+            if (JSON.parse(localStorage.getItem('user')).user_id == this.likes[i].user_id) {
+              this.liked = true
+            }
           }
-        })
-        .then (resp => {
-          if (typeof resp.data.liked != 'undefined') {
-            this.liked = resp.data.liked
-          }
-          this.checkLikedLoaded = true
-        })
+        }
       }
     }
   }

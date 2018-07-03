@@ -7,7 +7,7 @@
     <div :id="'replyList' + parentId" class="replyList">
       <div class="row replyItem" v-for="comment in comments">
           <div class="col-2">
-            <img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid">
+            <a :href="'/user/'+comment.user.nickname"><img :src="avatar(comment.user.avatar_image)" class="avatarimg img-fluid"></a>
           </div>
           <div class="col-10">
             <div class="info row justify-content-around">
@@ -17,11 +17,11 @@
             <div class="commentContent row justify-content-start" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br />')">
             </div>
             <div class="updateDelete row">
-              <div class="btn" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
+              <div class="btn btn-link" data-toggle="modal" data-target="#modalUpdateCenter" @click="updateComment(comment)">
                 <i class="fas fa-pencil-alt"></i>
                 Update
               </div>
-              <div class="btn deleteButton" data-toggle="modal" data-target="#deleteModalComment" @click="deleteComment(comment.comment_id)">
+              <div class="btn deleteButton btn-link" data-toggle="modal" data-target="#deleteModalComment" @click="deleteComment(comment.comment_id)">
                 <i class="fas fa-trash"></i>
                 Delete
               </div>
@@ -92,6 +92,11 @@
         this.$emit('udpateReply', comment)
       },
 
+    },
+    watch: {
+      comments() {
+        this.replyCount = this.comments.length
+      }
     },
     mounted() {
       this.$bus.$on('changeAfterDeleteBus', (commentId) => {
@@ -164,6 +169,15 @@
     border-radius: 3px;
     padding: 10px 10px 10px 10px;
     margin-top: .5rem;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    transition: .15s all ease-in-out;
+  }
+  .replyCount  {
+    text-align: left;
+    color: green;
+  }
+  div.btn {
+    font-family: "Libre Baskerville",Georgia,serif;
   }
   @media only screen and (max-width: 768px) {
     .replyList > div > div > div.info  > div.col-sm-6.col-lg-6.col-xs-12.commentTime {

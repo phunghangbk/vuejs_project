@@ -17,6 +17,7 @@ import User from '../components/User/User.vue';
 import Blog from '../components/Post/Blog.vue';
 import UpdatePostForm from '../components/Post/UpdatePostForm.vue';
 import DeletePost from '../components/Post/DeletePost.vue';
+import UserList from '../components/User/UserList.vue'
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -161,6 +162,14 @@ const router = new VueRouter({
         auth: true
       },
       props: true
+    },
+    {
+      path: '/users/',
+      name: 'users',
+      component: UserList,
+      meta: {
+        auth: false
+      }
     }
   ]
 });
