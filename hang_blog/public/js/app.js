@@ -46776,7 +46776,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     postId: {
       required: true
     },
-    comments: {
+    commentsList: {
       required: true
     }
   },
@@ -46787,7 +46787,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       comment: null,
       content: null,
       user: null,
-      createdAt: null
+      createdAt: null,
+      comments: this.commentsList
     };
   },
   created: function created() {},
@@ -47034,15 +47035,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     parentId: {
       required: true
     },
-    comments: {
+    commentsList: {
       required: true
     }
   },
   data: function data() {
     return {
       replyCount: 0,
-      commentId: null
-
+      commentId: null,
+      comments: this.commentsList
     };
   },
   created: function created() {
@@ -48893,7 +48894,7 @@ var render = function() {
               _vm._v(" "),
               _c("reply", {
                 attrs: {
-                  comments: comment.replies,
+                  "comments-list": comment.replies,
                   "post-id": _vm.postId,
                   "parent-id": comment.comment_id
                 },
@@ -49159,7 +49160,7 @@ var render = function() {
               _vm.post
                 ? _c("comment-list", {
                     attrs: {
-                      comments: _vm.post.comments,
+                      "comments-list": _vm.post.comments,
                       "post-id": _vm.post_id
                     }
                   })

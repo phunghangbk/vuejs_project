@@ -49,7 +49,7 @@
       parentId: {
         required: true
       },
-      comments: {
+      commentsList: {
         required: true
       }
     },
@@ -57,7 +57,7 @@
       return {
         replyCount: 0,
         commentId: null,
-
+        comments: this.commentsList
       }
     },
     created() {

@@ -34,7 +34,7 @@
         <div>
           <hr>
         </div>
-        <reply :comments="comment.replies" :post-id="postId" :parent-id="comment.comment_id" @deleteReply="deleteComment" @udpateReply="updateComment"></reply>
+        <reply :comments-list="comment.replies" :post-id="postId" :parent-id="comment.comment_id" @deleteReply="deleteComment" @udpateReply="updateComment"></reply>
       </div>
     </div>
     <comment-delete :comment-id="commentId"></comment-delete>
@@ -60,7 +60,7 @@
       postId: {
         required: true
       },
-      comments: {
+      commentsList: {
         required: true
       }
     },
@@ -71,7 +71,8 @@
         comment: null,
         content: null,
         user: null,
-        createdAt: null
+        createdAt: null,
+        comments: this.commentsList
       }
     },
     created() {

@@ -69,7 +69,7 @@
             {{error}}
           </span>
         </div>
-        <comment-list v-if="post" :comments="post.comments" :post-id="post_id"></comment-list>
+        <comment-list v-if="post" :comments-list="post.comments" :post-id="post_id"></comment-list>
       </div>
       <div><hr></div>
       <h1>
