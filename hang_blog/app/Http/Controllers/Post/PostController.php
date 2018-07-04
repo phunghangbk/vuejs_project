@@ -242,9 +242,9 @@ class PostController extends Controller
             ]);
         }
         if (! empty($authUser) && $authUser->user_id == $user->user_id) {
-            $list = Post::with('likes')->where('user_id', $user->user_id)->paginate(self::PER_PAGE);
+            $list = Post::with('likes')->where('user_id', $user->user_id)->orderBy('post_id', 'desc')->paginate(self::PER_PAGE);
         } else {
-            $list = Post::with('likes')->where('user_id', $user->user_id)->where('status', self::POST_PUBLISH)->paginate(self::PER_PAGE);
+            $list = Post::with('likes')->where('user_id', $user->user_id)->where('status', self::POST_PUBLISH)->orderBy('post_id', 'desc')->paginate(self::PER_PAGE);
         }
         return response()->json([
             'status' => config('application.response_status')['success'],

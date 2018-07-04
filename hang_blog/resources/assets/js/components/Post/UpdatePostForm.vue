@@ -247,6 +247,7 @@
                   }
               }
             })
+            this.$router.push('/user/' + this.nickname+'/post/'+this.post_id)
           } else {
             this.error = true
             this.custom_errors = resp.data.errors

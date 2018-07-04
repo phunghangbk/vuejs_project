@@ -98,6 +98,7 @@
     },
     data () {
       return {
+        user: null,
         content: null,
         title: null,
         status: 1,
@@ -144,7 +145,14 @@
         }
       }
     },
-
+    beforeCreate() {
+      if (! this.$store.state.isLogged) {
+        this.$router.push('/login')
+      }
+    },
+    created() {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    },
     methods: {
       onEditorBlur(quill) {
         console.log('editor blur!', quill)
@@ -183,6 +191,7 @@
                   }
               }
             })
+            this.$router.push('/user/' + this.user.nickname);
           } else {
             this.error = true;
             if (typeof resp.data.errors != 'undefined') {
