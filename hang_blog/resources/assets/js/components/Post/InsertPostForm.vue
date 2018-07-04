@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid custom-container">
     <div class="row justify-content-center">
-      <h1>Create Article</h1>
       <div v-if="!success" class="col-xs-12 col-lg-8">
+        <h1>Create Article</h1>
         <div :class="{'has-error': error && custom_errors.title}">
           <div class="title form-group row form-inline">
             <label class="col-sm-2 col-form-label">Title</label>
@@ -63,11 +63,11 @@
         <div class="col-xs-12 submitButton">
           <button type="button" class="btn btn-success" @click="createPost">Submit</button>
         </div>
-      </div>
-      <div v-if="success">
-        <span style="color: green;">
-          Post article successfully!!
-        </span>
+        <div v-if="success">
+          <span style="color: green;">
+            Post article successfully!!
+          </span>
+        </div>
       </div>
     </div>
   </div>

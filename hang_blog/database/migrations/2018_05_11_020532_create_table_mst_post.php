@@ -18,7 +18,7 @@ class CreateTableMstPost extends Migration
             $table->unsignedInteger('user_id');
             $table->string('title')->default('');
             $table->string('image')->nullable();
-            $table->text('content')->default('');
+            $table->longtext('content')->default('');
             $table->integer('status')->default(1); //1: published 2: hidden
             $table->text('introduction')->default('');
             $table->timestamp('created_at')->nullable();

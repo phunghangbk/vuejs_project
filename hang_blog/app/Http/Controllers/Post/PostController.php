@@ -45,7 +45,7 @@ class PostController extends Controller
             if ($request->image !== '' && $request->image !== null) {
                 $image_name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
                 $image = \Image::make($request->image);
-                $image->resize(350,500);
+                $image->resize(350,300);
                 $image->save(public_path('post/images/') . $image_name);
                 $post->image = $image_name;
             }
